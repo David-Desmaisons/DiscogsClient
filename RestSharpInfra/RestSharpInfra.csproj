@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F0138D25-8712-4DCA-880A-507067AC1326}</ProjectGuid>
+    <ProjectGuid>{A9655673-4031-42C9-A3D6-53D01DAC5DBE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DiscogsClient</RootNamespace>
-    <AssemblyName>DiscogsClient</AssemblyName>
+    <RootNamespace>RestSharpInfra</RootNamespace>
+    <AssemblyName>RestSharpInfra</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -45,17 +45,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DiscogsAuthentifierClient.cs" />
-    <Compile Include="DiscogsClient.cs" />
-    <Compile Include="DiscogsOAuthBuilder.cs" />
-    <Compile Include="OAuthManager.cs" />
+    <Compile Include="OAuth1\OAuthAuthentifierClient.cs" />
+    <Compile Include="OAuth1\OAuthConsumerInformation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\RestSharpInfra\RestSharpInfra.csproj">
-      <Project>{a9655673-4031-42c9-a3d6-53d01dac5dbe}</Project>
-      <Name>RestSharpInfra</Name>
-    </ProjectReference>
+    <Compile Include="OAuth1\OAuthCompleteInformation.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

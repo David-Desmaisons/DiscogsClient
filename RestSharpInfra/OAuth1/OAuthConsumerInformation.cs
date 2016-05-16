@@ -1,4 +1,4 @@
-﻿namespace DiscogsClient 
+﻿namespace RestSharpInfra.OAuth1 
 {
     public class OAuthConsumerInformation 
     {

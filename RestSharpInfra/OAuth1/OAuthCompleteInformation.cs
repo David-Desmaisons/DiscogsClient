@@ -1,4 +1,6 @@
-﻿namespace DiscogsClient 
+﻿using RestSharp.Authenticators;
+
+namespace RestSharpInfra.OAuth1 
 {
     public class OAuthCompleteInformation 
     {
@@ -16,6 +18,11 @@
             ConsumerInformation = consumerInformation;
             Token = token;
             TokenSecret = tokenSecret;
+        }
+
+        public OAuth1Authenticator GetOAuth1() 
+        {
+            return OAuth1Authenticator.ForProtectedResource(ConsumerInformation.ConsumerKey, ConsumerInformation.ConsumerSecret, Token, TokenSecret);
         }
     }
 }

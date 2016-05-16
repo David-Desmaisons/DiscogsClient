@@ -1,12 +1,21 @@
-﻿namespace DiscogsClient
-{
-    public class DiscogsAuthentifierClient 
-    {
-        private readonly OAuthConsumerInformation _OAuthConsumerInformation;
+﻿using RestSharpInfra;
+using RestSharpInfra.OAuth1;
 
-        public DiscogsAuthentifierClient(OAuthConsumerInformation oAuthConsumerInformation) 
+namespace DiscogsClient
+{
+    public class DiscogsAuthentifierClient : OAuthAuthentifierClient
+    {
+        protected override string RequestUrl 
         {
-            _OAuthConsumerInformation = oAuthConsumerInformation;
+            get { return @"https://api.discogs.com/"; }
+        }
+
+        protected override string AuthorizeUrl {
+            get { return @"https://www.discogs.com/"; }
+        }
+
+        public DiscogsAuthentifierClient(OAuthConsumerInformation oAuthConsumerInformation) : base(oAuthConsumerInformation)
+        {
         }
     }
 }
