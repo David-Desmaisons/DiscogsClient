@@ -1,11 +1,10 @@
 ﻿namespace DiscogsClient
 {
-   public class DiscogsClient 
-   {
+    public class DiscogsAuthentifierClient 
+    {
         private readonly OAuthConsumerInformation _OAuthConsumerInformation;
-        private const string _UrlBase = "http://api.discogs.com/";
 
-        public DiscogsClient(OAuthConsumerInformation oAuthConsumerInformation) 
+        public DiscogsAuthentifierClient(OAuthConsumerInformation oAuthConsumerInformation) 
         {
             _OAuthConsumerInformation = oAuthConsumerInformation;
         }

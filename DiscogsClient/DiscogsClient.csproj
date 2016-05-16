@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DiscogsAuthentifierClient.cs" />
     <Compile Include="OAuthConsumerInformation.cs" />
     <Compile Include="OAuthCompleteInformation.cs" />
     <Compile Include="DiscogsClient.cs" />
