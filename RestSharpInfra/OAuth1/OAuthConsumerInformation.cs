@@ -1,4 +1,6 @@
-﻿namespace RestSharpInfra.OAuth1 
+﻿using RestSharp.Authenticators;
+
+namespace RestSharpInfra.OAuth1 
 {
     public class OAuthConsumerInformation 
     {
@@ -10,5 +12,10 @@
             ConsumerKey = consumerKey;
             ConsumerSecret = consumerSecret;
         }
+
+        public OAuth1Authenticator GetAuthenticatorForRequestToken() 
+        {
+            return OAuth1Authenticator.ForRequestToken(ConsumerKey, ConsumerSecret);
+        }   
     }
 }

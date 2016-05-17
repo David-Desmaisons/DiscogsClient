@@ -1,5 +1,4 @@
-﻿using RestSharpInfra;
-using RestSharpInfra.OAuth1;
+﻿using RestSharpInfra.OAuth1;
 
 namespace DiscogsClient
 {
@@ -14,7 +13,7 @@ namespace DiscogsClient
             get { return @"https://www.discogs.com/"; }
         }
 
-        public DiscogsAuthentifierClient(OAuthConsumerInformation oAuthConsumerInformation) : base(oAuthConsumerInformation)
+        public DiscogsAuthentifierClient(OAuthConsumerInformation consumerInformation) : base(consumerInformation)
         {
         }
     }

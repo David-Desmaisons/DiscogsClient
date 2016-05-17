@@ -45,6 +45,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\Result\DiscogsTrack.cs" />
+    <Compile Include="Data\Result\DiscogsArtist.cs" />
+    <Compile Include="Data\Result\DiscogsImage.cs" />
+    <Compile Include="Data\Result\DiscogsRelease.cs" />
     <Compile Include="DiscogsAuthentifierClient.cs" />
     <Compile Include="DiscogsClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -57,6 +61,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Data\Query\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

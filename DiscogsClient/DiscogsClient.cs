@@ -7,6 +7,8 @@ namespace DiscogsClient
    {
         private const string _UserAgent = @"DiscogsClient https://github.com/David-Desmaisons/DiscogsClient";
         private const string _UrlBase = "https://api.discogs.com/";
+        private const string _SearchUrl = "/database/search";
+
         private readonly OAuthCompleteInformation _OAuthCompleteInformation;
         private readonly RestClient _Client;
 
@@ -17,10 +19,9 @@ namespace DiscogsClient
             {
                 UserAgent = _UserAgent,
                 Timeout = timeOut,
-                Authenticator = _OAuthCompleteInformation.GetOAuth1Authenticator()
+                Authenticator = _OAuthCompleteInformation.GetAuthenticatorForProtectedResource()
             };
         }
-
 
         private IRestRequest Finalize(IRestRequest request)
         {

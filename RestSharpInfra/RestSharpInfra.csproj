@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="OAuth1\OAuthAuthentifierClient.cs" />
+    <Compile Include="OAuth1\OAuthTokenInformation.cs" />
     <Compile Include="OAuth1\OAuthConsumerInformation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="OAuth1\OAuthCompleteInformation.cs" />
