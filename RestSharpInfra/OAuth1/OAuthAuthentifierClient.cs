@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using RestSharp;
 using RestSharp.Authenticators;
 using RestSharp.Extensions.MonoHttp;
+using System;
 
 namespace RestSharpInfra.OAuth1
 {
@@ -15,34 +16,36 @@ namespace RestSharpInfra.OAuth1
         private const string _TokenSecret = "oauth_token_secret";
 
         private readonly OAuthConsumerInformation _OAuthConsumerInformation;
+        private OAuthCompleteInformation _OAuthCompleteInformation;
+
         protected abstract string RequestUrl { get; }
         protected abstract string AuthorizeUrl { get; }
-
-        public OAuthCompleteInformation OAuthCompleteInformation { get; private set; }
    
         protected OAuthAuthentifierClient(OAuthConsumerInformation oAuthConsumerInformation) 
         {
             _OAuthConsumerInformation = oAuthConsumerInformation;
         }
 
-        public async Task<string> GetAuthorizeUrl() 
+        public async Task<OAuthCompleteInformation> Authorize(Func<string, Task<string>> ExtractVerifier)
         {
-            var completeInformation = await RequestToken();
-            if (completeInformation == null)
+            if (_OAuthCompleteInformation != null)
+                return _OAuthCompleteInformation;
+
+            var token = await RequestToken();
+            if (token == null)
                 return null;
 
-            var authorizeTokenClient = GetRequestTokenClient(AuthorizeUrl);
-            var request = new RestRequest(_Authorize);
-            request.AddParameter(_Token, OAuthCompleteInformation.Token);
+            if (_OAuthCompleteInformation!=null)
+                return _OAuthCompleteInformation;
 
-            return authorizeTokenClient.BuildUri(request).ToString();
+            var url = GetAuthorizeUrl(token);
+
+            var verifier = await ExtractVerifier(url);         
+            return _OAuthCompleteInformation = await Access(verifier, token);
         }
 
-        private async Task<OAuthCompleteInformation> RequestToken() 
+        private async Task<string> RequestToken()
         {
-            if (OAuthCompleteInformation != null)
-                return OAuthCompleteInformation;
-
             var requestTokenClient = GetRequestTokenClient(RequestUrl);
             var request = new RestRequest(_RequestToken, Method.POST);
             var response = await requestTokenClient.ExecuteTaskAsync(request);
@@ -54,43 +57,52 @@ namespace RestSharpInfra.OAuth1
             var oauthToken = qs[_Token];
             var oauthTokenSecret = qs[_TokenSecret];
 
-            if ((oauthToken == null) || (oauthTokenSecret ==  null))
-                return null;
+            if ((oauthToken != null) && (oauthTokenSecret != null))
+                _OAuthCompleteInformation = new OAuthCompleteInformation(_OAuthConsumerInformation, oauthToken, oauthTokenSecret);
 
-            return OAuthCompleteInformation = new OAuthCompleteInformation(_OAuthConsumerInformation, oauthToken, oauthTokenSecret);
+            return oauthToken;
         }
 
-        public async Task<bool> Access(string verifier) 
+        private string GetAuthorizeUrl(string token)
         {
-            if (OAuthCompleteInformation == null)
-                return false;
+            var authorizeTokenClient = GetRequestTokenClient(AuthorizeUrl);
+            var request = new RestRequest(_Authorize);
+            request.AddParameter(_Token, token);
+            return authorizeTokenClient.BuildUri(request).ToString();
+        }
 
-            var accessTokenClient = GetAccessTokenClient(RequestUrl, verifier);      
+        private async Task<OAuthCompleteInformation> Access(string verifier, string token) 
+        {
+            var accessTokenClient = GetAccessTokenClient(RequestUrl, token, verifier);      
             var request = new RestRequest(_AccessToken, Method.POST);
             var response = await accessTokenClient.ExecuteTaskAsync(request);
 
-            ////qs = HttpUtility.ParseQueryString(response.Content);
-            //    //oauthToken = qs["oauth_token"];
-            //    //oauthTokenSecret = qs["oauth_token_secret"];
+            if ((response == null) || (response.StatusCode != HttpStatusCode.OK))
+                return null;
 
-            return (response != null) && (response.StatusCode == HttpStatusCode.OK);
+            var qs = HttpUtility.ParseQueryString(response.Content);
+            var oauthToken = qs[_Token];
+            var oauthTokenSecret = qs[_TokenSecret];
+
+            if ((oauthToken == null) || (oauthTokenSecret == null))
+                return null;
+
+            return new OAuthCompleteInformation(_OAuthConsumerInformation, oauthToken, oauthTokenSecret);
         }
 
         private IRestClient GetRequestTokenClient(string baseUrl) 
         {
-            return new RestClient(baseUrl) 
-            {
-                Authenticator = OAuth1Authenticator.ForRequestToken(_OAuthConsumerInformation.ConsumerKey, _OAuthConsumerInformation.ConsumerSecret)
-            };
+            var client = ClientBuilder.Builder(baseUrl);
+            client.Authenticator = OAuth1Authenticator.ForRequestToken(_OAuthConsumerInformation.ConsumerKey, _OAuthConsumerInformation.ConsumerSecret);
+            return client;
         }
 
-        private IRestClient GetAccessTokenClient(string baseUrl, string verifier) 
+        private IRestClient GetAccessTokenClient(string baseUrl, string token, string verifier) 
         {
-            var info = OAuthCompleteInformation.ConsumerInformation;
-            return new RestClient(baseUrl)
-            {
-                Authenticator = OAuth1Authenticator.ForAccessToken(info.ConsumerKey, info.ConsumerSecret, OAuthCompleteInformation.Token, OAuthCompleteInformation.TokenSecret, verifier)
-            };
+            var info = _OAuthCompleteInformation.ConsumerInformation;
+            var client = ClientBuilder.Builder(baseUrl);
+            client.Authenticator = OAuth1Authenticator.ForAccessToken(info.ConsumerKey, info.ConsumerSecret, token, null, verifier);
+            return client;
         }
     }
 }

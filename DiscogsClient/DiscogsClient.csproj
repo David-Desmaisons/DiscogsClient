@@ -47,8 +47,6 @@
   <ItemGroup>
     <Compile Include="DiscogsAuthentifierClient.cs" />
     <Compile Include="DiscogsClient.cs" />
-    <Compile Include="DiscogsOAuthBuilder.cs" />
-    <Compile Include="OAuthManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

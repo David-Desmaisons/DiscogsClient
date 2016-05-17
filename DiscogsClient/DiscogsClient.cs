@@ -5,22 +5,27 @@ namespace DiscogsClient
 {
    public class DiscogsClient 
    {
-        private readonly OAuthCompleteInformation _OAuthCompleteInformation;
+        private const string _UserAgent = @"DiscogsClient https://github.com/David-Desmaisons/DiscogsClient";
         private const string _UrlBase = "https://api.discogs.com/";
+        private readonly OAuthCompleteInformation _OAuthCompleteInformation;
         private readonly RestClient _Client;
 
-        public DiscogsClient(OAuthCompleteInformation oAuthCompleteInformation) 
+        public DiscogsClient(OAuthCompleteInformation oAuthCompleteInformation, int timeOut=5000) 
         {
             _OAuthCompleteInformation = oAuthCompleteInformation;
-            _Client = new RestClient(_UrlBase);
+            _Client = new RestClient(_UrlBase)
+            {
+                UserAgent = _UserAgent,
+                Timeout = timeOut,
+                Authenticator = _OAuthCompleteInformation.GetOAuth1Authenticator()
+            };
         }
 
 
-
-        //request.Headers["Accept-Encoding"] = "gzip";
-        //    if (string.IsNullOrEmpty(request.UserAgent))
-        //        request.UserAgent = _UA;
-        //    if (_TimeOut!=null)
-        //        request.Timeout = _TimeOut.Value;
+        private IRestRequest Finalize(IRestRequest request)
+        {
+            request.AddHeader("Accept-Encoding", "gzip");
+            return request;
+        }
     }
 }

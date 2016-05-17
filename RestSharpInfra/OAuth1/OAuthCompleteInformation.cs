@@ -20,7 +20,7 @@ namespace RestSharpInfra.OAuth1
             TokenSecret = tokenSecret;
         }
 
-        public OAuth1Authenticator GetOAuth1() 
+        public OAuth1Authenticator GetOAuth1Authenticator() 
         {
             return OAuth1Authenticator.ForProtectedResource(ConsumerInformation.ConsumerKey, ConsumerInformation.ConsumerSecret, Token, TokenSecret);
         }

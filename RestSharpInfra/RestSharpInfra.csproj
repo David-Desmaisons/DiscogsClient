@@ -49,6 +49,7 @@
     <Compile Include="OAuth1\OAuthConsumerInformation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="OAuth1\OAuthCompleteInformation.cs" />
+    <Compile Include="ClientBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
