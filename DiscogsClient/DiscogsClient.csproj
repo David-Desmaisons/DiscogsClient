@@ -45,6 +45,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\Query\DiscogsReleaseType.cs" />
+    <Compile Include="Data\Query\DiscogsSearch.cs" />
     <Compile Include="Data\Result\DiscogsTrack.cs" />
     <Compile Include="Data\Result\DiscogsArtist.cs" />
     <Compile Include="Data\Result\DiscogsImage.cs" />
@@ -62,9 +64,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Data\Query\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
