@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="OAuth1\IOAuthAuthentifierClient.cs" />
     <Compile Include="OAuth1\OAuthAuthentifierClient.cs" />
     <Compile Include="OAuth1\OAuthTokenInformation.cs" />
     <Compile Include="OAuth1\OAuthConsumerInformation.cs" />

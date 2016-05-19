@@ -5,14 +5,14 @@ namespace RestSharpInfra
 {
     public class ClientBuilder
     {
-        public static Func<string, IRestClient> Builder
+        public static Func<string, IRestClient> Build
         {
             get; set;
         }
 
         static ClientBuilder()
         {
-            Builder = (url) => new RestClient(url);
+            Build = (url) => new RestClient(url);
         }  
     }
 }

@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\Query\DiscogsPaginable.cs" />
     <Compile Include="Data\Query\DiscogsReleaseType.cs" />
     <Compile Include="Data\Query\DiscogsSearch.cs" />
     <Compile Include="Data\Result\DiscogsTrack.cs" />

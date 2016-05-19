@@ -9,7 +9,8 @@ namespace DiscogsClient
             get { return @"https://api.discogs.com/"; }
         }
 
-        protected override string AuthorizeUrl {
+        protected override string AuthorizeUrl
+        {
             get { return @"https://www.discogs.com/"; }
         }
 

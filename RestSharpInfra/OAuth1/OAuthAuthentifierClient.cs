@@ -6,7 +6,7 @@ using System;
 
 namespace RestSharpInfra.OAuth1
 {
-    public abstract class OAuthAuthentifierClient 
+    public abstract class OAuthAuthentifierClient : IOAuthAuthentifierClient
     {
         private const string _RequestTokenUrl = "oauth/request_token";
         private const string _AccessTokenUrl = "oauth/access_token";
@@ -121,14 +121,14 @@ namespace RestSharpInfra.OAuth1
 
         private IRestClient GetRequestTokenClient(string baseUrl) 
         {
-            var client = ClientBuilder.Builder(baseUrl);
+            var client = ClientBuilder.Build(baseUrl);
             client.Authenticator = _ConsumerInformation.GetAuthenticatorForRequestToken();
             return client;
         }
 
         private IRestClient GetAccessTokenClient(string baseUrl, string verifier) 
         {
-            var client = ClientBuilder.Builder(baseUrl);
+            var client = ClientBuilder.Build(baseUrl);
             client.Authenticator = _CompleteInformation.GetAuthenticatorForAccessToken(verifier);
             return client;
         }
