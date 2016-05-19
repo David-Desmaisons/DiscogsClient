@@ -6,9 +6,10 @@ namespace RestSharpInfra
 {
     public static class RequestExtension 
     {
-        public static void AddAsParameter(IRestRequest request, object parameter, ParameterType type = ParameterType.QueryString) 
+        public static void AddAsParameter(this IRestRequest request, object parameter, ParameterType type = ParameterType.QueryString) 
         {
-            foreach (var property in parameter.GetType().GetProperties()) {
+            foreach (var property in parameter.GetType().GetProperties())
+            {
                 var value = property.GetValue(parameter, null);
                 if (value == null)
                     continue;

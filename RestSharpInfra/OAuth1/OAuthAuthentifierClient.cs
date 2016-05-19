@@ -20,7 +20,17 @@ namespace RestSharpInfra.OAuth1
 
         protected abstract string RequestUrl { get; }
         protected abstract string AuthorizeUrl { get; }
-   
+
+        private bool TokenIsPartialOrValid
+        {
+            get { return ((_TokenInformation != null) && (_TokenInformation.PartialOrValid)); }
+        }
+
+        private bool TokenIsValid
+        {
+            get { return ((_TokenInformation != null) && (_TokenInformation.Valid)); }
+        }
+
         protected OAuthAuthentifierClient(OAuthConsumerInformation consumerInformation) 
         {
             _ConsumerInformation = consumerInformation;
@@ -44,7 +54,7 @@ namespace RestSharpInfra.OAuth1
             var requestTokenClient = GetRequestTokenClient(RequestUrl);
             _TokenInformation = await GetTokenInformationFromRequest(requestTokenClient, _RequestTokenUrl);
 
-            if ((_TokenInformation==null) || (!_TokenInformation.Valid))
+            if (!TokenIsValid)
                 return;
 
             _CompleteInformation = new OAuthCompleteInformation(_ConsumerInformation, _TokenInformation);
@@ -56,7 +66,7 @@ namespace RestSharpInfra.OAuth1
             if (res != null)
                 return res;
 
-            if (!_TokenInformation.PartialOrValid)
+            if (!TokenIsPartialOrValid)
                 return null;
 
             var url = GetAuthorizeUrl();

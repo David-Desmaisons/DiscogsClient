@@ -40,7 +40,7 @@ namespace DiscogsClient.Data.Query
         public string country { get; set; }
 
         //Search release year.  Example: 1991
-        public int year { get; set; }
+        public int? year { get; set; }
 
         //Search formats.  Example: album
         public string format { get; set; }
