@@ -4,60 +4,96 @@ namespace DiscogsClient.Data.Query
 {
     public class DiscogsSearch : DiscogsPaginable
     {
-        //Your search query. Example: nirvana
+        /// <summary>
+        ///  Your search query. Example: nirvana
+        /// </summary>
         [Description("q")]
         public string query { get; set; }
 
-        //Example: release
+        /// <summary>
+        ///  Example: release
+        /// </summary>
         public DiscogsReleaseType? type { get; set; }
 
-        //Search by combined “Artist Name - Release Title” title field.
-        //Example: nirvana - nevermind
+        /// <summary>
+        ///  Search by combined “Artist Name - Release Title” title field.
+        ///  Example: nirvana - nevermind
+        /// </summary>
         public string title { get; set; }
 
-        //Search release titles. Example: nevermind
+        /// <summary>
+        ///  Search release titles. Example: nevermind
+        /// </summary>
         public string  release_title { get; set; }
 
-        //Search release credits.Example: kurt
+        /// <summary>
+        ///  Search release credits.Example: kurt
+        /// </summary>
         public string credit { get; set; }
 
-        //Search artist names. Example: nirvana
+        /// <summary>
+        ///  Search artist names. Example: nirvana
+        /// </summary>
         public string artist { get; set; }
 
-        //Search artist ANV. Example: nirvana
+        /// <summary>
+        ///  Search artist ANV. Example: nirvana
+        /// </summary>
         public string anv { get; set; }
 
-        //Search label names. Example: dgc
+        /// <summary>
+        ///  Search label names. Example: dgc
+        /// </summary>
         public string label { get; set; }
 
-        //Search genres. Example: rock
+        /// <summary>
+        ///  Search genres. Example: rock
+        /// </summary>
         public string genre { get; set; }
 
-        //Search style. Example: grunge
+        /// <summary>
+        /// Search style. Example: grunge
+        /// </summary>
         public string style { get; set; }
 
-        //Search country. Example: canada
+        /// <summary>
+        ///  Search country. Example: canada
+        /// </summary>
         public string country { get; set; }
 
-        //Search release year.  Example: 1991
+        /// <summary>
+        ///  Search release year.  Example: 1991
+        /// </summary>
         public int? year { get; set; }
 
-        //Search formats.  Example: album
+        /// <summary>
+        ///  Search formats.  Example: album
+        /// </summary>
         public string format { get; set; }
 
-        //Search catalog number.  Example: DGCD-24425
+        /// <summary>
+        ///  Search catalog number.  Example: DGCD-24425
+        /// </summary>
         public string catno { get; set; }
 
-        //Search barcodes. Example: 7 2064-24425-2 4
+        /// <summary>
+        ///  Search barcodes. Example: 7 2064-24425-2 4
+        /// </summary>
         public string barcode { get; set; }
 
-        //Search track titles. Example: smells like teen spirit
+        /// <summary>
+        ///  Search track titles. Example: smells like teen spirit
+        /// </summary>
         public string track { get; set; }
 
-        //Search submitter username. Example: milKt
+        /// <summary>
+        ///  Search submitter username. Example: milKt
+        /// </summary>
         public string submitter { get; set; }
 
-        //Search contributor usernames. Example: jerome99
+        /// <summary>
+        ///  Search contributor usernames. Example: jerome99
+        /// </summary>
         public string contributor { get; set; }
     }
 }

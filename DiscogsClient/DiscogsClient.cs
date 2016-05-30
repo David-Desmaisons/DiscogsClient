@@ -1,32 +1,32 @@
-﻿using RestSharp;
+﻿using DiscogsClient.Data.Query;
+using DiscogsClient.Data.Result;
+using DiscogsClient.Internal;
+using RestSharpInfra;
 using RestSharpInfra.OAuth1;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace DiscogsClient
 {
-   public class DiscogsClient 
-   {
-        private const string _UserAgent = @"DiscogsClient https://github.com/David-Desmaisons/DiscogsClient";
-        private const string _UrlBase = "https://api.discogs.com/";
-        private const string _SearchUrl = "/database/search";
+    public class DiscogsClient
+    {
+        private readonly DiscogsWebClient _Client;
 
-        private readonly OAuthCompleteInformation _OAuthCompleteInformation;
-        private readonly RestClient _Client;
-
-        public DiscogsClient(OAuthCompleteInformation oAuthCompleteInformation, int timeOut=5000) 
+        public DiscogsClient(OAuthCompleteInformation oAuthCompleteInformation, int timeOut = 5000)
         {
-            _OAuthCompleteInformation = oAuthCompleteInformation;
-            _Client = new RestClient(_UrlBase)
-            {
-                UserAgent = _UserAgent,
-                Timeout = timeOut,
-                Authenticator = _OAuthCompleteInformation.GetAuthenticatorForProtectedResource()
-            };
+            _Client = new DiscogsWebClient(oAuthCompleteInformation, timeOut);
         }
 
-        private IRestRequest Finalize(IRestRequest request)
+        public Task<DiscogsResults<T>> Search<T>(DiscogsSearch search) where T : DiscogsEntity
         {
-            request.AddHeader("Accept-Encoding", "gzip");
-            return request;
+            return Search<T>(search, CancellationToken.None);
+        }
+
+        public async Task<DiscogsResults<T>> Search<T>(DiscogsSearch search, CancellationToken token) where T : DiscogsEntity
+        {
+            var request = _Client.GetSearchRequest();
+            request.AddAsParameter(search);
+            return  await _Client.Execute<DiscogsResults<T>>(request, token);
         }
     }
 }

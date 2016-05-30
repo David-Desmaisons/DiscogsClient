@@ -5,11 +5,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{2E3DF5C2-8A38-4A03-86D7-8D463C917E47}</ProjectGuid>
+    <ProjectGuid>{532D1353-37AA-4548-A711-0E54B04A590A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RestSharpInfra.Test</RootNamespace>
-    <AssemblyName>RestSharpInfra.Test</AssemblyName>
+    <RootNamespace>DiscogsClient.Test</RootNamespace>
+    <AssemblyName>DiscogsClient.Test</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -46,14 +46,6 @@
       <HintPath>..\packages\FluentAssertions.4.6.3\lib\net45\FluentAssertions.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="NSubstitute, Version=1.10.0.0, Culture=neutral, PublicKeyToken=92dd2e9066daa5ca, processorArchitecture=MSIL">
-      <HintPath>..\packages\NSubstitute.1.10.0.0\lib\net45\NSubstitute.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="RestSharp, Version=105.2.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\RestSharp.105.2.3\lib\net45\RestSharp.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
@@ -79,13 +71,17 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="RequestExtensionTest.cs" />
+    <Compile Include="DiscogsClientTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DiscogsClient\DiscogsClient.csproj">
+      <Project>{f0138d25-8712-4dca-880a-507067ac1326}</Project>
+      <Name>DiscogsClient</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RestSharpInfra\RestSharpInfra.csproj">
       <Project>{a9655673-4031-42c9-a3d6-53d01dac5dbe}</Project>
       <Name>RestSharpInfra</Name>
