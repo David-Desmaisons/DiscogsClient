@@ -1,5 +1,6 @@
 ﻿using DiscogsClient.Data.Query;
 using DiscogsClient.Data.Result;
+using FluentAssertions;
 using RestSharpInfra.OAuth1;
 using System.Threading.Tasks;
 using Xunit;
@@ -13,7 +14,7 @@ namespace DiscogsClient.Test
 
         public DiscogsClientTest()
         {
-            //_OAuthCompleteInformation = new OAuthCompleteInformation();
+            //_OAuthCompleteInformation = new OAuthCompleteInformation("","","","");
             _DiscogsClient = new DiscogsClient(_OAuthCompleteInformation);
         }
 
@@ -22,12 +23,13 @@ namespace DiscogsClient.Test
         {
             var discogsSearch = new DiscogsSearch()
             {
+
                 artist = "Ornette Coleman",
                 release_title = "The Shape Of a Jazz To Come"
             };
             var res = await  _DiscogsClient.Search<DiscogsRelease>(discogsSearch);
 
-            //res.
+            res.results.Length.Should().BeGreaterThan(0);
         }
     }
 }
