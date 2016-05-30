@@ -102,10 +102,7 @@ namespace RestSharpInfra.OAuth1
             var request = new RestRequest(relativeUrl, Method.POST);
             var response = await client.ExecuteTaskAsync(request);
 
-            if (!CheckResponse(response))
-                return null;
-
-            return  GetTokenInformationFromBodyResponse(response);
+            return !CheckResponse(response) ? null : GetTokenInformationFromBodyResponse(response);
         }
 
         private OAuthTokenInformation GetTokenInformationFromBodyResponse(IRestResponse response) 
