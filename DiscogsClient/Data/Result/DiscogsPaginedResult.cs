@@ -6,6 +6,6 @@
         public int pages { get; set; }
         public int page { get; set; }
         public int items { get; set; }
-        public DiscogsPaginedUrls pagination { get; set; }
+        public DiscogsPaginedUrls urls { get; set; }
     }
 }

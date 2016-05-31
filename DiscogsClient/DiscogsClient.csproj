@@ -31,6 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="RateLimiter, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\RateLimiter.1.0.0\lib\net45\RateLimiter.dll</HintPath>
       <Private>True</Private>
@@ -56,11 +60,12 @@
     <Compile Include="Data\Query\DiscogsPaginable.cs" />
     <Compile Include="Data\Query\DiscogsReleaseType.cs" />
     <Compile Include="Data\Query\DiscogsSearch.cs" />
+    <Compile Include="Data\Result\DiscogsSearchResult.cs" />
     <Compile Include="Data\Result\DiscogsTrack.cs" />
     <Compile Include="Data\Result\DiscogsArtist.cs" />
     <Compile Include="Data\Result\DiscogsImage.cs" />
     <Compile Include="Data\Result\DiscogsRelease.cs" />
-    <Compile Include="Data\Result\DiscogsResults.cs" />
+    <Compile Include="Data\Result\DiscogsSearchResults.cs" />
     <Compile Include="DiscogsAuthentifierClient.cs" />
     <Compile Include="DiscogsClient.cs" />
     <Compile Include="DiscogsException.cs" />

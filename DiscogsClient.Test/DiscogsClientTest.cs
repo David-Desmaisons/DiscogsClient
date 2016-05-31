@@ -14,18 +14,18 @@ namespace DiscogsClient.Test
 
         public DiscogsClientTest()
         {
-            //_OAuthCompleteInformation = new OAuthCompleteInformation("","","","");
+            _OAuthCompleteInformation = new OAuthCompleteInformation("", "",  "", "");
             _DiscogsClient = new DiscogsClient(_OAuthCompleteInformation);
         }
 
-        [Fact]
+        [Fact(Skip ="Please provide valid token and keys to run the test")]
         public async Task Search_Artist()
         {
             var discogsSearch = new DiscogsSearch()
             {
 
                 artist = "Ornette Coleman",
-                release_title = "The Shape Of a Jazz To Come"
+                release_title = "The Shape Of Jazz To Come"
             };
             var res = await  _DiscogsClient.Search<DiscogsRelease>(discogsSearch);
 

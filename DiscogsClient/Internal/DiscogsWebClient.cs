@@ -1,4 +1,5 @@
-﻿using RateLimiter;
+﻿using Newtonsoft.Json;
+using RateLimiter;
 using RestSharp;
 using RestSharpInfra.OAuth1;
 using System;
@@ -11,14 +12,14 @@ namespace DiscogsClient.Internal
     {
         private const string _ErrorMessage = "";
         private const string _UserAgent = @"DiscogsClient https://github.com/David-Desmaisons/DiscogsClient";
-        private const string _UrlBase = "https://api.discogs.com/";
-        private const string _SearchUrl = "/database/search";
+        private const string _UrlBase = "https://api.discogs.com";
+        private const string _SearchUrl = "database/search";
 
         private readonly TimeLimiter _TimeLimiter;
         private readonly OAuthCompleteInformation _OAuthCompleteInformation;
         private readonly RestClient _Client;
 
-        public DiscogsWebClient(OAuthCompleteInformation oAuthCompleteInformation, int timeOut = 5000)
+        public DiscogsWebClient(OAuthCompleteInformation oAuthCompleteInformation, int timeOut = 10000)
         {
             _OAuthCompleteInformation = oAuthCompleteInformation;
             _TimeLimiter = TimeLimiter.GetFromMaxCountByInterval(240, TimeSpan.FromMinutes(1));
@@ -37,27 +38,26 @@ namespace DiscogsClient.Internal
 
         private IRestRequest GetRequest(string url)
         {
-            var request = new RestRequest(url);
+            var request = new RestSharp.RestRequest(url);
             request.AddHeader("Accept-Encoding", "gzip");
             return request;
         }
 
         public async Task<T> Execute<T>(IRestRequest request, CancellationToken cancellationToken)
         {
-            var response = await _TimeLimiter.Perform(async () => await ExecuteBasic<T>(request, cancellationToken), cancellationToken);
+            var response = await _TimeLimiter.Perform(async () => await ExecuteBasic(request, cancellationToken), cancellationToken);
 
             if (response.ErrorException != null)
             {
-                var twilioException = new DiscogsException(_ErrorMessage, response.ErrorException);
-                throw twilioException;
+                throw new DiscogsException(_ErrorMessage, response.ErrorException);
             }
 
-            return response.Data;
+            return JsonConvert.DeserializeObject<T>(response.Content);
         }
 
-        private Task<IRestResponse<T>> ExecuteBasic<T>(IRestRequest request, CancellationToken cancellationToken)
+        private Task<IRestResponse> ExecuteBasic(IRestRequest request, CancellationToken cancellationToken)
         {
-            return _Client.ExecuteTaskAsync<T>(request, cancellationToken);
+            return _Client.ExecuteTaskAsync(request, cancellationToken);
         }
     }
 }

@@ -6,12 +6,12 @@ namespace DiscogsClient
     {
         protected override string RequestUrl 
         {
-            get { return @"https://api.discogs.com/"; }
+            get { return @"https://api.discogs.com"; }
         }
 
         protected override string AuthorizeUrl
         {
-            get { return @"https://www.discogs.com/"; }
+            get { return @"https://www.discogs.com"; }
         }
 
         public DiscogsAuthentifierClient(OAuthConsumerInformation consumerInformation) : base(consumerInformation)

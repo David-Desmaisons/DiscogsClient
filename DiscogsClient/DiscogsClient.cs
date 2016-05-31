@@ -17,16 +17,16 @@ namespace DiscogsClient
             _Client = new DiscogsWebClient(oAuthCompleteInformation, timeOut);
         }
 
-        public Task<DiscogsResults<T>> Search<T>(DiscogsSearch search) where T : DiscogsEntity
+        public Task<DiscogsSearchResults> Search<T>(DiscogsSearch search) where T : DiscogsEntity
         {
             return Search<T>(search, CancellationToken.None);
         }
 
-        public async Task<DiscogsResults<T>> Search<T>(DiscogsSearch search, CancellationToken token) where T : DiscogsEntity
+        public async Task<DiscogsSearchResults> Search<T>(DiscogsSearch search, CancellationToken token) where T : DiscogsEntity
         {
             var request = _Client.GetSearchRequest();
             request.AddAsParameter(search);
-            return  await _Client.Execute<DiscogsResults<T>>(request, token);
+            return  await _Client.Execute<DiscogsSearchResults>(request, token);
         }
     }
 }
