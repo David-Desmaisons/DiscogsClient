@@ -13,7 +13,7 @@ namespace DiscogsClient.Data.Query
         /// <summary>
         ///  Example: release
         /// </summary>
-        public DiscogsReleaseType? type { get; set; }
+        public DiscogsEntityType? type { get; set; }
 
         /// <summary>
         ///  Search by combined “Artist Name - Release Title” title field.

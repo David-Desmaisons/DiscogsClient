@@ -17,12 +17,12 @@ namespace DiscogsClient
             _Client = new DiscogsWebClient(oAuthCompleteInformation, timeOut);
         }
 
-        public Task<DiscogsSearchResults> Search<T>(DiscogsSearch search) where T : DiscogsEntity
+        public Task<DiscogsSearchResults> Search(DiscogsSearch search)
         {
-            return Search<T>(search, CancellationToken.None);
+            return Search(search, CancellationToken.None);
         }
 
-        public async Task<DiscogsSearchResults> Search<T>(DiscogsSearch search, CancellationToken token) where T : DiscogsEntity
+        public async Task<DiscogsSearchResults> Search(DiscogsSearch search, CancellationToken token)
         {
             var request = _Client.GetSearchRequest();
             request.AddAsParameter(search);

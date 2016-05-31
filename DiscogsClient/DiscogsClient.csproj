@@ -59,7 +59,7 @@
     <Compile Include="Data\Result\DiscogsPaginedResult.cs" />
     <Compile Include="Data\Result\DiscogsPaginedUrls.cs" />
     <Compile Include="Data\Query\DiscogsPaginable.cs" />
-    <Compile Include="Data\Query\DiscogsReleaseType.cs" />
+    <Compile Include="Data\Query\DiscogsEntityType.cs" />
     <Compile Include="Data\Query\DiscogsSearch.cs" />
     <Compile Include="Data\Result\DiscogsSearchResult.cs" />
     <Compile Include="Data\Result\DiscogsTrack.cs" />

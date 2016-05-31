@@ -20,6 +20,6 @@ namespace DiscogsClient.Data.Result
         public string resource_url { get; set; }
         public string uri { get; set; }      
         [JsonConverter(typeof(StringEnumConverter))]
-        public DiscogsReleaseType type { get; set; }
+        public DiscogsEntityType type { get; set; }
     }
 }
