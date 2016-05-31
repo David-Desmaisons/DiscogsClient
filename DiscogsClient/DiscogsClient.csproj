@@ -53,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\Result\DiscogsCommunity.cs" />
     <Compile Include="Data\Result\DiscogsEntity.cs" />
     <Compile Include="Data\Result\DiscogsImageType.cs" />
     <Compile Include="Data\Result\DiscogsPaginedResult.cs" />

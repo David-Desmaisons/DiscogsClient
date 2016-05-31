@@ -1,16 +1,14 @@
-﻿using System.Collections.Generic;
-
-namespace DiscogsClient.Data.Result 
+﻿namespace DiscogsClient.Data.Result
 {
     public class DiscogsRelease : DiscogsEntity
     {
-        public List<DiscogsArtist> artists { get; set; }
-        public List<DiscogsImage> images { get; set; }
-        public List<DiscogsTrack> tracklist { get; set; }
-        public List<string> genre { get; set; }
-        public List<string> style { get; set; }
-        public List<string> label { get; set; }
-        public List<string> format { get; set; }
+        public DiscogsArtist[] artists { get; set; }
+        public DiscogsImage[] images { get; set; }
+        public DiscogsTrack[] tracklist { get; set; }
+        public string[] genre { get; set; }
+        public string[] style { get; set; }
+        public string[] label { get; set; }
+        public string[] format { get; set; }
         public int year { get; set; }
         public string title { get; set; }
         public string catno { get; set; }

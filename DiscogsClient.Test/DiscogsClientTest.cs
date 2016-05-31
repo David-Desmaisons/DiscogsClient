@@ -14,7 +14,7 @@ namespace DiscogsClient.Test
 
         public DiscogsClientTest()
         {
-            _OAuthCompleteInformation = new OAuthCompleteInformation("", "",  "", "");
+            _OAuthCompleteInformation = new OAuthCompleteInformation( "", "",  "", "");
             _DiscogsClient = new DiscogsClient(_OAuthCompleteInformation);
         }
 
@@ -23,7 +23,6 @@ namespace DiscogsClient.Test
         {
             var discogsSearch = new DiscogsSearch()
             {
-
                 artist = "Ornette Coleman",
                 release_title = "The Shape Of Jazz To Come"
             };
