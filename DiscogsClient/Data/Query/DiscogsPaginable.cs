@@ -2,12 +2,16 @@
 {
     public class DiscogsPaginable
     {
-        //number(optional) Example: 3
-        //The page you want to request
+        /// <summary>
+        ///  number(optional) Example: 3
+        ///  The page you want to request
+        /// </summary>
         public int? page { get; set;  }
 
-        //per_page
-        //number(optional) Example: 25
+        /// <summary>
+        ///  number(optional) Example: 25
+        ///  The number of item per page
+        /// </summary>
         public int? per_page { get; set; }
     }
 }
