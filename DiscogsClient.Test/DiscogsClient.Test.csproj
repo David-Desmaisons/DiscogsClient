@@ -96,7 +96,8 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="DeserializationTest.cs" />
+    <Compile Include="TrackDeserializationTest.cs" />
+    <Compile Include="ResultDeserializationTest.cs" />
     <Compile Include="DiscogsClientTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

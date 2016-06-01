@@ -86,6 +86,7 @@
     <Compile Include="DiscogsAuthentifierClient.cs" />
     <Compile Include="DiscogsClient.cs" />
     <Compile Include="DiscogsException.cs" />
+    <Compile Include="Internal\DiscogsTimeSpanConverter.cs" />
     <Compile Include="Internal\DiscogsWebClient.cs" />
     <Compile Include="Internal\IDiscogsWebClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
