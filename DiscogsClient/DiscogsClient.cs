@@ -34,7 +34,7 @@ namespace DiscogsClient
         public IObservable<DiscogsSearchResult> SearchAll(DiscogsSearch search, int? maxElement=null)
         {
             var searchPerPage = search.per_page;
-            var perPage = ((searchPerPage > 0) && (searchPerPage < 50)) ? searchPerPage : 50;
+            var perPage = (searchPerPage > 0) ? Math.Min(100, searchPerPage.Value) : 50;
 
             var searchPage = search.page;
             var page = searchPage ?? 1;
