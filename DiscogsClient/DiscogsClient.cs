@@ -33,18 +33,19 @@ namespace DiscogsClient
 
         public IObservable<DiscogsSearchResult> SearchAll(DiscogsSearch search, int? maxElement=null)
         {
-            var perPage = 50;
-            var page = 0;
-            if ((maxElement != null) && (maxElement.Value > 0) && (maxElement.Value < 50))
-                perPage = maxElement.Value;
+            var searchPerPage = search.per_page;
+            var perPage = ((searchPerPage > 0) && (searchPerPage < 50)) ? searchPerPage : 50;
 
-            DiscogsPaginedResult pagination = null;
+            var searchPage = search.page;
+            var page = searchPage ?? 1;
 
             return Observable.Create<DiscogsSearchResult>(async (observer, cancel) =>
             {
+                DiscogsPaginedResult pagination;
                 do
-                {
-                    var request = GetSearchRequest(search, perPage, ++page);
+                {             
+                    cancel.ThrowIfCancellationRequested();
+                    var request = GetSearchRequest(search, perPage, page++);
 
                     var res = await _Client.Execute<DiscogsSearchResults>(request, cancel);
                     if (res?.results == null)
