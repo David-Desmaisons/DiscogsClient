@@ -1,5 +1,4 @@
-﻿using DiscogsClient.Data.Query;
-using DiscogsClient.Data.Result;
+﻿using DiscogsClient.Data.Result;
 using FluentAssertions;
 using Newtonsoft.Json;
 using System;
@@ -40,6 +39,20 @@ namespace DiscogsClient.Test
         public void DeserializeTitle_IsCorrect()
         {
             _Result.title.Should().Be("From The Heart");
+        }
+
+        [Fact]
+        public void DeserializeExtraArtists_HasCorrectSize()
+        {
+            _Result.extraartists.Should().NotBeNull();
+            _Result.extraartists.Should().HaveCount(1);
+        }
+
+        [Fact]
+        public void DeserializeExtraArtists_HasCorrectInformation()
+        {
+            _Result.extraartists[0].name.Should().Be("DJ Sangeet");
+            _Result.extraartists[0].resource_url.Should().Be("https://api.discogs.com/artists/25460");
         }
     }
 }

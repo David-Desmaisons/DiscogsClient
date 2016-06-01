@@ -96,6 +96,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="ImageDeserializationTest.cs" />
     <Compile Include="TrackDeserializationTest.cs" />
     <Compile Include="ResultDeserializationTest.cs" />
     <Compile Include="DiscogsClientTest.cs" />

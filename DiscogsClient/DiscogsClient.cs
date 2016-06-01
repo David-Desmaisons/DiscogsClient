@@ -5,6 +5,7 @@ using RestSharp;
 using RestSharpInfra;
 using RestSharpInfra.OAuth1;
 using System;
+using System.Collections.Generic;
 using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -29,6 +30,11 @@ namespace DiscogsClient
         {
             var request = GetSearchRequest(search);
             return  await _Client.Execute<DiscogsSearchResults>(request, token);
+        }
+
+        public IEnumerable<DiscogsSearchResult> SearchAllEnumerable(DiscogsSearch search, int? maxElement = null)
+        {
+            return SearchAll(search, maxElement).ToEnumerable();
         }
 
         public IObservable<DiscogsSearchResult> SearchAll(DiscogsSearch search, int? maxElement=null)
