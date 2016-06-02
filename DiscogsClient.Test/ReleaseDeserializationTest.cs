@@ -21,30 +21,5 @@ namespace DiscogsClient.Test
         {
             _Result.Should().NotBeNull();
         }
-
-        [Fact]
-        public void DeserializeDuration_IsOK()
-        {
-        }
-
-        [Fact]
-        public void DeserializePosition_IsCorrect()
-        {
-        }
-
-        [Fact]
-        public void DeserializeTitle_IsCorrect()
-        {
-        }
-
-        [Fact]
-        public void DeserializeExtraArtists_HasCorrectSize()
-        {
-        }
-
-        [Fact]
-        public void DeserializeExtraArtists_HasCorrectInformation()
-        {
-        }
     }
 }
