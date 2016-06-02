@@ -14,6 +14,7 @@ namespace DiscogsClient.Internal
         private const string _UserAgentFallBack = @"DiscogsClient https://github.com/David-Desmaisons/DiscogsClient";
         private const string _SearchUrl = "database/search";
         private const string _ReleaseUrl = "releases/{releaseId}";
+        private const string _MasterUrl = "masters/{masterId}";
         private readonly TimeLimiter _TimeLimiter;
         private readonly OAuthCompleteInformation _OAuthCompleteInformation;
         private readonly RestClient _Client;
@@ -44,9 +45,18 @@ namespace DiscogsClient.Internal
             return GetRequest(_SearchUrl);
         }
 
-        public IRestRequest GetReleaseRequest()
+        public IRestRequest GetReleaseRequest(int releaseId)
         {       
-             return GetRequest(_ReleaseUrl);
+            var request = GetRequest(_ReleaseUrl);
+            request.AddUrlSegment(nameof(releaseId), releaseId.ToString());
+            return request;
+        }
+
+        public IRestRequest GetMasterRequest(int masterId) 
+        {
+            var request = GetRequest(_MasterUrl);
+            request.AddUrlSegment(nameof(masterId), masterId.ToString());
+            return request;
         }
 
         private IRestRequest GetRequest(string url)

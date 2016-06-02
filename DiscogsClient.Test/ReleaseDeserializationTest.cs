@@ -1,7 +1,6 @@
 ﻿using DiscogsClient.Data.Result;
 using FluentAssertions;
 using Newtonsoft.Json;
-using System;
 using Xunit;
 
 namespace DiscogsClient.Test

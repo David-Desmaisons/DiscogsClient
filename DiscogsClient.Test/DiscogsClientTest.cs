@@ -60,6 +60,12 @@ namespace DiscogsClient.Test
             await observable.ForEachAsync(OnResult);
         }
 
+        private void OnResult(DiscogsSearchResult result)
+        {
+            _Count++;
+            Trace.WriteLine($"{_Count} - {result.title}");
+        }
+
         [Fact(Skip = "Please provide valid token and keys to run the test")]
         public async Task GetRelease()
         {     
@@ -67,10 +73,11 @@ namespace DiscogsClient.Test
             res.Should().NotBeNull();
         }
 
-        private void OnResult(DiscogsSearchResult result)
+        [Fact(Skip = "Please provide valid token and keys to run the test")]
+        public async Task GetMaster() 
         {
-            _Count++;
-            Trace.WriteLine($"{_Count} - {result.title}");
+            var res = await _DiscogsClient.GetMaster(47813);
+            res.Should().NotBeNull();
         }
     }
 }

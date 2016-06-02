@@ -8,7 +8,9 @@ namespace DiscogsClient.Internal
     {
         IRestRequest GetSearchRequest();
 
-        IRestRequest GetReleaseRequest();
+        IRestRequest GetReleaseRequest(int relaseId);
+
+        IRestRequest GetMasterRequest(int masterId);
 
         Task<T> Execute<T>(IRestRequest request, CancellationToken cancellationToken);
     }

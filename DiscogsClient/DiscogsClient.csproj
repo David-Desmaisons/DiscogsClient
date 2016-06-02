@@ -69,6 +69,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\Result\DiscogsMaster.cs" />
     <Compile Include="Data\Result\DiscogsRating.cs" />
     <Compile Include="Data\Result\DiscogsCommunityInfo.cs" />
     <Compile Include="Data\Result\DiscogsCommunity.cs" />
@@ -82,6 +83,7 @@
     <Compile Include="Data\Query\DiscogsPaginable.cs" />
     <Compile Include="Data\Query\DiscogsEntityType.cs" />
     <Compile Include="Data\Query\DiscogsSearch.cs" />
+    <Compile Include="Data\Result\DiscogsReleaseBase.cs" />
     <Compile Include="Data\Result\DiscogsSearchResult.cs" />
     <Compile Include="Data\Result\DiscogsTrack.cs" />
     <Compile Include="Data\Result\DiscogsArtist.cs" />

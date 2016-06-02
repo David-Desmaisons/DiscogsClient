@@ -97,6 +97,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="ImageDeserializationTest.cs" />
+    <Compile Include="MasterDeserializationTest.cs" />
     <Compile Include="ReleaseDeserializationTest.cs" />
     <Compile Include="TrackDeserializationTest.cs" />
     <Compile Include="ResultDeserializationTest.cs" />

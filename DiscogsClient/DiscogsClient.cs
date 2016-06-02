@@ -32,12 +32,12 @@ namespace DiscogsClient
             return  await _Client.Execute<DiscogsSearchResults>(request, token);
         }
 
-        public IEnumerable<DiscogsSearchResult> SearchAllEnumerable(DiscogsSearch search, int? maxElement = null)
+        public IEnumerable<DiscogsSearchResult> SearchAllEnumerable(DiscogsSearch search)
         {
-            return SearchAll(search, maxElement).ToEnumerable();
+            return SearchAll(search).ToEnumerable();
         }
 
-        public IObservable<DiscogsSearchResult> SearchAll(DiscogsSearch search, int? maxElement=null)
+        public IObservable<DiscogsSearchResult> SearchAll(DiscogsSearch search)
         {
             var searchPerPage = search.per_page;
             var perPage = (searchPerPage > 0) ? Math.Min(100, searchPerPage.Value) : 50;
@@ -85,9 +85,19 @@ namespace DiscogsClient
 
         public async Task<DiscogsRelease> GetRelease(int releaseId, CancellationToken token)
         {
-            var request = _Client.GetReleaseRequest();
-            request.AddUrlSegment(nameof(releaseId), releaseId.ToString());
+            var request = _Client.GetReleaseRequest(releaseId);
             return await _Client.Execute<DiscogsRelease>(request, token);
+        }
+
+        public Task<DiscogsMaster> GetMaster(int masterId) 
+        {
+            return GetMaster(masterId, CancellationToken.None);
+        }
+
+        public async Task<DiscogsMaster> GetMaster(int masterId, CancellationToken token) 
+        {
+            var request = _Client.GetMasterRequest(masterId);
+            return await _Client.Execute<DiscogsMaster>(request, token);
         }
     }
 }

@@ -13,14 +13,16 @@ namespace DiscogsClient
 
         Task<DiscogsSearchResults> Search(DiscogsSearch search, CancellationToken token);
 
-        IEnumerable<DiscogsSearchResult> SearchAllEnumerable(DiscogsSearch search, int? maxElement = null);
+        IEnumerable<DiscogsSearchResult> SearchAllEnumerable(DiscogsSearch search);
 
-        IObservable<DiscogsSearchResult> SearchAll(DiscogsSearch search, int? maxElement = null);
+        IObservable<DiscogsSearchResult> SearchAll(DiscogsSearch search);
 
         Task<DiscogsRelease> GetRelease(int releaseId);
 
         Task<DiscogsRelease> GetRelease(int releaseId, CancellationToken token);
 
-        //Task<DiscogsRelease> GetRelease(DiscogsSearchResult result, CancellationToken token);
+        Task<DiscogsMaster> GetMaster(int masterId);
+
+        Task<DiscogsMaster> GetMaster(int masterId, CancellationToken token);
     }
 }
