@@ -32,7 +32,7 @@ namespace DiscogsClient.Test
         [Fact]
         public void DeserializePosition_IsCorrect()
         {
-            _Result.position.Should().Be(2);
+            _Result.position.Should().Be("2");
         }
 
         [Fact]

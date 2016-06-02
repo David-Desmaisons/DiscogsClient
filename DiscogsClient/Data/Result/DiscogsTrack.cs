@@ -10,7 +10,7 @@ namespace DiscogsClient.Data.Result
         public string type_ { get; set; }
         [JsonConverter(typeof(DiscogsTimeSpanConverter))]
         public TimeSpan duration { get; set; }
-        public int position { get; set; }
+        public string position { get; set; }
         public DiscogsArtist[] extraartists { get; set; }
     }
 }

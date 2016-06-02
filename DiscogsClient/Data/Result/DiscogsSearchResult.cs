@@ -15,7 +15,7 @@ namespace DiscogsClient.Data.Result
         public string title { get; set; }
         public string thumb { get; set; }
         public string country { get; set; }
-        public DiscogsCommunity community { get; set; }
+        public DiscogsCommunityInfo community { get; set; }
         public string catno { get; set; }
         public string resource_url { get; set; }
         public string uri { get; set; }      
