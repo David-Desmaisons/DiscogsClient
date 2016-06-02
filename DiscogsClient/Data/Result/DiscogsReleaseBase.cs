@@ -2,7 +2,7 @@
 {
     public class DiscogsReleaseBase : DiscogsEntity
     {
-        public DiscogsArtist[] artists { get; set; }
+        public DiscogsReleaseArtist[] artists { get; set; }
         public DiscogsVideo[] videos { get; set; }
         public DiscogsImage[] images { get; set; }
         public DiscogsTrack[] tracklist { get; set; }

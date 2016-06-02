@@ -11,6 +11,6 @@ namespace DiscogsClient.Data.Result
         [JsonConverter(typeof(DiscogsTimeSpanConverter))]
         public TimeSpan duration { get; set; }
         public string position { get; set; }
-        public DiscogsArtist[] extraartists { get; set; }
+        public DiscogsReleaseArtist[] extraartists { get; set; }
     }
 }

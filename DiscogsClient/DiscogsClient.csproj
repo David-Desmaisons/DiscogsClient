@@ -69,6 +69,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\Result\DiscogsArtistRelease.cs" />
+    <Compile Include="Data\Result\DiscogsArtist.cs" />
+    <Compile Include="Data\Result\DiscogsLabelRelease.cs" />
+    <Compile Include="Data\Result\DiscogsSortOrder.cs" />
+    <Compile Include="Data\Result\DiscogsBandMember.cs" />
+    <Compile Include="Data\Result\DiscogsArtistSortType.cs" />
     <Compile Include="Data\Result\DiscogsMaster.cs" />
     <Compile Include="Data\Result\DiscogsRating.cs" />
     <Compile Include="Data\Result\DiscogsCommunityInfo.cs" />
@@ -86,16 +92,18 @@
     <Compile Include="Data\Result\DiscogsReleaseBase.cs" />
     <Compile Include="Data\Result\DiscogsSearchResult.cs" />
     <Compile Include="Data\Result\DiscogsTrack.cs" />
-    <Compile Include="Data\Result\DiscogsArtist.cs" />
+    <Compile Include="Data\Result\DiscogsReleaseArtist.cs" />
     <Compile Include="Data\Result\DiscogsImage.cs" />
     <Compile Include="Data\Result\DiscogsRelease.cs" />
     <Compile Include="Data\Result\DiscogsSearchResults.cs" />
     <Compile Include="Data\Result\DiscogsUser.cs" />
+    <Compile Include="Data\Result\DiscogsReleaseVersion.cs" />
     <Compile Include="Data\Result\DiscogsVideo.cs" />
     <Compile Include="DiscogsAuthentifierClient.cs" />
     <Compile Include="DiscogsClient.cs" />
     <Compile Include="DiscogsException.cs" />
     <Compile Include="IDiscogsClient.cs" />
+    <Compile Include="Internal\DiscogsDateTimeConverter.cs" />
     <Compile Include="Internal\DiscogsTimeSpanConverter.cs" />
     <Compile Include="Internal\DiscogsWebClient.cs" />
     <Compile Include="Internal\IDiscogsWebClient.cs" />

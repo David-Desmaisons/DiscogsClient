@@ -4,7 +4,7 @@ namespace DiscogsClient.Data.Result
 {
     public class DiscogsRelease : DiscogsReleaseBase 
     {
-        public DiscogsArtist[] extraartists { get; set; }
+        public DiscogsReleaseArtist[] extraartists { get; set; }
         public DiscogsLabel[] labels { get; set; }
         public DiscogsLabel[] companies { get; set; }
         public DiscogsFormat[] formats { get; set; }

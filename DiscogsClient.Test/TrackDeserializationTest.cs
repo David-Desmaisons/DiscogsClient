@@ -8,7 +8,7 @@ namespace DiscogsClient.Test
 {
     public class TrackDeserializationTest
     {
-        private const string _Track = "{\"duration\": \"7:13\",\"position\": \"2\",\"type_\": \"track\",\"extraartists\": [  {\"join\": \"\",\"name\": \"DJ Sangeet\",\"anv\": \"\",\"tracks\": \"\",\"role\": \"Written-By, Producer\",\"resource_url\": \"https://api.discogs.com/artists/25460\",\"id\": 25460  }],\"title\": \"From The Heart\"}";
+        private const string _Track = "{\"duration\": \"7:13\",\"position\": \"2\",\"type_\": \"track\",\"extraartists\": [  {\"join\": \"\",\"name\": \"DJ Sangeet\",\"anv\": \"\",\"tracks\": \"\",\"role\": \"Written-By, Producer\",\"resource_url\": \"https://api.discogs.com/ReleaseArtists/25460\",\"id\": 25460  }],\"title\": \"From The Heart\"}";
 
         private readonly DiscogsTrack _Result;
  
@@ -52,7 +52,7 @@ namespace DiscogsClient.Test
         public void DeserializeExtraArtists_HasCorrectInformation()
         {
             _Result.extraartists[0].name.Should().Be("DJ Sangeet");
-            _Result.extraartists[0].resource_url.Should().Be("https://api.discogs.com/artists/25460");
+            _Result.extraartists[0].resource_url.Should().Be("https://api.discogs.com/ReleaseArtists/25460");
         }
     }
 }
