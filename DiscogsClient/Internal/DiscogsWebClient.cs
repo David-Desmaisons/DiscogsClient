@@ -13,11 +13,13 @@ namespace DiscogsClient.Internal
         private const string _ErrorMessage = "";
         private const string _UserAgentFallBack = @"DiscogsClient https://github.com/David-Desmaisons/DiscogsClient";
         private const string _SearchUrl = "database/search";
-
+        private const string _ReleaseUrl = "releases/{releaseId}";
         private readonly TimeLimiter _TimeLimiter;
         private readonly OAuthCompleteInformation _OAuthCompleteInformation;
         private readonly RestClient _Client;
+
         private string UrlBase => "https://api.discogs.com";
+
         private string _UserAgent;
         public string UserAgent
         {
@@ -42,7 +44,12 @@ namespace DiscogsClient.Internal
             return GetRequest(_SearchUrl);
         }
 
-        public IRestRequest GetRequest(string url)
+        public IRestRequest GetReleaseRequest()
+        {       
+             return GetRequest(_ReleaseUrl);
+        }
+
+        private IRestRequest GetRequest(string url)
         {
             var request = new RestRequest(url);
             return Finalize(request);

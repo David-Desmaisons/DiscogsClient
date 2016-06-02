@@ -8,7 +8,7 @@ namespace DiscogsClient.Internal
     {
         IRestRequest GetSearchRequest();
 
-        IRestRequest GetRequest(string url);
+        IRestRequest GetReleaseRequest();
 
         Task<T> Execute<T>(IRestRequest request, CancellationToken cancellationToken);
     }

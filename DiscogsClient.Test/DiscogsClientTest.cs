@@ -60,6 +60,13 @@ namespace DiscogsClient.Test
             await observable.ForEachAsync(OnResult);
         }
 
+        [Fact(Skip = "Please provide valid token and keys to run the test")]
+        public async Task GetRelease()
+        {     
+            var res = await _DiscogsClient.GetRelease(1704673);
+            res.Should().NotBeNull();
+        }
+
         private void OnResult(DiscogsSearchResult result)
         {
             _Count++;
