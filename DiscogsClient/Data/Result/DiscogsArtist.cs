@@ -3,7 +3,8 @@
     public class DiscogsArtist : DiscogsEntity 
     {
         public DiscogsImage[] images { get; set; }
-        public DiscogsBandMember[] members { get; set; }
+        public DiscogsGroupOrBandMember[] members { get; set; }
+        public DiscogsGroupOrBandMember[] groups { get; set; }
         public string[] urls { get; set; }
         public string[] namevariations { get; set; }
         public string profile { get; set; }

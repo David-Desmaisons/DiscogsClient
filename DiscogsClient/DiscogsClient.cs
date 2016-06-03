@@ -43,12 +43,23 @@ namespace DiscogsClient
             return await _Client.Execute<DiscogsMaster>(request, token);
         }
 
-        public IEnumerable<DiscogsSearchResult> SearchAllAsEnumerable(DiscogsSearch search, int? max = null)
+        public Task<DiscogsArtist> GetArtist(int artistId) 
         {
-            return SearchAll(search, max).ToEnumerable();
+            return GetArtist(artistId, CancellationToken.None);
         }
 
-        public IObservable<DiscogsSearchResult> SearchAll(DiscogsSearch search, int? max = null)
+        public async Task<DiscogsArtist> GetArtist(int artistId, CancellationToken token) 
+        {
+            var request = _Client.GetArtistRequest(artistId);
+            return await _Client.Execute<DiscogsArtist>(request, token);
+        }
+
+        public IEnumerable<DiscogsSearchResult> SearchAsEnumerable(DiscogsSearch search, int? max = null)
+        {
+            return Search(search, max).ToEnumerable();
+        }
+
+        public IObservable<DiscogsSearchResult> Search(DiscogsSearch search, int? max = null)
         {
             var observable = RawSearchAll(search, max);
             return max.HasValue? observable.Take(max.Value) : observable;
@@ -60,15 +71,38 @@ namespace DiscogsClient
             return GenerateFromPaginable<DiscogsSearchResult, DiscogsSearchResults>(requestBuilder, max);
         }
 
-        public IEnumerable<DiscogsReleaseVersion> GetMasterReleaseVersionAsEnumerable(int masterId, int? max = default(int?))
+        public IEnumerable<DiscogsReleaseVersion> GetMasterReleaseVersionsAsEnumerable(int masterId, int? max = default(int?))
         {
-            return GetMasterReleaseVersion(masterId, max).ToEnumerable();        
+            return GetMasterReleaseVersions(masterId, max).ToEnumerable();        
         }
 
-        public IObservable<DiscogsReleaseVersion> GetMasterReleaseVersion(int masterId, int? max = default(int?))
+        public IObservable<DiscogsReleaseVersion> GetMasterReleaseVersions(int masterId, int? max = default(int?)) 
+        {
+            var observable = GetMasterReleaseVersionseRaw(masterId, max);
+            return max.HasValue ? observable.Take(max.Value) : observable;
+        }
+
+        private IObservable<DiscogsReleaseVersion> GetMasterReleaseVersionseRaw(int masterId, int? max = default(int?))
         {
             Func<IRestRequest> requestBuilder = () => _Client.GetMasterReleaseVersion(masterId);
             return GenerateFromPaginable<DiscogsReleaseVersion, DiscogsReleaseVersions>(requestBuilder, max);
+        }
+
+        public IEnumerable<DiscogsArtistRelease> GetArtistReleaseAsEnumerable(int artistId, DiscogsSortInformation sort = null, int? max = null) 
+        {
+            return GetArtistRelease(artistId, sort, max).ToEnumerable();
+        }
+
+        public IObservable<DiscogsArtistRelease> GetArtistRelease(int artistId, DiscogsSortInformation sort = null, int? max = null) 
+        {
+            var observable = GetArtistReleaseRaw(artistId, sort, max);
+            return max.HasValue ? observable.Take(max.Value) : observable;
+        }
+
+        private IObservable<DiscogsArtistRelease> GetArtistReleaseRaw(int artistId, DiscogsSortInformation sort = null, int? max = null) 
+        {
+            Func<IRestRequest> requestBuilder = () => _Client.GetArtistReleaseVersion(artistId).AddAsParameter(sort);
+            return GenerateFromPaginable<DiscogsArtistRelease, DiscogsArtistReleases>(requestBuilder, max);
         }
 
         private IObservable<T> GenerateFromPaginable<T, TRes>(Func<IRestRequest> requestBuilder, int? max = null) where T : DiscogsEntity 

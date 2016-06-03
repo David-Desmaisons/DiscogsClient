@@ -15,7 +15,9 @@ namespace DiscogsClient.Internal
         private const string _SearchUrl = "database/search";
         private const string _ReleaseUrl = "releases/{releaseId}";
         private const string _MasterUrl = "masters/{masterId}";
-        private const string _MasterReleaseVersion = "masters/{masterId}/versions";
+        private const string _MasterReleaseVersionUrl = "masters/{masterId}/versions";
+        private const string _ArtistUrl = "artists/{artistId}";
+        private const string _ArtistReleaseUrl = "artists/{artistId}/releases";
         private readonly TimeLimiter _TimeLimiter;
         private readonly OAuthCompleteInformation _OAuthCompleteInformation;
         private readonly RestClient _Client;
@@ -37,7 +39,7 @@ namespace DiscogsClient.Internal
             {
                 UserAgent = _UserAgent,
                 Timeout = timeOut,
-                Authenticator = _OAuthCompleteInformation.GetAuthenticatorForProtectedResource()
+                Authenticator = _OAuthCompleteInformation?.GetAuthenticatorForProtectedResource()
             };
         }
 
@@ -62,8 +64,22 @@ namespace DiscogsClient.Internal
 
         public IRestRequest GetMasterReleaseVersion(int masterId)
         {
-            var request = GetRequest(_MasterReleaseVersion);
+            var request = GetRequest(_MasterReleaseVersionUrl);
             request.AddUrlSegment(nameof(masterId), masterId.ToString());
+            return request;
+        }
+
+        public IRestRequest GetArtistRequest(int artistId) 
+        {
+            var request = GetRequest(_ArtistUrl);
+            request.AddUrlSegment(nameof(artistId), artistId.ToString());
+            return request;
+        }
+
+        public IRestRequest GetArtistReleaseVersion(int artistId) 
+        {
+            var request = GetRequest(_ArtistReleaseUrl);
+            request.AddUrlSegment(nameof(artistId), artistId.ToString());
             return request;
         }
 
