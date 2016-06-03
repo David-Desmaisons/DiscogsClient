@@ -11,7 +11,6 @@ namespace DiscogsClient.Data.Result
         public DiscogsIdentifier[] identifiers { get; set; }
         public DiscogsCommunity community { get; set; }
         public string catno { get; set; }
-        public string resource_url { get; set; }
         public string thumb { get; set; }
         public string country { get; set; }
         public int estimated_weight { get; set; }

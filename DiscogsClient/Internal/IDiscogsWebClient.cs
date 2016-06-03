@@ -12,6 +12,8 @@ namespace DiscogsClient.Internal
 
         IRestRequest GetMasterRequest(int masterId);
 
+        IRestRequest GetMasterReleaseVersion(int masterId);
+
         Task<T> Execute<T>(IRestRequest request, CancellationToken cancellationToken);
     }
 }

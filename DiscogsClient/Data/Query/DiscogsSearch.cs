@@ -2,7 +2,7 @@
 
 namespace DiscogsClient.Data.Query 
 {
-    public class DiscogsSearch : DiscogsPaginable
+    public class DiscogsSearch
     {
         /// <summary>
         ///  Your search query. Example: nirvana

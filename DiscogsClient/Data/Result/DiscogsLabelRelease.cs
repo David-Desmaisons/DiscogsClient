@@ -7,7 +7,6 @@ namespace DiscogsClient.Data.Result
     public class DiscogsLabelRelease : DiscogsEntity
     {
         public string artist { get; set; }
-        public int id { get; set; }
         public int main_release { get; set; }
         public string resource_url { get; set; }
         public string role { get; set; }

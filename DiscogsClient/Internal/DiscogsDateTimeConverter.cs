@@ -25,12 +25,17 @@ namespace DiscogsClient.Internal
                     return new DateTime(values[0], 1, 1);
 
                 case 2:
-                    return new DateTime(values[0], values[1], 1);
+                    return new DateTime(values[0], Normalize(values[1]), 1);
 
                 case 3:
-                    return new DateTime(values[0], values[1], values[2]);
+                    return new DateTime(values[0], Normalize(values[1]), Normalize(values[2]));
             }
             return null;
+        }
+
+        private int Normalize(int value)
+        {
+            return (value <= 0) ? 1 : value;
         }
 
         public override bool CanRead => true;

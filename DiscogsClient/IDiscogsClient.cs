@@ -9,13 +9,13 @@ namespace DiscogsClient
 {
     public interface IDiscogsClient
     {
-        Task<DiscogsSearchResults> Search(DiscogsSearch search);
+        IEnumerable<DiscogsSearchResult> SearchAllAsEnumerable(DiscogsSearch search, int? max = null);
 
-        Task<DiscogsSearchResults> Search(DiscogsSearch search, CancellationToken token);
+        IObservable<DiscogsSearchResult> SearchAll(DiscogsSearch search, int? max = null);
 
-        IEnumerable<DiscogsSearchResult> SearchAllEnumerable(DiscogsSearch search);
+        IEnumerable<DiscogsReleaseVersion> GetMasterReleaseVersionAsEnumerable(int masterId, int? max=null);
 
-        IObservable<DiscogsSearchResult> SearchAll(DiscogsSearch search);
+        IObservable<DiscogsReleaseVersion> GetMasterReleaseVersion(int masterId, int? max = null);
 
         Task<DiscogsRelease> GetRelease(int releaseId);
 

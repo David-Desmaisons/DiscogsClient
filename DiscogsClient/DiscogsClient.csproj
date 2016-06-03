@@ -72,6 +72,7 @@
     <Compile Include="Data\Result\DiscogsArtistRelease.cs" />
     <Compile Include="Data\Result\DiscogsArtist.cs" />
     <Compile Include="Data\Result\DiscogsLabelRelease.cs" />
+    <Compile Include="Data\Result\DiscogsPaginableResults.cs" />
     <Compile Include="Data\Result\DiscogsSortOrder.cs" />
     <Compile Include="Data\Result\DiscogsBandMember.cs" />
     <Compile Include="Data\Result\DiscogsArtistSortType.cs" />
@@ -102,6 +103,7 @@
     <Compile Include="DiscogsAuthentifierClient.cs" />
     <Compile Include="DiscogsClient.cs" />
     <Compile Include="DiscogsException.cs" />
+    <Compile Include="Data\Result\DiscogsReleaseVersions.cs" />
     <Compile Include="IDiscogsClient.cs" />
     <Compile Include="Internal\DiscogsDateTimeConverter.cs" />
     <Compile Include="Internal\DiscogsTimeSpanConverter.cs" />

@@ -1,9 +1,12 @@
 ﻿namespace DiscogsClient.Data.Result
 {
-    public class DiscogsSearchResults
+    public class DiscogsSearchResults : DiscogsPaginableResults<DiscogsSearchResult>
     {
-        public DiscogsPaginedResult pagination { get; set; }
-
         public DiscogsSearchResult[] results { get; set; }
+
+        public override DiscogsSearchResult[] GetResults()
+        {
+            return results;
+        }
     }
 }

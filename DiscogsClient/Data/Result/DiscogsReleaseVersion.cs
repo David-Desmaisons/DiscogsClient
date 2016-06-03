@@ -11,7 +11,7 @@ namespace DiscogsClient.Data.Result
         public string format { get; set; }
         public string label { get; set; }
         [JsonConverter(typeof(DiscogsDateTimeConverter))]
-        public DateTime released { get; set; }
+        public DateTime? released { get; set; }
         public string resource_url { get; set; }
         public string status { get; set; }
         public string thumb { get; set; }
