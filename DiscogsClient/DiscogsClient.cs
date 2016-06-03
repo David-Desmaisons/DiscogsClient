@@ -54,6 +54,17 @@ namespace DiscogsClient
             return await _Client.Execute<DiscogsArtist>(request, token);
         }
 
+        public Task<DiscogsLabel> GetLabel(int labelId) 
+        {
+            return GetLabel(labelId, CancellationToken.None);
+        }
+
+        public async Task<DiscogsLabel> GetLabel(int labelId, CancellationToken token) 
+        {
+            var request = _Client.GetLabelRequest(labelId);
+            return await _Client.Execute<DiscogsLabel>(request, token);
+        }
+
         public IEnumerable<DiscogsSearchResult> SearchAsEnumerable(DiscogsSearch search, int? max = null)
         {
             return Search(search, max).ToEnumerable();

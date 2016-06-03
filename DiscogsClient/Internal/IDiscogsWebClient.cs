@@ -16,6 +16,8 @@ namespace DiscogsClient.Internal
 
         IRestRequest GetArtistRequest(int artistId);
 
+        IRestRequest GetLabelRequest(int artistId);
+
         IRestRequest GetArtistReleaseVersion(int artistId);
 
         Task<T> Execute<T>(IRestRequest request, CancellationToken cancellationToken);

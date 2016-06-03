@@ -18,6 +18,7 @@ namespace DiscogsClient.Internal
         private const string _MasterReleaseVersionUrl = "masters/{masterId}/versions";
         private const string _ArtistUrl = "artists/{artistId}";
         private const string _ArtistReleaseUrl = "artists/{artistId}/releases";
+        private const string _LabeltUrl = "labels/{labelId}";
         private readonly TimeLimiter _TimeLimiter;
         private readonly OAuthCompleteInformation _OAuthCompleteInformation;
         private readonly RestClient _Client;
@@ -50,49 +51,37 @@ namespace DiscogsClient.Internal
 
         public IRestRequest GetReleaseRequest(int releaseId)
         {       
-            var request = GetRequest(_ReleaseUrl);
-            request.AddUrlSegment(nameof(releaseId), releaseId.ToString());
-            return request;
+            return GetRequest(_ReleaseUrl).AddUrlSegment(nameof(releaseId), releaseId.ToString());
         }
 
         public IRestRequest GetMasterRequest(int masterId) 
         {
-            var request = GetRequest(_MasterUrl);
-            request.AddUrlSegment(nameof(masterId), masterId.ToString());
-            return request;
+            return GetRequest(_MasterUrl).AddUrlSegment(nameof(masterId), masterId.ToString());
         }
 
         public IRestRequest GetMasterReleaseVersion(int masterId)
         {
-            var request = GetRequest(_MasterReleaseVersionUrl);
-            request.AddUrlSegment(nameof(masterId), masterId.ToString());
-            return request;
+            return GetRequest(_MasterReleaseVersionUrl).AddUrlSegment(nameof(masterId), masterId.ToString());
         }
 
         public IRestRequest GetArtistRequest(int artistId) 
         {
-            var request = GetRequest(_ArtistUrl);
-            request.AddUrlSegment(nameof(artistId), artistId.ToString());
-            return request;
+            return GetRequest(_ArtistUrl).AddUrlSegment(nameof(artistId), artistId.ToString());
+        }
+
+        public IRestRequest GetLabelRequest(int labelId) 
+        {
+            return GetRequest(_LabeltUrl).AddUrlSegment(nameof(labelId), labelId.ToString());
         }
 
         public IRestRequest GetArtistReleaseVersion(int artistId) 
         {
-            var request = GetRequest(_ArtistReleaseUrl);
-            request.AddUrlSegment(nameof(artistId), artistId.ToString());
-            return request;
+            return GetRequest(_ArtistReleaseUrl).AddUrlSegment(nameof(artistId), artistId.ToString());
         }
 
         private IRestRequest GetRequest(string url)
         {
-            var request = new RestRequest(url);
-            return Finalize(request);
-        }
-
-        private IRestRequest Finalize(IRestRequest request)
-        {
-            request.AddHeader("Accept-Encoding", "gzip");
-            return request;
+            return new RestRequest(url).AddHeader("Accept-Encoding", "gzip");
         }
 
         public async Task<T> Execute<T>(IRestRequest request, CancellationToken cancellationToken)

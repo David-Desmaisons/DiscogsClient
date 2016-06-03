@@ -99,6 +99,23 @@ namespace DiscogsClient
         IEnumerable<DiscogsArtistRelease> GetArtistReleaseAsEnumerable(int artistId, DiscogsSortInformation sort =null, int? max = null);
 
         /// <summary>
+        /// Get a label
+        /// See https://www.discogs.com/developers/#page:database,header:database-label
+        /// </summary>
+        /// <param name="labelId">The Label ID</param>
+        /// <param name="token">Cancellation Token</param>
+        /// <returns>The corresponding label</returns>
+        Task<DiscogsLabel> GetLabel(int labelId, CancellationToken token);
+
+        /// <summary>
+        /// Get a label
+        /// See https://www.discogs.com/developers/#page:database,header:database-label
+        /// </summary>
+        /// <param name="labelId">The Label ID</param>
+        /// <returns>The corresponding label</returns>
+        Task<DiscogsLabel> GetLabel(int labelId);
+
+        /// <summary>
         /// Issue a search query to Discogs database.
         /// See https://www.discogs.com/developers/#page:database,header:database-search.
         /// </summary>
