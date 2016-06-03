@@ -88,7 +88,7 @@ namespace DiscogsClient.Test
             res.Should().NotBeNull();
         }
 
-        [Fact(Skip = "Need internet access.")]]
+        [Fact(Skip = "Need internet access.")]
         public async Task GetArtistRelease() 
         {
             var observable = _DiscogsClient.GetArtistRelease(200818);
