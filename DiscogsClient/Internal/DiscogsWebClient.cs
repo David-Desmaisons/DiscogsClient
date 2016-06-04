@@ -10,7 +10,7 @@ namespace DiscogsClient.Internal
 {
     internal class DiscogsWebClient : IDiscogsWebClient
     {
-        private const string _ErrorMessage = "";
+        private const string _ErrorMessage = "Error During Request Processing";
         private const string _UserAgentFallBack = @"DiscogsClient https://github.com/David-Desmaisons/DiscogsClient";
         private const string _SearchUrl = "database/search";
         private const string _ReleaseUrl = "releases/{releaseId}";
