@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DiscogsClient
 {
-    public interface IDiscogsDataBase : IDiscogsReleaseRating
+    public interface IDiscogsDataBaseClient : IDiscogsReleaseRatingClient
     {
         /// <summary>
         /// Get a release

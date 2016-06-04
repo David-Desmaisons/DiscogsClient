@@ -127,5 +127,12 @@ namespace DiscogsClient.Test
             var res = await _DiscogsClient.GetUserReleaseRating("andersinstockholm", 488973);
             res.Should().NotBeNull();
         }
+
+        [Fact(Skip = "Need internet access.")]
+        public async Task GetCommunityReleaseRating()
+        {
+            var res = await _DiscogsClient.GetCommunityReleaseRating(488973);
+            res.Should().NotBeNull();
+        }
     }
 }

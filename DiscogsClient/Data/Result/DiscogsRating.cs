@@ -2,7 +2,7 @@
 {
     public class DiscogsRating
     {
-        public double average { get; set; }
+        public decimal average { get; set; }
         public int count { get; set; }
     }
 }

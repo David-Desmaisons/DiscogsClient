@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace DiscogsClient
 {
-    public class DiscogsClient : IDiscogsDataBase
+    public class DiscogsClient : IDiscogsDataBaseClient
     {
         private readonly IDiscogsWebClient _Client;
 
@@ -74,6 +74,17 @@ namespace DiscogsClient
         {
             var request = _Client.GetUserReleaseRatingRequest(userName, releaseId);
             return await _Client.Execute<DiscogsReleaseRating>(request, token);          
+        }
+
+        public Task<DiscogsCommunityReleaseRating> GetCommunityReleaseRating(int releaseId)
+        {
+            return GetCommunityReleaseRating(releaseId, CancellationToken.None);
+        }
+
+        public async Task<DiscogsCommunityReleaseRating> GetCommunityReleaseRating(int releaseId, CancellationToken token)
+        {
+            var request = _Client.GetCommunityReleaseRatingRequest(releaseId);
+            return await _Client.Execute<DiscogsCommunityReleaseRating>(request, token);
         }
 
         public IEnumerable<DiscogsSearchResult> SearchAsEnumerable(DiscogsSearch search, int? max = null)
