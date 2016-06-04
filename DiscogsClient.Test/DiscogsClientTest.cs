@@ -95,7 +95,27 @@ namespace DiscogsClient.Test
             await observable.ForEachAsync(OnResult);
         }
 
-        private void OnResult(DiscogsArtistRelease result) 
+        private void OnResult(DiscogsArtistRelease result)
+        {
+            _Count++;
+            Trace.WriteLine($"{_Count} - {result.title}");
+        }
+
+        [Fact(Skip = "Need internet access.")]
+        public async Task GetLabel()
+        {
+            var res = await _DiscogsClient.GetLabel(125);
+            res.Should().NotBeNull();
+        }
+
+        [Fact]
+        public async Task GetAllLabelReleases()
+        {
+            var observable = _DiscogsClient.GetAllLabelReleases(26557);
+            await observable.ForEachAsync(OnResult);
+        }
+
+        private void OnResult(DiscogsLabelRelease result) 
         {
             _Count++;
             Trace.WriteLine($"{_Count} - {result.title}");

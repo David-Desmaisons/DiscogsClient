@@ -18,6 +18,7 @@ namespace DiscogsClient.Internal
         private const string _MasterReleaseVersionUrl = "masters/{masterId}/versions";
         private const string _ArtistUrl = "artists/{artistId}";
         private const string _ArtistReleaseUrl = "artists/{artistId}/releases";
+        private const string _AllLabelReleasesUrl = "labels/{labelId}/releases";
         private const string _LabeltUrl = "labels/{labelId}";
         private readonly TimeLimiter _TimeLimiter;
         private readonly OAuthCompleteInformation _OAuthCompleteInformation;
@@ -59,7 +60,7 @@ namespace DiscogsClient.Internal
             return GetRequest(_MasterUrl).AddUrlSegment(nameof(masterId), masterId.ToString());
         }
 
-        public IRestRequest GetMasterReleaseVersion(int masterId)
+        public IRestRequest GetMasterReleaseVersionRequest(int masterId)
         {
             return GetRequest(_MasterReleaseVersionUrl).AddUrlSegment(nameof(masterId), masterId.ToString());
         }
@@ -74,9 +75,14 @@ namespace DiscogsClient.Internal
             return GetRequest(_LabeltUrl).AddUrlSegment(nameof(labelId), labelId.ToString());
         }
 
-        public IRestRequest GetArtistReleaseVersion(int artistId) 
+        public IRestRequest GetArtistReleaseVersionRequest(int artistId) 
         {
             return GetRequest(_ArtistReleaseUrl).AddUrlSegment(nameof(artistId), artistId.ToString());
+        }
+
+        public IRestRequest GetAllLabelReleasesRequest(int labelId)
+        {
+            return GetRequest(_AllLabelReleasesUrl).AddUrlSegment(nameof(labelId), labelId.ToString());
         }
 
         private IRestRequest GetRequest(string url)
