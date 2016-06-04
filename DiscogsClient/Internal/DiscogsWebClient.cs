@@ -20,6 +20,7 @@ namespace DiscogsClient.Internal
         private const string _ArtistReleaseUrl = "artists/{artistId}/releases";
         private const string _AllLabelReleasesUrl = "labels/{labelId}/releases";
         private const string _LabeltUrl = "labels/{labelId}";
+        private const string _ReleaseRatingByUser = "releases/{releaseId}/rating/{userName}";
         private readonly TimeLimiter _TimeLimiter;
         private readonly OAuthCompleteInformation _OAuthCompleteInformation;
         private readonly RestClient _Client;
@@ -83,6 +84,13 @@ namespace DiscogsClient.Internal
         public IRestRequest GetAllLabelReleasesRequest(int labelId)
         {
             return GetRequest(_AllLabelReleasesUrl).AddUrlSegment(nameof(labelId), labelId.ToString());
+        }
+
+        public IRestRequest GetUserReleaseRatingRequest(string userName, int releaseId)
+        {
+            return GetRequest(_ReleaseRatingByUser)
+                        .AddUrlSegment(nameof(userName), userName)
+                        .AddUrlSegment(nameof(releaseId), releaseId.ToString());
         }
 
         private IRestRequest GetRequest(string url)

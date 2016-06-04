@@ -22,6 +22,8 @@ namespace DiscogsClient.Internal
 
         IRestRequest GetAllLabelReleasesRequest(int labelId);
 
+        IRestRequest GetUserReleaseRatingRequest(string userName, int releaseId);
+
         Task<T> Execute<T>(IRestRequest request, CancellationToken cancellationToken);   
     }
 }

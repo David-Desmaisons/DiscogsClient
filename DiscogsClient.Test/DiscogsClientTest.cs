@@ -108,7 +108,7 @@ namespace DiscogsClient.Test
             res.Should().NotBeNull();
         }
 
-        [Fact]
+        [Fact(Skip = "Need internet access.")]
         public async Task GetAllLabelReleases()
         {
             var observable = _DiscogsClient.GetAllLabelReleases(26557);
@@ -119,6 +119,13 @@ namespace DiscogsClient.Test
         {
             _Count++;
             Trace.WriteLine($"{_Count} - {result.title}");
+        }
+
+        [Fact(Skip = "Need internet access.")]
+        public async Task GetUserReleaseRating()
+        {
+            var res = await _DiscogsClient.GetUserReleaseRating("andersinstockholm", 488973);
+            res.Should().NotBeNull();
         }
     }
 }
