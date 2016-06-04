@@ -6,6 +6,7 @@ using System;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace DiscogsClient.Internal
 {
@@ -26,7 +27,7 @@ namespace DiscogsClient.Internal
         private const string _IdendityUrl = "oauth/identity";
         private readonly TimeLimiter _TimeLimiter;
         private readonly OAuthCompleteInformation _OAuthCompleteInformation;
-        private readonly RestClient _Client;
+        private readonly IRestClient _Client;
 
         private string UrlBase => "https://api.discogs.com";
 
@@ -41,7 +42,12 @@ namespace DiscogsClient.Internal
         {
             _OAuthCompleteInformation = oAuthCompleteInformation;
             _TimeLimiter = TimeLimiter.GetFromMaxCountByInterval(240, TimeSpan.FromMinutes(1));
-            _Client = new RestClient(UrlBase)
+            _Client = GetClient(UrlBase, timeOut);
+        }
+
+        private IRestClient GetClient(string UrlBase, int timeOut=10000)
+        {
+            return new RestClient(UrlBase)
             {
                 UserAgent = _UserAgent,
                 Timeout = timeOut,
@@ -138,9 +144,18 @@ namespace DiscogsClient.Internal
             return response.StatusCode;
         }
 
-        private async Task<IRestResponse> GetResponse(IRestRequest request, CancellationToken cancellationToken)
+        public async Task Download(string url, Stream copyStream, CancellationToken cancellationToken)
         {
-            var response = await _TimeLimiter.Perform(async () => await ExecuteBasic(request, cancellationToken), cancellationToken);
+            var client = GetClient(url, 15000);
+            var request = new RestRequest(Method.GET);
+            request.ResponseWriter = (stream) => stream.CopyTo(copyStream);
+            await GetResponse(request, cancellationToken, client);
+        }
+
+        private async Task<IRestResponse> GetResponse(IRestRequest request, CancellationToken cancellationToken, IRestClient client = null)
+        {
+            client = client ?? _Client;
+            var response = await _TimeLimiter.Perform(async () => await ExecuteBasic(client, request, cancellationToken), cancellationToken);
 
             if (response.ErrorException != null)
                 throw new DiscogsException(_ErrorMessage, response.ErrorException);
@@ -148,9 +163,9 @@ namespace DiscogsClient.Internal
             return response;
         }
 
-        private Task<IRestResponse> ExecuteBasic(IRestRequest request, CancellationToken cancellationToken)
+        private static Task<IRestResponse> ExecuteBasic(IRestClient client, IRestRequest request, CancellationToken cancellationToken)
         {
-            return _Client.ExecuteTaskAsync(request, cancellationToken);
+            return client.ExecuteTaskAsync(request, cancellationToken);
         }
     }
 }

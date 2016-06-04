@@ -65,6 +65,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\Query\DiscogsImageType.cs" />
     <Compile Include="Data\Query\DiscogsSortInformation.cs" />
     <Compile Include="Data\Result\DiscogsArtistRelease.cs" />
     <Compile Include="Data\Result\DiscogsArtist.cs" />

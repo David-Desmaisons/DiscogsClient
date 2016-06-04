@@ -1,4 +1,5 @@
 ﻿using RestSharp;
+using System.IO;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
@@ -36,5 +37,7 @@ namespace DiscogsClient.Internal
         Task<T> Execute<T>(IRestRequest request, CancellationToken cancellationToken);
 
         Task<HttpStatusCode> Execute(IRestRequest request, CancellationToken cancellationToken);
+
+        Task Download(string url, Stream copyStream, CancellationToken cancellationToken);
     }
 }

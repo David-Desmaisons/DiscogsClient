@@ -3,6 +3,7 @@ using DiscogsClient.Data.Result;
 using FluentAssertions;
 using RestSharpInfra.OAuth1;
 using System.Diagnostics;
+using System.IO;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Xunit;
@@ -154,6 +155,15 @@ namespace DiscogsClient.Test
         {
             var res = await _DiscogsClient.GetCommunityReleaseRating(488973);
             res.Should().NotBeNull();
+        }
+
+        [Fact(Skip = "Need internet access and valid token and keys.")]
+        public async Task SaveImage()
+        {
+            var res = await _DiscogsClient.GetMaster(47813);
+            res.Should().NotBeNull();
+
+            await _DiscogsClient.SaveImage(res.images[0], Path.GetTempPath(), "Ornette-TSOAJTC");
         }
     }
 }

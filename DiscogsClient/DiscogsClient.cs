@@ -10,6 +10,7 @@ using System.Net;
 using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace DiscogsClient
 {
@@ -229,6 +230,33 @@ namespace DiscogsClient
                 }
                 while (pagination.page != pagination.pages);
             });
+        }
+
+        public Task DownloadImage(DiscogsImage image, Stream copyStream, DiscogsImageFormatType type = DiscogsImageFormatType.Normal)
+        {
+            return DownloadImage(image, copyStream, CancellationToken.None, type);
+        }
+
+        public async Task DownloadImage(DiscogsImage image, Stream copyStream, CancellationToken cancellationToken, DiscogsImageFormatType type = DiscogsImageFormatType.Normal)
+        {
+            var url = (type == DiscogsImageFormatType.Normal) ? image.uri : image.uri150;
+            await _Client.Download(url, copyStream, cancellationToken); 
+        }
+
+        public Task SaveImage(DiscogsImage image, string path, string fileName, DiscogsImageFormatType type = DiscogsImageFormatType.Normal)
+        {
+            return SaveImage(image, path, fileName, CancellationToken.None, type);
+        }
+
+        public async Task SaveImage(DiscogsImage image, string path, string fileName, CancellationToken cancellationToken, DiscogsImageFormatType type = DiscogsImageFormatType.Normal)
+        { 
+            var url = (type == DiscogsImageFormatType.Normal) ? image.uri : image.uri150;
+            var extension = Path.GetExtension(url);
+            var fullPath = Path.Combine(path, fileName + extension);
+            using (var writer = File.Create(fullPath))
+            {
+                await DownloadImage(image, writer, cancellationToken, type);
+            }
         }
     }
 }
