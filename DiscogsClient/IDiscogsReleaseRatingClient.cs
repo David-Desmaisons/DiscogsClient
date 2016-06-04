@@ -26,6 +26,41 @@ namespace DiscogsClient
         Task<DiscogsReleaseRating> GetUserReleaseRating(string userName, int releaseId);
 
         /// <summary>
+        /// Updates the release’s rating for a given user. 
+        /// See https://www.discogs.com/developers/#page:database,header:database-release-rating-by-user-put
+        /// </summary>
+        /// <param name="releaseId">The Release ID</param>
+        /// <param name="rating">The rating</param>
+        /// <returns>The corresponding updated release’s rating</returns>
+        Task<DiscogsReleaseRating> SetUserReleaseRating(int releaseId, int rating);
+
+        /// <summary>
+        /// Updates the release’s rating for a given user. 
+        /// See https://www.discogs.com/developers/#page:database,header:database-release-rating-by-user-put
+        /// </summary>
+        /// <param name="releaseId">The Release ID</param>
+        /// <param name="rating">The rating</param>
+        /// <returns>The corresponding updated release’s rating</returns>
+        Task<DiscogsReleaseRating> SetUserReleaseRating(int releaseId, int rating, CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Deletes the release’s rating for the current user.
+        /// See https://www.discogs.com/developers/#page:database,header:database-release-rating-by-user-delete
+        /// </summary>
+        /// <param name="releaseId">The Release ID</param>
+        /// <param name="token">Cancellation Token</param>
+        /// <returns>True if the operation is sucessfull</returns>
+        Task<bool> DeleteUserReleaseRating(int releaseId, CancellationToken token);
+
+        /// <summary>
+        /// Deletes the release’s rating for the current user.
+        /// See https://www.discogs.com/developers/#page:database,header:database-release-rating-by-user-delete
+        /// </summary>
+        /// <param name="releaseId">The Release ID</param>
+        /// <returns>True if the operation is sucessfull</returns>
+        Task<bool> DeleteUserReleaseRating(int releaseId);
+
+        /// <summary>
         /// Retrieves the community release rating average and count.
         /// See https://www.discogs.com/developers/#page:database,header:database-community-release-rating
         /// </summary>

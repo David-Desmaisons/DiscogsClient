@@ -36,6 +36,27 @@ namespace DiscogsClient.Test
         }
 
         [Fact(Skip = "Need internet access and valid token and keys.")]
+        public async Task GetUserIdentity()
+        {
+            var res = await _DiscogsClient.GetUserIdentity();
+            res.Should().NotBeNull();
+        }
+
+        [Fact(Skip = "Need internet access and valid token and keys.")]
+        public async Task SetUserReleaseRating()
+        {
+            var res = await _DiscogsClient.SetUserReleaseRating(488973, 5);
+            res.Should().NotBeNull();
+        }
+
+        [Fact(Skip = "Need internet access and valid token and keys.")]
+        public async Task DeleteUserReleaseRating()
+        {
+            var res = await _DiscogsClient.DeleteUserReleaseRating(488973);
+            res.Should().BeTrue();
+        }
+
+        [Fact(Skip = "Need internet access and valid token and keys.")]
         public async Task SearchAll_Artist()
         {
             var discogsSearch = new DiscogsSearch()

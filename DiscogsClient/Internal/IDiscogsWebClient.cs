@@ -1,4 +1,5 @@
 ﻿using RestSharp;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -22,10 +23,18 @@ namespace DiscogsClient.Internal
 
         IRestRequest GetAllLabelReleasesRequest(int labelId);
 
-        IRestRequest GetUserReleaseRatingRequest(string userName, int releaseId);
+        IRestRequest GetGetUserReleaseRatingRequest(string userName, int releaseId);
+
+        IRestRequest GetPutUserReleaseRatingRequest(string username, int releaseId);
+
+        IRestRequest GetDeleteUserReleaseRatingRequest(string userName, int releaseId);
 
         IRestRequest GetCommunityReleaseRatingRequest(int releaseId);
 
+        IRestRequest GetUserIdentityRequest();
+
         Task<T> Execute<T>(IRestRequest request, CancellationToken cancellationToken);
+
+        Task<HttpStatusCode> Execute(IRestRequest request, CancellationToken cancellationToken);
     }
 }

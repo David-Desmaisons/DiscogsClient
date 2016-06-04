@@ -6,19 +6,35 @@ using RestSharpInfra;
 using RestSharpInfra.OAuth1;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace DiscogsClient
 {
-    public class DiscogsClient : IDiscogsDataBaseClient
+    public class DiscogsClient : IDiscogsDataBaseClient, IDiscogsUserIdentityClient
     {
         private readonly IDiscogsWebClient _Client;
+        private DiscogsIdentity _DiscogsIdentity;
 
         public DiscogsClient(OAuthCompleteInformation oAuthCompleteInformation, int timeOut = 5000)
         {
             _Client = new DiscogsWebClient(oAuthCompleteInformation, timeOut);
+        }
+
+        public Task<DiscogsIdentity> GetUserIdentity()
+        {
+            return GetUserIdentity(CancellationToken.None);
+        }
+
+        public async Task<DiscogsIdentity> GetUserIdentity(CancellationToken token)
+        {
+            if (_DiscogsIdentity != null)
+                return _DiscogsIdentity;
+
+            var request = _Client.GetUserIdentityRequest();
+            return _DiscogsIdentity = await _Client.Execute<DiscogsIdentity>(request, token);
         }
 
         public Task<DiscogsRelease> GetRelease(int releaseId)
@@ -72,8 +88,33 @@ namespace DiscogsClient
 
         public async Task<DiscogsReleaseRating> GetUserReleaseRating(string userName, int releaseId, CancellationToken token)
         {
-            var request = _Client.GetUserReleaseRatingRequest(userName, releaseId);
+            var request = _Client.GetGetUserReleaseRatingRequest(userName, releaseId);
             return await _Client.Execute<DiscogsReleaseRating>(request, token);          
+        }
+
+        public Task<DiscogsReleaseRating> SetUserReleaseRating(int releaseId, int rating)
+        {
+            return SetUserReleaseRating(releaseId, rating, CancellationToken.None);
+        }
+
+        public async Task<DiscogsReleaseRating> SetUserReleaseRating(int releaseId, int rating, CancellationToken token)
+        {
+            var userIdendity = await GetUserIdentity(token);
+            var request = _Client.GetPutUserReleaseRatingRequest(userIdendity.username, releaseId);
+            request.AddJsonBody(new { rating= rating});
+            return await _Client.Execute<DiscogsReleaseRating>(request, token);
+        }
+
+        public Task<bool> DeleteUserReleaseRating(int releaseId)
+        {
+            return DeleteUserReleaseRating(releaseId, CancellationToken.None);
+        }
+
+        public async Task<bool> DeleteUserReleaseRating(int releaseId, CancellationToken token)
+        {
+            var userIdendity = await GetUserIdentity(token);
+            var request = _Client.GetDeleteUserReleaseRatingRequest(userIdendity.username, releaseId);
+            return await _Client.Execute(request, token) == HttpStatusCode.NoContent;
         }
 
         public Task<DiscogsCommunityReleaseRating> GetCommunityReleaseRating(int releaseId)

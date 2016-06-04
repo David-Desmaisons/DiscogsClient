@@ -3,6 +3,7 @@ using RateLimiter;
 using RestSharp;
 using RestSharpInfra.OAuth1;
 using System;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -22,6 +23,7 @@ namespace DiscogsClient.Internal
         private const string _LabeltUrl = "labels/{labelId}";
         private const string _ReleaseRatingByUserUrl = "releases/{releaseId}/rating/{userName}";
         private const string _CommunityReleaseRatingUrl = "releases/{releaseId}/rating";
+        private const string _IdendityUrl = "oauth/identity";
         private readonly TimeLimiter _TimeLimiter;
         private readonly OAuthCompleteInformation _OAuthCompleteInformation;
         private readonly RestClient _Client;
@@ -45,6 +47,11 @@ namespace DiscogsClient.Internal
                 Timeout = timeOut,
                 Authenticator = _OAuthCompleteInformation?.GetAuthenticatorForProtectedResource()
             };
+        }
+
+        public IRestRequest GetUserIdentityRequest()
+        {
+            return GetRequest(_IdendityUrl);
         }
 
         public IRestRequest GetSearchRequest()
@@ -87,11 +94,26 @@ namespace DiscogsClient.Internal
             return GetRequest(_AllLabelReleasesUrl).AddUrlSegment(nameof(labelId), labelId.ToString());
         }
 
-        public IRestRequest GetUserReleaseRatingRequest(string userName, int releaseId)
+        public IRestRequest GetGetUserReleaseRatingRequest(string userName, int releaseId)
         {
-            return GetRequest(_ReleaseRatingByUserUrl)
-                        .AddUrlSegment(nameof(userName), userName)
-                        .AddUrlSegment(nameof(releaseId), releaseId.ToString());
+            return GetUserReleaseRatingRequestRaw(userName, releaseId, Method.GET);
+        }
+
+        public IRestRequest GetPutUserReleaseRatingRequest(string userName, int releaseId)
+        {
+            return GetUserReleaseRatingRequestRaw(userName, releaseId, Method.PUT);
+        }
+
+        public IRestRequest GetDeleteUserReleaseRatingRequest(string userName, int releaseId)
+        {
+            return GetUserReleaseRatingRequestRaw(userName, releaseId, Method.DELETE);
+        }
+
+        private IRestRequest GetUserReleaseRatingRequestRaw(string userName, int releaseId, Method method)
+        {
+            return GetRequest(_ReleaseRatingByUserUrl, method)
+                       .AddUrlSegment(nameof(userName), userName)
+                       .AddUrlSegment(nameof(releaseId), releaseId.ToString());
         }
 
         public IRestRequest GetCommunityReleaseRatingRequest(int releaseId)
@@ -99,19 +121,31 @@ namespace DiscogsClient.Internal
             return GetRequest(_CommunityReleaseRatingUrl).AddUrlSegment(nameof(releaseId), releaseId.ToString());
         }
 
-        private IRestRequest GetRequest(string url)
+        private IRestRequest GetRequest(string url, Method method = Method.GET)
         {
-            return new RestRequest(url).AddHeader("Accept-Encoding", "gzip");
+            return new RestRequest(url, method).AddHeader("Accept-Encoding", "gzip");
         }
 
         public async Task<T> Execute<T>(IRestRequest request, CancellationToken cancellationToken)
+        {
+            var response = await GetResponse(request, cancellationToken);
+            return JsonConvert.DeserializeObject<T>(response.Content);
+        }
+
+        public async Task<HttpStatusCode> Execute(IRestRequest request, CancellationToken cancellationToken)
+        {
+            var response = await GetResponse(request, cancellationToken);
+            return response.StatusCode;
+        }
+
+        private async Task<IRestResponse> GetResponse(IRestRequest request, CancellationToken cancellationToken)
         {
             var response = await _TimeLimiter.Perform(async () => await ExecuteBasic(request, cancellationToken), cancellationToken);
 
             if (response.ErrorException != null)
                 throw new DiscogsException(_ErrorMessage, response.ErrorException);
 
-            return JsonConvert.DeserializeObject<T>(response.Content);
+            return response;
         }
 
         private Task<IRestResponse> ExecuteBasic(IRestRequest request, CancellationToken cancellationToken)
