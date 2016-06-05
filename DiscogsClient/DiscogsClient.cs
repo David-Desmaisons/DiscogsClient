@@ -19,9 +19,12 @@ namespace DiscogsClient
         private readonly IDiscogsWebClient _Client;
         private DiscogsIdentity _DiscogsIdentity;
 
-        public DiscogsClient(OAuthCompleteInformation oAuthCompleteInformation, int timeOut = 5000)
+        public DiscogsClient(OAuthCompleteInformation oAuthCompleteInformation, string userAgent=null, int timeOut = 5000)
         {
-            _Client = new DiscogsWebClient(oAuthCompleteInformation, timeOut);
+            _Client = new DiscogsWebClient(oAuthCompleteInformation, timeOut)
+            {
+                UserAgent = userAgent
+            };
         }
 
         public Task<DiscogsIdentity> GetUserIdentity()

@@ -25,9 +25,10 @@ namespace DiscogsClient.Internal
         private const string _ReleaseRatingByUserUrl = "releases/{releaseId}/rating/{userName}";
         private const string _CommunityReleaseRatingUrl = "releases/{releaseId}/rating";
         private const string _IdendityUrl = "oauth/identity";
-        private readonly TimeLimiter _TimeLimiter;
         private readonly OAuthCompleteInformation _OAuthCompleteInformation;
         private readonly IRestClient _Client;
+
+        private static TimeLimiter TimeLimiter { get; set; }
 
         private string UrlBase => "https://api.discogs.com";
 
@@ -41,8 +42,12 @@ namespace DiscogsClient.Internal
         public DiscogsWebClient(OAuthCompleteInformation oAuthCompleteInformation, int timeOut = 10000)
         {
             _OAuthCompleteInformation = oAuthCompleteInformation;
-            _TimeLimiter = TimeLimiter.GetFromMaxCountByInterval(240, TimeSpan.FromMinutes(1));
             _Client = GetClient(UrlBase, timeOut);
+        }
+
+        static DiscogsWebClient()
+        {
+            TimeLimiter = TimeLimiter.GetFromMaxCountByInterval(240, TimeSpan.FromMinutes(1));
         }
 
         private IRestClient GetClient(string UrlBase, int timeOut=10000)
@@ -155,7 +160,7 @@ namespace DiscogsClient.Internal
         private async Task<IRestResponse> GetResponse(IRestRequest request, CancellationToken cancellationToken, IRestClient client = null)
         {
             client = client ?? _Client;
-            var response = await _TimeLimiter.Perform(async () => await ExecuteBasic(client, request, cancellationToken), cancellationToken);
+            var response = await TimeLimiter.Perform(async () => await ExecuteBasic(client, request, cancellationToken), cancellationToken);
 
             if (response.ErrorException != null)
                 throw new DiscogsException(_ErrorMessage, response.ErrorException);
