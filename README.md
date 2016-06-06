@@ -40,17 +40,21 @@ Using IEnumerable
   var enumerable = _DiscogsClient.SearchAsEnumerable(discogsSearch);
 ```
 
-####Get Release, Master ou Artist Information
+####Get Release, Master, Artist or Label Information
 ```C#
   var release = await _DiscogsClient.GetRelease(1704673);
 ```
 
 ```C#
-  var master = await _DiscogsClient.GetMaster(1704673);
+  var master = await _DiscogsClient.GetMaster(47813);
 ```
 
 ```C#
-  var artist = await _DiscogsClient.GetArtist(1704673);
+  var artist = await _DiscogsClient.GetArtist(224506);
+```
+
+```C#
+  var label = await _DiscogsClient.GetLabel(125);
 ```
 
 ####Download Image
