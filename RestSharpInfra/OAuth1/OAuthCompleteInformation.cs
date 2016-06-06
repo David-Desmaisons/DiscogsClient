@@ -23,6 +23,8 @@ namespace RestSharpInfra.OAuth1
             TokenInformation = oAuthTokenInformation;
         }
 
+        public bool Complete => (ConsumerInformation != null) && ((TokenInformation?.Valid)??false);
+
         public OAuth1Authenticator GetAuthenticatorForProtectedResource() 
         {
             return OAuth1Authenticator.ForProtectedResource(ConsumerInformation.ConsumerKey, ConsumerInformation.ConsumerSecret, 

@@ -36,43 +36,33 @@ namespace RestSharpInfra.OAuth1
             _ConsumerInformation = consumerInformation;
         }
 
-        public async Task<OAuthCompleteInformation> AuthorizeImplicitelly() 
+        public async Task<OAuthCompleteInformation> Authorize(Func<string, Task<string>> extractVerifier) 
         {
-            if (_CompleteInformation != null)
-                return _CompleteInformation;
-
-            await RequestToken();
-
-            return _CompleteInformation;
-        }
-
-        private async Task RequestToken() 
-        {
-            if (_TokenInformation.PartialOrValid)
-                return;
-
-            var requestTokenClient = GetRequestTokenClient(RequestUrl);
-            _TokenInformation = await GetTokenInformationFromRequest(requestTokenClient, _RequestTokenUrl);
-
-            if (!TokenIsValid)
-                return;
-
-            _CompleteInformation = new OAuthCompleteInformation(_ConsumerInformation, _TokenInformation);
-        }
-
-        public async Task<OAuthCompleteInformation> AuthorizeExplicitelly(Func<string, Task<string>> extractVerifier) 
-        {
-            var res = await AuthorizeImplicitelly();
-            if (res != null)
-                return res;
-
-            if (!TokenIsPartialOrValid)
+            var res = await RequestToken();
+            if ((res == null) ||(!TokenIsPartialOrValid))
                 return null;
 
             var url = GetAuthorizeUrl();
             var verifier = await extractVerifier(url);
 
             return _CompleteInformation = await Access(verifier);
+        }
+
+        private async Task<OAuthCompleteInformation> RequestToken()
+        {
+            if (_CompleteInformation != null)
+                return _CompleteInformation;
+
+            if (_TokenInformation?.PartialOrValid == true)
+                return null;
+
+            var requestTokenClient = GetRequestTokenClient(RequestUrl);
+            _TokenInformation = await GetTokenInformationFromRequest(requestTokenClient, _RequestTokenUrl);
+
+            if (!TokenIsValid)
+                return null;
+
+            return _CompleteInformation = new OAuthCompleteInformation(_ConsumerInformation, _TokenInformation);
         }
 
         private string GetAuthorizeUrl()
