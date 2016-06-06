@@ -24,7 +24,7 @@ namespace DiscogsClient.Test
         }
 
         [Fact(Skip = "Need internet access and valid token and keys.")]
-        public async Task SearchAll_Release()
+        public async Task Search_Release()
         {
             var discogsSearch = new DiscogsSearch()
             {
@@ -58,7 +58,7 @@ namespace DiscogsClient.Test
         }
 
         [Fact(Skip = "Need internet access and valid token and keys.")]
-        public async Task SearchAll_Artist()
+        public async Task Search_Artist()
         {
             var discogsSearch = new DiscogsSearch()
             {
