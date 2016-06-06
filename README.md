@@ -15,7 +15,7 @@ C# Client library for [Discogs API v2.0](https://www.discogs.com/developers/)
 ####Create discogs client
 
 ```C#
-  //Create authentication object using private and public keys: you should fournishes real keys here
+  //Create authentication object using private and public keys: you should fournish real keys here
   var oAuthCompleteInformation = new OAuthCompleteInformation("consumerKey", 
                                   "consumerSecret", "token", "tokenSecret");
   //Create discogs client using the authentication
@@ -23,7 +23,7 @@ C# Client library for [Discogs API v2.0](https://www.discogs.com/developers/)
 ```
 ####Search The DataBase
 
-Using IObservable
+Using IObservable:
 ```C#
   var discogsSearch = new DiscogsSearch()
   {
@@ -35,7 +35,7 @@ Using IObservable
   var observable = _DiscogsClient.Search(discogsSearch);
 ```
 
-Using IEnumerable
+Using IEnumerable:
 ```C#
   //Alternatively retreive same result as enumerable 
   var enumerable = _DiscogsClient.SearchAsEnumerable(discogsSearch);
@@ -67,4 +67,26 @@ Using IEnumerable
   await _DiscogsClient.SaveImage(res.images[0], Path.GetTempPath(), "Ornette-TSOAJTC");
 ```
 
-See [DiscogsClientTest](https://github.com/David-Desmaisons/DiscogsClient/blob/master/DiscogsClient.Test/DiscogsClientTest.cs) for full sample of available APIs.
+####Authorize new user
+```C#
+  //Create authentificator information: you should fournish real keys here
+  var oAuthConsumerInformation = new OAuthConsumerInformation("consumerKey", "consumerSecret");
+  
+  //Create Authentifier client
+  var discogsAuthentifierClient = new DiscogsAuthentifierClient(oAuthConsumerInformation);
+
+  //Retreive Token and Token secret 
+  var aouth = discogsClient.Authorize(s => Task.FromResult(GetToken(s))).Result;
+```
+
+Authorize takes a Func< string, Task< string>> as parameter, receiving the authentication url and returning the corresponding access key. Trivial implementation:
+
+```C#
+  private static string GetToken(string url)
+  {
+    Console.WriteLine("Please authorize the application and enter the final key in the console");
+    Process.Start(url);
+    return Console.ReadLine();
+  }
+```
+See [DiscogsClientTest](https://github.com/David-Desmaisons/DiscogsClient/blob/master/DiscogsClient.Test/DiscogsClientTest.cs) and [DiscogsAuthenticationConsole](https://github.com/David-Desmaisons/DiscogsClient/blob/master/DiscogsAuthenticationConsole/Program.cs) for full samples of available APIs.
