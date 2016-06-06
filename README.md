@@ -6,6 +6,7 @@ C# Client library for [Discogs API v2.0](https://www.discogs.com/developers/)
 * Include API to authorize user (generating OAuth1.0 token and token secret)
 * Full support to [DataBase API](https://www.discogs.com/developers/#page:database) including image download
 * Support of identity API
+* Transparent support of rate limit
 * Asynchroneous and cancellable API using Tasks
 * Transparent management of pagination using none blocking API (Reactive IObservable) or IEnumerable
 
