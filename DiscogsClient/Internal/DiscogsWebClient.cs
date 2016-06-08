@@ -152,8 +152,10 @@ namespace DiscogsClient.Internal
         public async Task Download(string url, Stream copyStream, CancellationToken cancellationToken)
         {
             var client = GetClient(url, 15000);
-            var request = new RestRequest(Method.GET);
-            request.ResponseWriter = (stream) => stream.CopyTo(copyStream);
+            var request = new RestRequest(Method.GET) 
+            {
+                ResponseWriter = (stream) => stream.CopyTo(copyStream)
+            };
             await GetResponse(request, cancellationToken, client);
         }
 
