@@ -177,8 +177,8 @@ namespace DiscogsClient
         /// <param name="fileName">Type of image to download: thumbnail or normal</param>
         /// <param name="type">Type of image to download: thumbnail or normal</param>
         /// <param name="cancellationToken">Cancellation Token</param>
-        /// <returns>the image stream</returns>
-        Task SaveImage(DiscogsImage image, string path, string fileName, CancellationToken cancellationToken, DiscogsImageFormatType type = DiscogsImageFormatType.Normal);
+        /// <returns>the file path</returns>
+        Task<string> SaveImage(DiscogsImage image, string path, string fileName, CancellationToken cancellationToken, DiscogsImageFormatType type = DiscogsImageFormatType.Normal);
 
         /// <summary>
         /// Download the stream corresponding to a given image
@@ -187,7 +187,7 @@ namespace DiscogsClient
         /// <param name="path">Type of image to download: thumbnail or normal</param>
         /// <param name="fileName">Type of image to download: thumbnail or normal</param>
         /// <param name="type">Type of image to download: thumbnail or normal</param>
-        /// <returns>the image stream</returns>
-        Task SaveImage(DiscogsImage image, string path, string fileName, DiscogsImageFormatType type = DiscogsImageFormatType.Normal);
+        /// <returns>the file path</returns>
+        Task<string> SaveImage(DiscogsImage image, string path, string fileName, DiscogsImageFormatType type = DiscogsImageFormatType.Normal);
     }
 }
