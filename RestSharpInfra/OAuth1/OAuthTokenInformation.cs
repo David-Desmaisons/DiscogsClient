@@ -2,8 +2,8 @@
 {
     public class OAuthTokenInformation 
     {
-        public string Token { get; private set; }
-        public string TokenSecret { get; private set; }
+        public string Token { get; }
+        public string TokenSecret { get; }
 
         public OAuthTokenInformation(string token, string tokenSecret) 
         {

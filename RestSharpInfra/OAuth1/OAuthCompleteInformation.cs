@@ -4,8 +4,8 @@ namespace RestSharpInfra.OAuth1
 {
     public class OAuthCompleteInformation 
     {
-        public OAuthConsumerInformation ConsumerInformation { get; private set; }
-        public OAuthTokenInformation TokenInformation { get; private set; }
+        public OAuthConsumerInformation ConsumerInformation { get; }
+        public OAuthTokenInformation TokenInformation { get; }
 
         public OAuthCompleteInformation(string consumerKey, string consumerSecret, string token, string tokenSecret): 
             this(new OAuthConsumerInformation(consumerKey, consumerSecret), token, tokenSecret)
