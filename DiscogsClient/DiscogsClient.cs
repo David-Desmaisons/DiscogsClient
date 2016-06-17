@@ -246,12 +246,12 @@ namespace DiscogsClient
             await _Client.Download(url, copyStream, cancellationToken); 
         }
 
-        public Task SaveImage(DiscogsImage image, string path, string fileName, DiscogsImageFormatType type = DiscogsImageFormatType.Normal)
+        public Task<string> SaveImage(DiscogsImage image, string path, string fileName, DiscogsImageFormatType type = DiscogsImageFormatType.Normal)
         {
             return SaveImage(image, path, fileName, CancellationToken.None, type);
         }
 
-        public async Task SaveImage(DiscogsImage image, string path, string fileName, CancellationToken cancellationToken, DiscogsImageFormatType type = DiscogsImageFormatType.Normal)
+        public async Task<string> SaveImage(DiscogsImage image, string path, string fileName, CancellationToken cancellationToken, DiscogsImageFormatType type = DiscogsImageFormatType.Normal)
         { 
             var url = (type == DiscogsImageFormatType.Normal) ? image.uri : image.uri150;
             var extension = Path.GetExtension(url);
@@ -260,6 +260,7 @@ namespace DiscogsClient
             {
                 await DownloadImage(image, writer, cancellationToken, type);
             }
+            return fullPath;
         }
     }
 }
