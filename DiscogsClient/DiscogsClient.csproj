@@ -43,6 +43,10 @@
       <HintPath>..\packages\RestSharp.105.2.3\lib\net46\RestSharp.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="RestSharpHelper, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\RestSharpHelper.1.1.0\lib\net461\RestSharpHelper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Reactive.Core, Version=2.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -112,17 +116,9 @@
     <Compile Include="IDiscogsDataBaseClient.cs" />
     <Compile Include="IDiscogsReleaseRatingClient.cs" />
     <Compile Include="IDiscogsUserIdentityClient.cs" />
-    <Compile Include="Internal\DiscogsDateTimeConverter.cs" />
-    <Compile Include="Internal\DiscogsTimeSpanConverter.cs" />
     <Compile Include="Internal\DiscogsWebClient.cs" />
     <Compile Include="Internal\IDiscogsWebClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\RestSharpInfra\RestSharpInfra.csproj">
-      <Project>{a9655673-4031-42c9-a3d6-53d01dac5dbe}</Project>
-      <Name>RestSharpInfra</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

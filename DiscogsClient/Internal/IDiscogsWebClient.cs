@@ -38,6 +38,8 @@ namespace DiscogsClient.Internal
 
         Task<HttpStatusCode> Execute(IRestRequest request, CancellationToken cancellationToken);
 
-        Task Download(string url, Stream copyStream, CancellationToken cancellationToken);
+        Task Download(string url, Stream copyStream, CancellationToken cancellationToken, int timeOut=15000);
+
+        Task<string> SaveFile(string url, string path, string fileName, CancellationToken cancellationToken, int timeOut = 15000);
     }
 }

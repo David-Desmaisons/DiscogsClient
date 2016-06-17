@@ -2,8 +2,6 @@
 using DiscogsClient.Data.Result;
 using DiscogsClient.Internal;
 using RestSharp;
-using RestSharpInfra;
-using RestSharpInfra.OAuth1;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -11,20 +9,19 @@ using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.IO;
+using RestSharpHelper;
+using RestSharpHelper.OAuth1;
 
 namespace DiscogsClient
 {
-    public class DiscogsClient : IDiscogsDataBaseClient, IDiscogsUserIdentityClient
+    public class DiscogsClient :  IDiscogsDataBaseClient, IDiscogsUserIdentityClient
     {
         private readonly IDiscogsWebClient _Client;
         private DiscogsIdentity _DiscogsIdentity;
 
-        public DiscogsClient(OAuthCompleteInformation oAuthCompleteInformation, string userAgent=null, int timeOut = 5000)
+        public DiscogsClient(OAuthCompleteInformation oAuthCompleteInformation, string userAgent=null, int timeOut = 5000) 
         {
-            _Client = new DiscogsWebClient(oAuthCompleteInformation, timeOut)
-            {
-                UserAgent = userAgent
-            };
+            _Client = new DiscogsWebClient(oAuthCompleteInformation, userAgent, timeOut);
         }
 
         public Task<DiscogsIdentity> GetUserIdentity()
@@ -254,13 +251,7 @@ namespace DiscogsClient
         public async Task<string> SaveImage(DiscogsImage image, string path, string fileName, CancellationToken cancellationToken, DiscogsImageFormatType type = DiscogsImageFormatType.Normal)
         { 
             var url = (type == DiscogsImageFormatType.Normal) ? image.uri : image.uri150;
-            var extension = Path.GetExtension(url);
-            var fullPath = Path.Combine(path, fileName + extension);
-            using (var writer = File.Create(fullPath))
-            {
-                await DownloadImage(image, writer, cancellationToken, type);
-            }
-            return fullPath;
+            return await _Client.SaveFile(url, path, fileName, cancellationToken);
         }
     }
 }

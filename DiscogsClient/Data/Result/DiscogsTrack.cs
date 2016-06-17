@@ -1,6 +1,6 @@
-﻿using DiscogsClient.Internal;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
+using RestSharpHelper;
 
 namespace DiscogsClient.Data.Result 
 {
@@ -8,7 +8,7 @@ namespace DiscogsClient.Data.Result
     {
         public string title { get; set; }
         public string type_ { get; set; }
-        [JsonConverter(typeof(DiscogsTimeSpanConverter))]
+        [JsonConverter(typeof(BasicTimeSpanConverter))]
         public TimeSpan? duration { get; set; }
         public string position { get; set; }
         public DiscogsReleaseArtist[] extraartists { get; set; }

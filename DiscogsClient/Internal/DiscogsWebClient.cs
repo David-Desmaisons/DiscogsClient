@@ -1,19 +1,13 @@
-﻿using Newtonsoft.Json;
-using RateLimiter;
+﻿using RateLimiter;
 using RestSharp;
-using RestSharpInfra.OAuth1;
 using System;
-using System.Net;
-using System.Threading;
-using System.Threading.Tasks;
-using System.IO;
+using RestSharpHelper;
+using RestSharpHelper.OAuth1;
 
 namespace DiscogsClient.Internal
 {
-    internal class DiscogsWebClient : IDiscogsWebClient
+    internal class DiscogsWebClient : RestSharpWebClient, IDiscogsWebClient
     {
-        private const string _ErrorMessage = "Error During Request Processing";
-        private const string _UserAgentFallBack = @"DiscogsClient https://github.com/David-Desmaisons/DiscogsClient";
         private const string _SearchUrl = "database/search";
         private const string _ReleaseUrl = "releases/{releaseId}";
         private const string _MasterUrl = "masters/{masterId}";
@@ -26,38 +20,28 @@ namespace DiscogsClient.Internal
         private const string _CommunityReleaseRatingUrl = "releases/{releaseId}/rating";
         private const string _IdendityUrl = "oauth/identity";
         private readonly OAuthCompleteInformation _OAuthCompleteInformation;
-        private readonly IRestClient _Client;
 
-        private static TimeLimiter TimeLimiter { get; set; }
+        protected override string UrlBase => "https://api.discogs.com";
+        protected override string UserAgentFallBack => @"DiscogsClient https://github.com/David-Desmaisons/DiscogsClient";
+        protected override TimeLimiter TimeLimiter => SharedTimeLimiter;
 
-        private string UrlBase => "https://api.discogs.com";
+        private static TimeLimiter SharedTimeLimiter { get; }
 
-        private string _UserAgent;
-        public string UserAgent
-        {
-            get { return _UserAgent ?? _UserAgentFallBack; }
-            set { _UserAgent = value; }
-        }
-
-        public DiscogsWebClient(OAuthCompleteInformation oAuthCompleteInformation, int timeOut = 10000)
+        public DiscogsWebClient(OAuthCompleteInformation oAuthCompleteInformation, string userAgent, int timeOut = 10000):
+            base(userAgent, timeOut)
         {
             _OAuthCompleteInformation = oAuthCompleteInformation;
-            _Client = GetClient(UrlBase, timeOut);
         }
 
         static DiscogsWebClient()
         {
-            TimeLimiter = TimeLimiter.GetFromMaxCountByInterval(240, TimeSpan.FromMinutes(1));
+            SharedTimeLimiter = TimeLimiter.GetFromMaxCountByInterval(240, TimeSpan.FromMinutes(1));
         }
 
-        private IRestClient GetClient(string UrlBase, int timeOut=10000)
+        protected override IRestClient Mature(IRestClient client) 
         {
-            return new RestClient(UrlBase)
-            {
-                UserAgent = _UserAgent,
-                Timeout = timeOut,
-                Authenticator = _OAuthCompleteInformation?.GetAuthenticatorForProtectedResource()
-            };
+            client.Authenticator = _OAuthCompleteInformation?.GetAuthenticatorForProtectedResource();
+            return client;
         }
 
         public IRestRequest GetUserIdentityRequest()
@@ -135,44 +119,6 @@ namespace DiscogsClient.Internal
         private IRestRequest GetRequest(string url, Method method = Method.GET)
         {
             return new RestRequest(url, method).AddHeader("Accept-Encoding", "gzip");
-        }
-
-        public async Task<T> Execute<T>(IRestRequest request, CancellationToken cancellationToken)
-        {
-            var response = await GetResponse(request, cancellationToken);
-            return JsonConvert.DeserializeObject<T>(response.Content);
-        }
-
-        public async Task<HttpStatusCode> Execute(IRestRequest request, CancellationToken cancellationToken)
-        {
-            var response = await GetResponse(request, cancellationToken);
-            return response.StatusCode;
-        }
-
-        public async Task Download(string url, Stream copyStream, CancellationToken cancellationToken)
-        {
-            var client = GetClient(url, 15000);
-            var request = new RestRequest(Method.GET) 
-            {
-                ResponseWriter = (stream) => stream.CopyTo(copyStream)
-            };
-            await GetResponse(request, cancellationToken, client);
-        }
-
-        private async Task<IRestResponse> GetResponse(IRestRequest request, CancellationToken cancellationToken, IRestClient client = null)
-        {
-            client = client ?? _Client;
-            var response = await TimeLimiter.Perform(async () => await ExecuteBasic(client, request, cancellationToken), cancellationToken);
-
-            if (response.ErrorException != null)
-                throw new DiscogsException(_ErrorMessage, response.ErrorException);
-
-            return response;
-        }
-
-        private static Task<IRestResponse> ExecuteBasic(IRestClient client, IRestRequest request, CancellationToken cancellationToken)
-        {
-            return client.ExecuteTaskAsync(request, cancellationToken);
         }
     }
 }

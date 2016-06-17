@@ -1,4 +1,4 @@
-﻿using RestSharpInfra.OAuth1;
+﻿using RestSharpHelper.OAuth1;
 
 namespace DiscogsClient
 {

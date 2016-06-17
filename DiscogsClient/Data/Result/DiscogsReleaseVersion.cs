@@ -1,6 +1,6 @@
 ﻿using System;
-using DiscogsClient.Internal;
 using Newtonsoft.Json;
+using RestSharpHelper;
 
 namespace DiscogsClient.Data.Result 
 {
@@ -10,7 +10,7 @@ namespace DiscogsClient.Data.Result
         public string country { get; set; }
         public string format { get; set; }
         public string label { get; set; }
-        [JsonConverter(typeof(DiscogsDateTimeConverter))]
+        [JsonConverter(typeof(BasicDateTimeConverter))]
         public DateTime? released { get; set; }
         public string resource_url { get; set; }
         public string status { get; set; }

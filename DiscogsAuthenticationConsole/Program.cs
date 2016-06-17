@@ -1,8 +1,8 @@
 ﻿using DiscogsClient;
-using RestSharpInfra.OAuth1;
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using RestSharpHelper.OAuth1;
 
 namespace DiscogsAuthenticationConsole
 {

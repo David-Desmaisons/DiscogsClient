@@ -1,11 +1,11 @@
 ﻿using DiscogsClient.Data.Query;
 using DiscogsClient.Data.Result;
 using FluentAssertions;
-using RestSharpInfra.OAuth1;
 using System.Diagnostics;
 using System.IO;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
+using RestSharpHelper.OAuth1;
 using Xunit;
 
 namespace DiscogsClient.Test
