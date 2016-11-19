@@ -20,6 +20,7 @@ namespace DiscogsClient.Internal
         private const string _CommunityReleaseRatingUrl = "releases/{releaseId}/rating";
         private const string _IdendityUrl = "oauth/identity";
         private readonly OAuthCompleteInformation _OAuthCompleteInformation;
+        private readonly TokenAuthenticationInformation _tokenAuthenticationInformation;
 
         protected override string UrlBase => "https://api.discogs.com";
         protected override string UserAgentFallBack => @"DiscogsClient https://github.com/David-Desmaisons/DiscogsClient";
@@ -31,6 +32,12 @@ namespace DiscogsClient.Internal
             base(userAgent, timeOut)
         {
             _OAuthCompleteInformation = oAuthCompleteInformation;
+        }
+
+        public DiscogsWebClient(TokenAuthenticationInformation tokenAuthenticationInformation, string userAgent, int timeOut = 10000)
+            : base(userAgent, timeOut)
+        {
+            _tokenAuthenticationInformation = tokenAuthenticationInformation;
         }
 
         static DiscogsWebClient()
@@ -118,7 +125,12 @@ namespace DiscogsClient.Internal
 
         private IRestRequest GetRequest(string url, Method method = Method.GET)
         {
-            return new RestRequest(url, method).AddHeader("Accept-Encoding", "gzip");
+            var request = new RestRequest(url, method).AddHeader("Accept-Encoding", "gzip");
+            if (_tokenAuthenticationInformation != null)
+            {
+                request.AddHeader("Authorization", _tokenAuthenticationInformation.GetDiscogsSecretToken());
+            }
+            return request;
         }
     }
 }

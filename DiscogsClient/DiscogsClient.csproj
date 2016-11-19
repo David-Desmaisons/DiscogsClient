@@ -118,6 +118,7 @@
     <Compile Include="IDiscogsUserIdentityClient.cs" />
     <Compile Include="Internal\DiscogsWebClient.cs" />
     <Compile Include="Internal\IDiscogsWebClient.cs" />
+    <Compile Include="Internal\TokenAuthenticationInformation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
