@@ -17,7 +17,7 @@ namespace DiscogsClient
         /// <param name="releaseId">The Release ID</param>
         /// <param name="token">Cancellation Token</param>
         /// <returns>The corresponding release</returns>
-        Task<DiscogsRelease> GetRelease(int releaseId, CancellationToken token);
+        Task<DiscogsRelease> GetReleaseAsync(int releaseId, CancellationToken token);
 
         /// <summary>
         /// Get a release
@@ -34,7 +34,7 @@ namespace DiscogsClient
         /// <param name="masterId">The Master ID</param>
         /// <param name="token">Cancellation Token</param>
         /// <returns>The corresponding master</returns>
-        Task<DiscogsMaster> GetMaster(int masterId, CancellationToken token);
+        Task<DiscogsMaster> GetMasterAsync(int masterId, CancellationToken token);
 
         /// <summary>
         /// Get a master release
@@ -69,7 +69,7 @@ namespace DiscogsClient
         /// <param name="artistId">The Release ID</param>
         /// <param name="token">Cancellation Token</param>
         /// <returns>The corresponding artist</returns>
-        Task<DiscogsArtist> GetArtist(int artistId, CancellationToken token);
+        Task<DiscogsArtist> GetArtistAsync(int artistId, CancellationToken token);
 
         /// <summary>
         /// Get an artist
@@ -106,7 +106,7 @@ namespace DiscogsClient
         /// <param name="labelId">The Label ID</param>
         /// <param name="token">Cancellation Token</param>
         /// <returns>The corresponding label</returns>
-        Task<DiscogsLabel> GetLabel(int labelId, CancellationToken token);
+        Task<DiscogsLabel> GetLabelAsync(int labelId, CancellationToken token);
 
         /// <summary>
         /// Get a label
@@ -159,7 +159,7 @@ namespace DiscogsClient
         /// <param name="copyStream">Stream where image stream will be copied</param>
         /// <param name="cancellationToken">Cancellation Token</param>
         /// <param name="type">Type of image to download: thumbnail or normal</param>
-        Task DownloadImage(DiscogsImage image, Stream copyStream, CancellationToken cancellationToken, DiscogsImageFormatType type = DiscogsImageFormatType.Normal);
+        Task DownloadImageAsync(DiscogsImage image, Stream copyStream, CancellationToken cancellationToken, DiscogsImageFormatType type = DiscogsImageFormatType.Normal);
 
         /// <summary>
         /// Download the stream corresponding to a given image
@@ -178,7 +178,7 @@ namespace DiscogsClient
         /// <param name="type">Type of image to download: thumbnail or normal</param>
         /// <param name="cancellationToken">Cancellation Token</param>
         /// <returns>the file path</returns>
-        Task<string> SaveImage(DiscogsImage image, string path, string fileName, CancellationToken cancellationToken, DiscogsImageFormatType type = DiscogsImageFormatType.Normal);
+        Task<string> SaveImageAsync(DiscogsImage image, string path, string fileName, CancellationToken cancellationToken, DiscogsImageFormatType type = DiscogsImageFormatType.Normal);
 
         /// <summary>
         /// Download the stream corresponding to a given image

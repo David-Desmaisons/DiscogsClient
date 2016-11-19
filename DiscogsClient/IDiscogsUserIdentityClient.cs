@@ -14,7 +14,7 @@ namespace DiscogsClient
         /// </summary>
         /// <param name="cancellationToken">Cancellation Token</param>
         /// <returns>The current discogs user identity</returns>
-        Task<DiscogsIdentity> GetUserIdentity(CancellationToken cancellationToken);
+        Task<DiscogsIdentity> GetUserIdentityAsync(CancellationToken cancellationToken);
 
         /// <summary>
         /// Retrieve basic information about the authenticated user.
