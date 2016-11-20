@@ -10,7 +10,7 @@ namespace DiscogsClient.Internal
         public TokenAuthenticationInformation(string token)
         {
             this.Token = token;
-            _secretToken = $"Discogs token={_secretToken}";
+            _secretToken = $"Discogs token={token}";
         }
 
         public string GetDiscogsSecretToken()
