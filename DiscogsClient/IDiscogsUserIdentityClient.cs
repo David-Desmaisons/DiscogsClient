@@ -23,6 +23,6 @@ namespace DiscogsClient
         /// See https://www.discogs.com/developers/#page:user-identity,header:user-identity-identity
         /// </summary>
         /// <returns>The current discogs user identity</returns>
-        Task<DiscogsIdentity> GetUserIdentity();
+        Task<DiscogsIdentity> GetUserIdentityAsync();
     }
 }
