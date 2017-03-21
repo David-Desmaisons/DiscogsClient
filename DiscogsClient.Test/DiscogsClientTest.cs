@@ -24,7 +24,7 @@ namespace DiscogsClient.Test
         }
 
         [Fact(Skip = "Need internet access and valid token and keys.")]
-        public async Task Search_Release()
+        public async Task Search_ReleaseAsync()
         {
             var discogsSearch = new DiscogsSearch()
             {
@@ -37,28 +37,28 @@ namespace DiscogsClient.Test
         }
 
         [Fact(Skip = "Need internet access and valid token and keys.")]
-        public async Task GetUserIdentity()
+        public async Task GetUserIdentityAsync()
         {
             var res = await _DiscogsClient.GetUserIdentity();
             res.Should().NotBeNull();
         }
 
         [Fact(Skip = "Need internet access and valid token and keys.")]
-        public async Task SetUserReleaseRating()
+        public async Task SetUserReleaseRatingAsync()
         {
             var res = await _DiscogsClient.SetUserReleaseRating(488973, 5);
             res.Should().NotBeNull();
         }
 
         [Fact(Skip = "Need internet access and valid token and keys.")]
-        public async Task DeleteUserReleaseRating()
+        public async Task DeleteUserReleaseRatingAsync()
         {
             var res = await _DiscogsClient.DeleteUserReleaseRating(488973);
             res.Should().BeTrue();
         }
 
         [Fact(Skip = "Need internet access and valid token and keys.")]
-        public async Task Search_Artist()
+        public async Task Search_ArtistAsync()
         {
             var discogsSearch = new DiscogsSearch()
             {
@@ -77,7 +77,7 @@ namespace DiscogsClient.Test
         }
 
         [Fact(Skip = "Need internet access.")]
-        public async Task GetMasterReleaseVersion()
+        public async Task GetMasterReleaseVersionAsync()
         {
             var observable = _DiscogsClient.GetMasterReleaseVersions(47813);
             await observable.ForEachAsync(OnResult);
@@ -90,28 +90,28 @@ namespace DiscogsClient.Test
         }
 
         [Fact(Skip = "Need internet access.")]
-        public async Task GetRelease()
+        public async Task GetReleaseAsync()
         {     
             var res = await _DiscogsClient.GetRelease(1704673);
             res.Should().NotBeNull();
         }
 
         [Fact(Skip = "Need internet access.")]
-        public async Task GetMaster() 
+        public async Task GetMasterAsync() 
         {
             var res = await _DiscogsClient.GetMaster(47813);
             res.Should().NotBeNull();
         }
 
         [Fact (Skip = "Need internet access.")]
-        public async Task GetArtist() 
+        public async Task GetArtistAsync() 
         { 
             var res = await _DiscogsClient.GetArtist(224506);
             res.Should().NotBeNull();
         }
 
         [Fact(Skip = "Need internet access.")]
-        public async Task GetArtistRelease() 
+        public async Task GetArtistReleaseAsync() 
         {
             var observable = _DiscogsClient.GetArtistRelease(200818);
             await observable.ForEachAsync(OnResult);
@@ -124,14 +124,14 @@ namespace DiscogsClient.Test
         }
 
         [Fact(Skip = "Need internet access.")]
-        public async Task GetLabel()
+        public async Task GetLabelAsync()
         {
             var res = await _DiscogsClient.GetLabel(125);
             res.Should().NotBeNull();
         }
 
         [Fact(Skip = "Need internet access.")]
-        public async Task GetAllLabelReleases()
+        public async Task GetAllLabelReleasesAsync()
         {
             var observable = _DiscogsClient.GetAllLabelReleases(26557);
             await observable.ForEachAsync(OnResult);
@@ -144,21 +144,21 @@ namespace DiscogsClient.Test
         }
 
         [Fact(Skip = "Need internet access.")]
-        public async Task GetUserReleaseRating()
+        public async Task GetUserReleaseRatingAsync()
         {
             var res = await _DiscogsClient.GetUserReleaseRating("andersinstockholm", 488973);
             res.Should().NotBeNull();
         }
 
         [Fact(Skip = "Need internet access.")]
-        public async Task GetCommunityReleaseRating()
+        public async Task GetCommunityReleaseRatingAsync()
         {
             var res = await _DiscogsClient.GetCommunityReleaseRating(488973);
             res.Should().NotBeNull();
         }
 
         [Fact(Skip = "Need internet access and valid token and keys.")]
-        public async Task SaveImage()
+        public async Task SaveImageAsync()
         {
             var res = await _DiscogsClient.GetMaster(47813);
             res.Should().NotBeNull();
