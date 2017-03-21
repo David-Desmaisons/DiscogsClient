@@ -14,7 +14,7 @@ Nuget [here](https://www.nuget.org/packages/DiscogsClient/)
 
 ## Sample usage
 
-####Create discogs client
+#### Create discogs client
 
 ```C#
   //Create authentication object using private and public keys: you should fournish real keys here
@@ -23,7 +23,7 @@ Nuget [here](https://www.nuget.org/packages/DiscogsClient/)
   //Create discogs client using the authentication
   var discogsClient = new DiscogsClient(oAuthCompleteInformation);
 ```
-####Search The DataBase
+#### Search The DataBase
 
 Using IObservable:
 ```C#
@@ -43,7 +43,7 @@ Using IEnumerable:
   var enumerable = _DiscogsClient.SearchAsEnumerable(discogsSearch);
 ```
 
-####Get Release, Master, Artist or Label Information
+#### Get Release, Master, Artist or Label Information
 ```C#
   var release = await _DiscogsClient.GetRelease(1704673);
 ```
@@ -60,7 +60,7 @@ Using IEnumerable:
   var label = await _DiscogsClient.GetLabel(125);
 ```
 
-####Download Image
+#### Download Image
 ```C#
   //Retrieve Release information
   var res = await _DiscogsClient.GetMaster(47813);
@@ -69,7 +69,7 @@ Using IEnumerable:
   await _DiscogsClient.SaveImage(res.images[0], Path.GetTempPath(), "Ornette-TSOAJTC");
 ```
 
-####Authorize new user
+#### Authorize new user
 ```C#
   //Create authentificator information: you should fournish real keys here
   var oAuthConsumerInformation = new OAuthConsumerInformation("consumerKey", "consumerSecret");
