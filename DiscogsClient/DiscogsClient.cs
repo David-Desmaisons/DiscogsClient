@@ -19,17 +19,22 @@ namespace DiscogsClient
         private readonly IDiscogsWebClient _Client;
         private DiscogsIdentity _DiscogsIdentity;
 
-        public DiscogsClient(OAuthCompleteInformation oAuthCompleteInformation, string userAgent=null, int timeOut = 5000) 
+        public DiscogsClient(OAuthCompleteInformation oAuthCompleteInformation, string userAgent = null, int timeOut = 5000)
         {
             _Client = new DiscogsWebClient(oAuthCompleteInformation, userAgent, timeOut);
         }
 
-        public Task<DiscogsIdentity> GetUserIdentity()
+        public DiscogsClient(TokenAuthenticationInformation tokenAuthenticationInformation, string userAgent = null, int timeOut = 5000)
         {
-            return GetUserIdentity(CancellationToken.None);
+            _Client = new DiscogsWebClient(tokenAuthenticationInformation, userAgent, timeOut);
         }
 
-        public async Task<DiscogsIdentity> GetUserIdentity(CancellationToken token)
+        public async Task<DiscogsIdentity> GetUserIdentityAsync()
+        {
+            return await GetUserIdentityAsync(CancellationToken.None);
+        }
+
+        public async Task<DiscogsIdentity> GetUserIdentityAsync(CancellationToken token)
         {
             if (_DiscogsIdentity != null)
                 return _DiscogsIdentity;
@@ -38,92 +43,92 @@ namespace DiscogsClient
             return _DiscogsIdentity = await _Client.Execute<DiscogsIdentity>(request, token);
         }
 
-        public Task<DiscogsRelease> GetRelease(int releaseId)
+        public async Task<DiscogsRelease> GetReleaseAsync (int releaseId)
         {
-            return GetRelease(releaseId, CancellationToken.None);
+            return await GetReleaseAsync(releaseId, CancellationToken.None);
         }
 
-        public async Task<DiscogsRelease> GetRelease(int releaseId, CancellationToken token)
+        public async Task<DiscogsRelease> GetReleaseAsync(int releaseId, CancellationToken token)
         {
             var request = _Client.GetReleaseRequest(releaseId);
             return await _Client.Execute<DiscogsRelease>(request, token);
         }
 
-        public Task<DiscogsMaster> GetMaster(int masterId)
+        public async Task<DiscogsMaster> GetMasterAsync(int masterId)
         {
-            return GetMaster(masterId, CancellationToken.None);
+            return await GetMasterAsync(masterId, CancellationToken.None);
         }
 
-        public async Task<DiscogsMaster> GetMaster(int masterId, CancellationToken token)
+        public async Task<DiscogsMaster> GetMasterAsync(int masterId, CancellationToken token)
         {
             var request = _Client.GetMasterRequest(masterId);
             return await _Client.Execute<DiscogsMaster>(request, token);
         }
 
-        public Task<DiscogsArtist> GetArtist(int artistId) 
+        public async Task<DiscogsArtist> GetArtistAsync(int artistId) 
         {
-            return GetArtist(artistId, CancellationToken.None);
+            return await GetArtistAsync(artistId, CancellationToken.None);
         }
 
-        public async Task<DiscogsArtist> GetArtist(int artistId, CancellationToken token) 
+        public async Task<DiscogsArtist> GetArtistAsync(int artistId, CancellationToken token) 
         {
             var request = _Client.GetArtistRequest(artistId);
             return await _Client.Execute<DiscogsArtist>(request, token);
         }
 
-        public Task<DiscogsLabel> GetLabel(int labelId) 
+        public async Task<DiscogsLabel> GetLabelAsync(int labelId) 
         {
-            return GetLabel(labelId, CancellationToken.None);
+            return await GetLabelAsync(labelId, CancellationToken.None);
         }
 
-        public async Task<DiscogsLabel> GetLabel(int labelId, CancellationToken token) 
+        public async Task<DiscogsLabel> GetLabelAsync(int labelId, CancellationToken token) 
         {
             var request = _Client.GetLabelRequest(labelId);
             return await _Client.Execute<DiscogsLabel>(request, token);
         }
 
-        public Task<DiscogsReleaseRating> GetUserReleaseRating(string userName, int releaseId)
+        public async Task<DiscogsReleaseRating> GetUserReleaseRatingAsync(string userName, int releaseId)
         {
-            return GetUserReleaseRating(userName, releaseId, CancellationToken.None);
+            return await GetUserReleaseRatingAsync(userName, releaseId, CancellationToken.None);
         }
 
-        public async Task<DiscogsReleaseRating> GetUserReleaseRating(string userName, int releaseId, CancellationToken token)
+        public async Task<DiscogsReleaseRating> GetUserReleaseRatingAsync(string userName, int releaseId, CancellationToken token)
         {
             var request = _Client.GetGetUserReleaseRatingRequest(userName, releaseId);
             return await _Client.Execute<DiscogsReleaseRating>(request, token);          
         }
 
-        public Task<DiscogsReleaseRating> SetUserReleaseRating(int releaseId, int rating)
+        public async Task<DiscogsReleaseRating> SetUserReleaseRatingAsync(int releaseId, int rating)
         {
-            return SetUserReleaseRating(releaseId, rating, CancellationToken.None);
+            return await SetUserReleaseRatingAsync(releaseId, rating, CancellationToken.None);
         }
 
-        public async Task<DiscogsReleaseRating> SetUserReleaseRating(int releaseId, int rating, CancellationToken token)
+        public async Task<DiscogsReleaseRating> SetUserReleaseRatingAsync(int releaseId, int rating, CancellationToken token)
         {
-            var userIdendity = await GetUserIdentity(token);
+            var userIdendity = await GetUserIdentityAsync(token);
             var request = _Client.GetPutUserReleaseRatingRequest(userIdendity.username, releaseId);
             request.AddJsonBody(new { rating= rating});
             return await _Client.Execute<DiscogsReleaseRating>(request, token);
         }
 
-        public Task<bool> DeleteUserReleaseRating(int releaseId)
+        public async Task<bool> DeleteUserReleaseRatingAsync(int releaseId)
         {
-            return DeleteUserReleaseRating(releaseId, CancellationToken.None);
+            return await DeleteUserReleaseRatingAsync(releaseId, CancellationToken.None);
         }
 
-        public async Task<bool> DeleteUserReleaseRating(int releaseId, CancellationToken token)
+        public async Task<bool> DeleteUserReleaseRatingAsync(int releaseId, CancellationToken token)
         {
-            var userIdendity = await GetUserIdentity(token);
+            var userIdendity = await GetUserIdentityAsync(token);
             var request = _Client.GetDeleteUserReleaseRatingRequest(userIdendity.username, releaseId);
             return await _Client.Execute(request, token) == HttpStatusCode.NoContent;
         }
 
-        public Task<DiscogsCommunityReleaseRating> GetCommunityReleaseRating(int releaseId)
+        public async Task<DiscogsCommunityReleaseRating> GetCommunityReleaseRatingAsync(int releaseId)
         {
-            return GetCommunityReleaseRating(releaseId, CancellationToken.None);
+            return await GetCommunityReleaseRatingAsync(releaseId, CancellationToken.None);
         }
 
-        public async Task<DiscogsCommunityReleaseRating> GetCommunityReleaseRating(int releaseId, CancellationToken token)
+        public async Task<DiscogsCommunityReleaseRating> GetCommunityReleaseRatingAsync(int releaseId, CancellationToken token)
         {
             var request = _Client.GetCommunityReleaseRatingRequest(releaseId);
             return await _Client.Execute<DiscogsCommunityReleaseRating>(request, token);
@@ -232,23 +237,23 @@ namespace DiscogsClient
             });
         }
 
-        public Task DownloadImage(DiscogsImage image, Stream copyStream, DiscogsImageFormatType type = DiscogsImageFormatType.Normal)
+        public async Task DownloadImageAsync(DiscogsImage image, Stream copyStream, DiscogsImageFormatType type = DiscogsImageFormatType.Normal)
         {
-            return DownloadImage(image, copyStream, CancellationToken.None, type);
+            await DownloadImageAsync(image, copyStream, CancellationToken.None, type);
         }
 
-        public async Task DownloadImage(DiscogsImage image, Stream copyStream, CancellationToken cancellationToken, DiscogsImageFormatType type = DiscogsImageFormatType.Normal)
+        public async Task DownloadImageAsync(DiscogsImage image, Stream copyStream, CancellationToken cancellationToken, DiscogsImageFormatType type = DiscogsImageFormatType.Normal)
         {
             var url = (type == DiscogsImageFormatType.Normal) ? image.uri : image.uri150;
             await _Client.Download(url, copyStream, cancellationToken); 
         }
 
-        public Task<string> SaveImage(DiscogsImage image, string path, string fileName, DiscogsImageFormatType type = DiscogsImageFormatType.Normal)
+        public async Task<string> SaveImageAsync(DiscogsImage image, string path, string fileName, DiscogsImageFormatType type = DiscogsImageFormatType.Normal)
         {
-            return SaveImage(image, path, fileName, CancellationToken.None, type);
+            return await SaveImageAsync(image, path, fileName, CancellationToken.None, type);
         }
 
-        public async Task<string> SaveImage(DiscogsImage image, string path, string fileName, CancellationToken cancellationToken, DiscogsImageFormatType type = DiscogsImageFormatType.Normal)
+        public async Task<string> SaveImageAsync(DiscogsImage image, string path, string fileName, CancellationToken cancellationToken, DiscogsImageFormatType type = DiscogsImageFormatType.Normal)
         { 
             var url = (type == DiscogsImageFormatType.Normal) ? image.uri : image.uri150;
             return await _Client.SaveFile(url, path, fileName, cancellationToken);

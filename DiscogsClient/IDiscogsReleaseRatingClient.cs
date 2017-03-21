@@ -14,7 +14,7 @@ namespace DiscogsClient
         /// <param name="releaseId">The Release ID</param>
         /// <param name="cancellationToken">Cancellation Token</param>
         /// <returns>The corresponding release’s rating</returns>
-        Task<DiscogsReleaseRating> GetUserReleaseRating(string userName, int releaseId, CancellationToken cancellationToken);
+        Task<DiscogsReleaseRating> GetUserReleaseRatingAsync(string userName, int releaseId, CancellationToken cancellationToken);
 
         /// <summary>
         /// Retrieves the release’s rating for a given user.
@@ -23,7 +23,7 @@ namespace DiscogsClient
         /// <param name="userName">The username of the rating you are trying to request.</param>
         /// <param name="releaseId">The Release ID</param>
         /// <returns>The corresponding release’s rating</returns>
-        Task<DiscogsReleaseRating> GetUserReleaseRating(string userName, int releaseId);
+        Task<DiscogsReleaseRating> GetUserReleaseRatingAsync(string userName, int releaseId);
 
         /// <summary>
         /// Updates the release’s rating for a given user. 
@@ -32,7 +32,7 @@ namespace DiscogsClient
         /// <param name="releaseId">The Release ID</param>
         /// <param name="rating">The rating</param>
         /// <returns>The corresponding updated release’s rating</returns>
-        Task<DiscogsReleaseRating> SetUserReleaseRating(int releaseId, int rating);
+        Task<DiscogsReleaseRating> SetUserReleaseRatingAsync(int releaseId, int rating);
 
         /// <summary>
         /// Updates the release’s rating for a given user. 
@@ -41,7 +41,7 @@ namespace DiscogsClient
         /// <param name="releaseId">The Release ID</param>
         /// <param name="rating">The rating</param>
         /// <returns>The corresponding updated release’s rating</returns>
-        Task<DiscogsReleaseRating> SetUserReleaseRating(int releaseId, int rating, CancellationToken cancellationToken);
+        Task<DiscogsReleaseRating> SetUserReleaseRatingAsync(int releaseId, int rating, CancellationToken cancellationToken);
 
         /// <summary>
         /// Deletes the release’s rating for the current user.
@@ -50,7 +50,7 @@ namespace DiscogsClient
         /// <param name="releaseId">The Release ID</param>
         /// <param name="token">Cancellation Token</param>
         /// <returns>True if the operation is sucessfull</returns>
-        Task<bool> DeleteUserReleaseRating(int releaseId, CancellationToken token);
+        Task<bool> DeleteUserReleaseRatingAsync(int releaseId, CancellationToken token);
 
         /// <summary>
         /// Deletes the release’s rating for the current user.
@@ -58,7 +58,7 @@ namespace DiscogsClient
         /// </summary>
         /// <param name="releaseId">The Release ID</param>
         /// <returns>True if the operation is sucessfull</returns>
-        Task<bool> DeleteUserReleaseRating(int releaseId);
+        Task<bool> DeleteUserReleaseRatingAsync(int releaseId);
 
         /// <summary>
         /// Retrieves the community release rating average and count.
@@ -67,7 +67,7 @@ namespace DiscogsClient
         /// <param name="releaseId">The Release ID</param>
         /// <param name="cancellationToken">Cancellation Token</param>
         /// <returns>The community release rating</returns>
-        Task<DiscogsCommunityReleaseRating> GetCommunityReleaseRating(int releaseId, CancellationToken cancellationToken);
+        Task<DiscogsCommunityReleaseRating> GetCommunityReleaseRatingAsync(int releaseId, CancellationToken cancellationToken);
 
         /// <summary>
         /// Retrieves the community release rating average and count.
@@ -75,6 +75,6 @@ namespace DiscogsClient
         /// </summary>
         /// <param name="releaseId">The Release ID</param>
         /// <returns>The community release rating</returns>
-        Task<DiscogsCommunityReleaseRating> GetCommunityReleaseRating(int releaseId);
+        Task<DiscogsCommunityReleaseRating> GetCommunityReleaseRatingAsync(int releaseId);
     }
 }
