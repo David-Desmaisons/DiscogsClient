@@ -39,21 +39,21 @@ namespace DiscogsClient.Test
         [Fact(Skip = "Need internet access and valid token and keys.")]
         public async Task GetUserIdentityAsync()
         {
-            var res = await _DiscogsClient.GetUserIdentity();
+            var res = await _DiscogsClient.GetUserIdentityAsync();
             res.Should().NotBeNull();
         }
 
         [Fact(Skip = "Need internet access and valid token and keys.")]
         public async Task SetUserReleaseRatingAsync()
         {
-            var res = await _DiscogsClient.SetUserReleaseRating(488973, 5);
+            var res = await _DiscogsClient.SetUserReleaseRatingAsync(488973, 5);
             res.Should().NotBeNull();
         }
 
         [Fact(Skip = "Need internet access and valid token and keys.")]
         public async Task DeleteUserReleaseRatingAsync()
         {
-            var res = await _DiscogsClient.DeleteUserReleaseRating(488973);
+            var res = await _DiscogsClient.DeleteUserReleaseRatingAsync(488973);
             res.Should().BeTrue();
         }
 
@@ -92,21 +92,21 @@ namespace DiscogsClient.Test
         [Fact(Skip = "Need internet access.")]
         public async Task GetReleaseAsync()
         {     
-            var res = await _DiscogsClient.GetRelease(1704673);
+            var res = await _DiscogsClient.GetReleaseAsync(1704673);
             res.Should().NotBeNull();
         }
 
         [Fact(Skip = "Need internet access.")]
         public async Task GetMasterAsync() 
         {
-            var res = await _DiscogsClient.GetMaster(47813);
+            var res = await _DiscogsClient.GetMasterAsync(47813);
             res.Should().NotBeNull();
         }
 
         [Fact (Skip = "Need internet access.")]
         public async Task GetArtistAsync() 
         { 
-            var res = await _DiscogsClient.GetArtist(224506);
+            var res = await _DiscogsClient.GetArtistAsync(224506);
             res.Should().NotBeNull();
         }
 
@@ -126,7 +126,7 @@ namespace DiscogsClient.Test
         [Fact(Skip = "Need internet access.")]
         public async Task GetLabelAsync()
         {
-            var res = await _DiscogsClient.GetLabel(125);
+            var res = await _DiscogsClient.GetLabelAsync(125);
             res.Should().NotBeNull();
         }
 
@@ -146,24 +146,24 @@ namespace DiscogsClient.Test
         [Fact(Skip = "Need internet access.")]
         public async Task GetUserReleaseRatingAsync()
         {
-            var res = await _DiscogsClient.GetUserReleaseRating("andersinstockholm", 488973);
+            var res = await _DiscogsClient.GetUserReleaseRatingAsync("andersinstockholm", 488973);
             res.Should().NotBeNull();
         }
 
         [Fact(Skip = "Need internet access.")]
         public async Task GetCommunityReleaseRatingAsync()
         {
-            var res = await _DiscogsClient.GetCommunityReleaseRating(488973);
+            var res = await _DiscogsClient.GetCommunityReleaseRatingAsync(488973);
             res.Should().NotBeNull();
         }
 
         [Fact(Skip = "Need internet access and valid token and keys.")]
         public async Task SaveImageAsync()
         {
-            var res = await _DiscogsClient.GetMaster(47813);
+            var res = await _DiscogsClient.GetMasterAsync(47813);
             res.Should().NotBeNull();
 
-            await _DiscogsClient.SaveImage(res.images[0], Path.GetTempPath(), "Ornette-TSOAJTC");
+            await _DiscogsClient.SaveImageAsync(res.images[0], Path.GetTempPath(), "Ornette-TSOAJTC");
         }
     }
 }

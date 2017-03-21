@@ -2,8 +2,8 @@
 {
     public class TokenAuthenticationInformation
     {
-        public string Token { get; set; }
-        private string _SecretToken;
+        public string Token { get; }
+        private readonly string _SecretToken;
 
         public TokenAuthenticationInformation(string token)
         {
