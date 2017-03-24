@@ -17,14 +17,22 @@ C# Client library for [Discogs API v2.0](https://www.discogs.com/developers/)
 
 ## Sample usage
 
-#### Create discogs client
+### Create discogs client
 
+* Oauth authentication
 ```C#
   //Create authentication object using private and public keys: you should fournish real keys here
   var oAuthCompleteInformation = new OAuthCompleteInformation("consumerKey", 
                                   "consumerSecret", "token", "tokenSecret");
   //Create discogs client using the authentication
   var discogsClient = new DiscogsClient(oAuthCompleteInformation);
+```
+* Token based authentication
+```C#
+  //Create authentication based on Discogs token
+  var tokenInformation = new TokenAuthenticationInformation("my-token");
+  //Create discogs client using the authentication
+  var discogsClient = new DiscogsClient(tokenInformation);
 ```
 #### Search The DataBase
 
@@ -48,31 +56,31 @@ var enumerable = _DiscogsClient.SearchAsEnumerable(discogsSearch);
 
 #### Get Release, Master, Artist or Label Information
 ```C#
-var release = await _DiscogsClient.GetRelease(1704673);
+var release = await _DiscogsClient.GetReleaseAsync(1704673);
 ```
 
 ```C#
-var master = await _DiscogsClient.GetMaster(47813);
+var master = await _DiscogsClient.GetMasterAsync(47813);
 ```
 
 ```C#
-var artist = await _DiscogsClient.GetArtist(224506);
+var artist = await _DiscogsClient.GetArtistAsync(224506);
 ```
 
 ```C#
-var label = await _DiscogsClient.GetLabel(125);
+var label = await _DiscogsClient.GetLabelAsync(125);
 ```
 
 #### Download Image
 ```C#
 //Retrieve Release information
-var res = await _DiscogsClient.GetMaster(47813);
+var res = await _DiscogsClient.GetMasterAsync(47813);
   
 //Download the first image of the release
-await _DiscogsClient.SaveImage(res.images[0], Path.GetTempPath(), "Ornette-TSOAJTC");
+await _DiscogsClient.SaveImageAsync(res.images[0], Path.GetTempPath(), "Ornette-TSOAJTC");
 ```
 
-#### Authorize new user
+#### OAuth: Authorize new user
 ```C#
 //Create authentificator information: you should fournish real keys here
 var oAuthConsumerInformation = new OAuthConsumerInformation("consumerKey", "consumerSecret");
@@ -81,7 +89,7 @@ var oAuthConsumerInformation = new OAuthConsumerInformation("consumerKey", "cons
 var discogsAuthentifierClient = new DiscogsAuthentifierClient(oAuthConsumerInformation);
 
 //Retreive Token and Token secret 
-var aouth = discogsClient.Authorize(s => Task.FromResult(GetToken(s))).Result;
+var oauth = discogsClient.Authorize(s => Task.FromResult(GetToken(s))).Result;
 ```
 
 Authorize takes a Func< string, Task< string>> as parameter, receiving the authentication url and returning the corresponding access key. Trivial implementation:
