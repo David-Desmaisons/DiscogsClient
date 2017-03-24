@@ -1,13 +1,11 @@
 # DiscogsClient
 
 [![Build status](https://img.shields.io/appveyor/ci/David-Desmaisons/DiscogsClient.svg?maxAge=2592000)](https://ci.appveyor.com/project/David-Desmaisons/DiscogsClient)
-[![NuGet Badge](https://buildstats.info/nuget/DiscogsClient)](https://www.nuget.org/packages/DiscogsClient/)
+[![NuGet Badge](https://img.shields.io/nuget/v/DiscogsClient.svg)](https://www.nuget.org/packages/DiscogsClient/)
 [![MIT License](https://img.shields.io/github/license/David-Desmaisons/DiscogsClient.svg)](https://github.com/David-Desmaisons/DiscogsClient/blob/master/LICENSE)
 
 
 C# Client library for [Discogs API v2.0](https://www.discogs.com/developers/)
-
-Nuget [here](https://www.nuget.org/packages/DiscogsClient/)
 
 ## Features
 * Include API to authorize user (generating OAuth1.0 token and token secret)
