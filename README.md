@@ -1,6 +1,6 @@
 # DiscogsClient
 
-[![Build status](https://img.shields.io/appveyor/ci/David-Desmaisons/DiscogsClient.svg?maxAge=2592000)](https://ci.appveyor.com/project/David-Desmaisons/DiscogsClient)
+[![Build status](https://img.shields.io/appveyor/ci/David-Desmaisons/DiscogsClient.svg?maxAge=592000)](https://ci.appveyor.com/project/David-Desmaisons/DiscogsClient)
 [![NuGet Badge](https://img.shields.io/nuget/v/DiscogsClient.svg)](https://www.nuget.org/packages/DiscogsClient/)
 [![MIT License](https://img.shields.io/github/license/David-Desmaisons/DiscogsClient.svg)](https://github.com/David-Desmaisons/DiscogsClient/blob/master/LICENSE)
 
