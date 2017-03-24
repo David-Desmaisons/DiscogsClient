@@ -12,5 +12,6 @@ namespace DiscogsClient.Data.Result
         public TimeSpan? duration { get; set; }
         public string position { get; set; }
         public DiscogsReleaseArtist[] extraartists { get; set; }
+        public DiscogsReleaseArtist[] artists { get; set; }
     }
 }
