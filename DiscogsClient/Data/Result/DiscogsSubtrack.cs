@@ -1,0 +1,15 @@
+﻿using Newtonsoft.Json;
+using System;
+using RestSharpHelper;
+
+namespace DiscogsClient.Data.Result 
+{
+    public class DiscogsSubtrack
+    {
+        public string title { get; set; }
+        public string type_ { get; set; }
+        [JsonConverter(typeof(BasicTimeSpanConverter))]
+        public TimeSpan? duration { get; set; }
+        public string position { get; set; }
+    }
+}

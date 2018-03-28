@@ -99,6 +99,7 @@
     <Compile Include="Data\Result\DiscogsReleaseBase.cs" />
     <Compile Include="Data\Result\DiscogsSearchResult.cs" />
     <Compile Include="Data\Result\DiscogsSublabel.cs" />
+    <Compile Include="Data\Result\DiscogsSubtrack.cs" />
     <Compile Include="Data\Result\DiscogsTrack.cs" />
     <Compile Include="Data\Result\DiscogsReleaseArtist.cs" />
     <Compile Include="Data\Result\DiscogsImage.cs" />
