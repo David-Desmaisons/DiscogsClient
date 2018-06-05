@@ -1,137 +1,40 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F0138D25-8712-4DCA-880A-507067AC1326}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DiscogsClient</RootNamespace>
+    <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <AssemblyName>DiscogsClient</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
+    <RootNamespace>DiscogsClient</RootNamespace>
+    <Authors>David Desmaisons</Authors>
+    <Version>2.2.1</Version>
+    <PackageProjectUrl></PackageProjectUrl>
+    <RepositoryUrl>https://github.com/David-Desmaisons/DiscogsClient</RepositoryUrl>
+    <PackageLicenseUrl>https://github.com/David-Desmaisons/DiscogsClient/blob/master/LICENSE</PackageLicenseUrl>
+    <Description>
+	C# Client library for Discogs API v2.0
+
+	Features
+
+	Include API to authorize user (generating OAuth1.0 token and token secret)
+	Full support to DataBase API including image download
+	Support of identity API
+	Asynchroneous and cancellable API using Tasks
+	Transparent management of pagination using none blocking API (Reactive IObservable) or IEnumerable
+	</Description>
+    <PackageId>DiscogsClient</PackageId>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageTags>DiscogsClient, Asynchronous, Client</PackageTags>
+    <AssemblyVersion>2.2.1.0</AssemblyVersion>
+    <FileVersion>2.2.1.0</FileVersion>
+    <PackageReleaseNotes>Update to &gt;NET Standard</PackageReleaseNotes>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="RateLimiter, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\RateLimiter.1.0.0\lib\net45\RateLimiter.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="RestSharp, Version=105.2.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\RestSharp.105.2.3\lib\net46\RestSharp.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="RestSharpHelper, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\RestSharpHelper.1.1.0\lib\net461\RestSharpHelper.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Reactive.Core, Version=3.0.3000.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Reactive.Core.3.1.1\lib\net46\System.Reactive.Core.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Reactive.Interfaces, Version=3.0.1000.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Reactive.Interfaces.3.1.1\lib\net45\System.Reactive.Interfaces.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Reactive.Linq, Version=3.0.3000.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Reactive.Linq.3.1.1\lib\net46\System.Reactive.Linq.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="RateLimiter" Version="1.1.1" />
+    <PackageReference Include="RestSharp" Version="106.3.0" />
+	  <PackageReference Include="RestSharpHelper" Version="1.1.1" />
+	  <PackageReference Include="System.Reactive" Version="4.0.0" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Data\Query\DiscogsImageType.cs" />
-    <Compile Include="Data\Query\DiscogsSortInformation.cs" />
-    <Compile Include="Data\Result\DiscogsArtistRelease.cs" />
-    <Compile Include="Data\Result\DiscogsArtist.cs" />
-    <Compile Include="Data\Result\DiscogsCommunityReleaseRating.cs" />
-    <Compile Include="Data\Result\DiscogsIdentity.cs" />
-    <Compile Include="Data\Result\DiscogsLabelRelease.cs" />
-    <Compile Include="Data\Result\DiscogsReleaseLabel.cs" />
-    <Compile Include="Data\Result\DiscogsPaginableResults.cs" />
-    <Compile Include="Data\Result\DiscogsReleaseRating.cs" />
-    <Compile Include="Data\Result\DiscogsSortOrder.cs" />
-    <Compile Include="Data\Result\DiscogsGroupOrBandMember.cs" />
-    <Compile Include="Data\Result\DiscogsArtistSortType.cs" />
-    <Compile Include="Data\Result\DiscogsMaster.cs" />
-    <Compile Include="Data\Result\DiscogsRating.cs" />
-    <Compile Include="Data\Result\DiscogsCommunityInfo.cs" />
-    <Compile Include="Data\Result\DiscogsCommunity.cs" />
-    <Compile Include="Data\Result\DiscogsEntity.cs" />
-    <Compile Include="Data\Result\DiscogsFormat.cs" />
-    <Compile Include="Data\Result\DiscogsIdentifier.cs" />
-    <Compile Include="Data\Result\DiscogsImageType.cs" />
-    <Compile Include="Data\Result\DiscogsLabel.cs" />
-    <Compile Include="Data\Result\DiscogsPaginedResult.cs" />
-    <Compile Include="Data\Result\DiscogsPaginedUrls.cs" />
-    <Compile Include="Data\Query\DiscogsPaginable.cs" />
-    <Compile Include="Data\Query\DiscogsEntityType.cs" />
-    <Compile Include="Data\Query\DiscogsSearch.cs" />
-    <Compile Include="Data\Result\DiscogsReleaseBase.cs" />
-    <Compile Include="Data\Result\DiscogsSearchResult.cs" />
-    <Compile Include="Data\Result\DiscogsSublabel.cs" />
-    <Compile Include="Data\Result\DiscogsSubtrack.cs" />
-    <Compile Include="Data\Result\DiscogsTrack.cs" />
-    <Compile Include="Data\Result\DiscogsReleaseArtist.cs" />
-    <Compile Include="Data\Result\DiscogsImage.cs" />
-    <Compile Include="Data\Result\DiscogsRelease.cs" />
-    <Compile Include="Data\Result\DiscogsSearchResults.cs" />
-    <Compile Include="Data\Result\DiscogsUser.cs" />
-    <Compile Include="Data\Result\DiscogsReleaseVersion.cs" />
-    <Compile Include="Data\Result\DiscogsVideo.cs" />
-    <Compile Include="Data\Result\DiscogsArtistReleases.cs" />
-    <Compile Include="DiscogsAuthentifierClient.cs" />
-    <Compile Include="DiscogsClient.cs" />
-    <Compile Include="DiscogsException.cs" />
-    <Compile Include="Data\Result\DiscogsReleaseVersions.cs" />
-    <Compile Include="Data\Result\DiscogsLabelReleases.cs" />
-    <Compile Include="IDiscogsDataBaseClient.cs" />
-    <Compile Include="IDiscogsReleaseRatingClient.cs" />
-    <Compile Include="IDiscogsUserIdentityClient.cs" />
-    <Compile Include="Internal\DiscogsWebClient.cs" />
-    <Compile Include="Internal\IDiscogsWebClient.cs" />
-    <Compile Include="Internal\TokenAuthenticationInformation.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+
 </Project>
