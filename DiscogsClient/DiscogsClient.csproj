@@ -10,23 +10,21 @@
     <PackageProjectUrl></PackageProjectUrl>
     <RepositoryUrl>https://github.com/David-Desmaisons/DiscogsClient</RepositoryUrl>
     <PackageLicenseUrl>https://github.com/David-Desmaisons/DiscogsClient/blob/master/LICENSE</PackageLicenseUrl>
-    <Description>
-	C# Client library for Discogs API v2.0
+    <Description>C# Client library for Discogs API v2.0
 
-	Features
+Features
 
-	Include API to authorize user (generating OAuth1.0 token and token secret)
-	Full support to DataBase API including image download
-	Support of identity API
-	Asynchroneous and cancellable API using Tasks
-	Transparent management of pagination using none blocking API (Reactive IObservable) or IEnumerable
-	</Description>
+Include API to authorize user (generating OAuth1.0 token and token secret)
+Full support to DataBase API including image download
+Support of identity API
+Asynchroneous and cancellable API using Tasks
+Transparent management of pagination using none blocking API (Reactive IObservable) or IEnumerable</Description>
     <PackageId>DiscogsClient</PackageId>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageTags>DiscogsClient, Asynchronous, Client</PackageTags>
     <AssemblyVersion>2.2.1.0</AssemblyVersion>
     <FileVersion>2.2.1.0</FileVersion>
-    <PackageReleaseNotes>Update to &gt;NET Standard</PackageReleaseNotes>
+    <PackageReleaseNotes>Update to .NET Standard</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
