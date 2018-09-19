@@ -58,7 +58,7 @@ namespace DiscogsClient.Test
         [Fact]
         public void DeserializeResult_Deserialize_Series()
         {
-            var expected = new DiscogsSerie
+            var expected = new DiscogsReleaseLabel
             {
                 name = "Fontana Special",
                 entity_type = "2",

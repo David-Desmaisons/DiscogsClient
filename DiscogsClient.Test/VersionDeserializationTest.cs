@@ -40,6 +40,7 @@ namespace DiscogsClient.Test
         {
             var result = JsonConvert.DeserializeObject<DiscogsReleaseVersion>(version);
             result.Should().NotBeNull();
+            result.released.Should().Be(expected);
         }
     }
 }

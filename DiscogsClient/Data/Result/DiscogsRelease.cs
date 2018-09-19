@@ -10,7 +10,7 @@ namespace DiscogsClient.Data.Result
         public DiscogsFormat[] formats { get; set; }
         public DiscogsIdentifier[] identifiers { get; set; }
         public DiscogsCommunity community { get; set; }
-        public DiscogsSerie[] series { get; set; }
+        public DiscogsReleaseLabel[] series { get; set; }
         public string artists_sort { get; set; }
         public string catno { get; set; }
         public string country { get; set; }
