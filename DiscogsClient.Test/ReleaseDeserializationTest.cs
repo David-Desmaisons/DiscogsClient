@@ -1,5 +1,4 @@
-﻿using System;
-using DiscogsClient.Data.Result;
+﻿using DiscogsClient.Data.Result;
 using FluentAssertions;
 using Newtonsoft.Json;
 using System.Collections.Generic;
@@ -65,5 +64,12 @@ namespace DiscogsClient.Test
             release.series.Should().HaveCount(1);
             release.series[0].Should().BeEquivalentTo(expected);
         }
+
+        [Fact]
+        public void DeserializeResult_Deserialize_Artists_sort()
+        {
+            var release = JsonConvert.DeserializeObject<DiscogsRelease>(_ReleaseJSON5);
+            release.artists_sort.Should().Be("Le Orme");
+        }       
     }
 }
