@@ -2,7 +2,7 @@
 
 namespace DiscogsClient.Data.Result
 {
-    public class DiscogsRelease : DiscogsReleaseBase 
+    public class DiscogsRelease : DiscogsReleaseBase
     {
         public DiscogsReleaseArtist[] extraartists { get; set; }
         public DiscogsReleaseLabel[] labels { get; set; }
@@ -10,6 +10,7 @@ namespace DiscogsClient.Data.Result
         public DiscogsFormat[] formats { get; set; }
         public DiscogsIdentifier[] identifiers { get; set; }
         public DiscogsCommunity community { get; set; }
+        public DiscogsSerie[] series { get; set; }
         public string catno { get; set; }
         public string thumb { get; set; }
         public string country { get; set; }
