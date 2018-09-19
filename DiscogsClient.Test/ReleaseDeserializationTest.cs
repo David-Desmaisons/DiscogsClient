@@ -3,6 +3,7 @@ using FluentAssertions;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace DiscogsClient.Test
 {
@@ -19,6 +20,12 @@ namespace DiscogsClient.Test
             new object[] { _ReleaseJSON },
             new object[] { _ReleaseJSON2 }
         };
+
+        private readonly ITestOutputHelper _OutputHelper;
+        public ReleaseDeserializationTest(ITestOutputHelper outputHelper)
+        {
+            _OutputHelper = outputHelper;
+        }
 
         [Theory, MemberData(nameof(Data))]
         public void DeserializeResult_IsNotNull(string json)
@@ -70,6 +77,13 @@ namespace DiscogsClient.Test
         {
             var release = JsonConvert.DeserializeObject<DiscogsRelease>(_ReleaseJSON5);
             release.artists_sort.Should().Be("Le Orme");
-        }       
+        }
+
+        [Fact]
+        public void DeserializeResult_Deserialize_Text_Format()
+        {
+            var release = JsonConvert.DeserializeObject<DiscogsRelease>(_ReleaseJSON3);
+            release.formats[0].text.Should().Be("Gatefold");
+        }
     }
 }
