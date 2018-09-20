@@ -6,7 +6,7 @@
     <AssemblyName>DiscogsClient</AssemblyName>
     <RootNamespace>DiscogsClient</RootNamespace>
     <Authors>David Desmaisons</Authors>
-    <Version>2.2.1</Version>
+    <Version>2.3.0</Version>
     <PackageProjectUrl></PackageProjectUrl>
     <RepositoryUrl>https://github.com/David-Desmaisons/DiscogsClient</RepositoryUrl>
     <PackageLicenseUrl>https://github.com/David-Desmaisons/DiscogsClient/blob/master/LICENSE</PackageLicenseUrl>
@@ -24,7 +24,7 @@ Transparent management of pagination using none blocking API (Reactive IObservab
     <PackageTags>DiscogsClient, Asynchronous, Client</PackageTags>
     <AssemblyVersion>2.2.1.0</AssemblyVersion>
     <FileVersion>2.2.1.0</FileVersion>
-    <PackageReleaseNotes>Update to .NET Standard</PackageReleaseNotes>
+    <PackageReleaseNotes>Add release information: series, artist_sort and text format</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
