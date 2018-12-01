@@ -7,6 +7,8 @@
 
 C# Client library for [Discogs API v2.0](https://www.discogs.com/developers/)
 
+Check demo application [Music.Cover.Finder](https://github.com/David-Desmaisons/Music.Cover.Finder)
+
 ## Features
 * Include API to authorize user (generating OAuth1.0 token and token secret)
 * Full support to [DataBase API](https://www.discogs.com/developers/#page:database) including image download
