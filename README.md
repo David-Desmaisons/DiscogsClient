@@ -21,7 +21,7 @@ Check demo application [Music.Cover.Finder](https://github.com/David-Desmaisons/
 
 ### Create discogs client
 
-* Oauth authentication
+#### Oauth authentication
 ```C#
   //Create authentication object using private and public keys: you should fournish real keys here
   var oAuthCompleteInformation = new OAuthCompleteInformation("consumerKey", 
@@ -29,7 +29,7 @@ Check demo application [Music.Cover.Finder](https://github.com/David-Desmaisons/
   //Create discogs client using the authentication
   var discogsClient = new DiscogsClient(oAuthCompleteInformation);
 ```
-* Token based authentication
+#### Token based authentication
 ```C#
   //Create authentication based on Discogs token
   var tokenInformation = new TokenAuthenticationInformation("my-token");
