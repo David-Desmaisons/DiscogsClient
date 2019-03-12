@@ -3,6 +3,7 @@
     public class DiscogsArtist : DiscogsEntity 
     {
         public string name { get; set; }
+        public string realname { get; set; }
         public DiscogsImage[] images { get; set; }
         public DiscogsGroupOrBandMember[] members { get; set; }
         public DiscogsGroupOrBandMember[] groups { get; set; }
