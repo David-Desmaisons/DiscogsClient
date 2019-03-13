@@ -19,7 +19,6 @@ namespace DiscogsClient.Test
         public DiscogsClientTest() 
         {
             _OAuthCompleteInformation = null;
-                //new OAuthCompleteInformation("", "", "", "");
             _DiscogsClient = new DiscogsClient(_OAuthCompleteInformation);
         }
 
