@@ -42,7 +42,7 @@ namespace DiscogsClient.Internal
 
         static DiscogsWebClient()
         {
-            SharedTimeLimiter = TimeLimiter.GetFromMaxCountByInterval(240, TimeSpan.FromMinutes(1));
+            SharedTimeLimiter = TimeLimiter.GetFromMaxCountByInterval(60, TimeSpan.FromMinutes(1));
         }
 
         protected override IRestClient Mature(IRestClient client) 
