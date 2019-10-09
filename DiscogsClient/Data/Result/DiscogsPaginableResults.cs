@@ -1,4 +1,4 @@
-﻿namespace DiscogsClient.Data.Result
+namespace DiscogsClient.Data.Result
 {
     public abstract class DiscogsPaginableResults<T> where T: DiscogsEntity
     {

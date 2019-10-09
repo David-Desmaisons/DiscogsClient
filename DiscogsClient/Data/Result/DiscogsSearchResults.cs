@@ -1,6 +1,6 @@
-﻿namespace DiscogsClient.Data.Result
+namespace DiscogsClient.Data.Result
 {
-    public class DiscogsSearchResults : DiscogsPaginableResults<DiscogsSearchResult>
+    public sealed class DiscogsSearchResults : DiscogsPaginableResults<DiscogsSearchResult>
     {
         public DiscogsSearchResult[] results { get; set; }
 

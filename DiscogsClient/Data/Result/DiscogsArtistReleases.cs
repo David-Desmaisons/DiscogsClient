@@ -1,6 +1,6 @@
 ﻿namespace DiscogsClient.Data.Result 
 {
-    public class DiscogsArtistReleases : DiscogsPaginableResults<DiscogsArtistRelease> 
+    public sealed class DiscogsArtistReleases : DiscogsPaginableResults<DiscogsArtistRelease> 
     {
         public DiscogsArtistRelease[] releases { get; set; }
 

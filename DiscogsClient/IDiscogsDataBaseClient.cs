@@ -70,7 +70,7 @@ namespace DiscogsClient
         /// <param name="paginable">Paginable information</param>
         /// <param name="token">CancellationToken</param>
         /// <returns>The corresponding releases</returns>
-        Task<DiscogsPaginableResults<DiscogsReleaseVersion>> GetMasterReleaseVersionsAsync(int masterId,
+        Task<DiscogsReleaseVersions> GetMasterReleaseVersionsAsync(int masterId,
             DiscogsPaginable paginable, CancellationToken token);
 
         /// <summary>
@@ -80,7 +80,7 @@ namespace DiscogsClient
         /// <param name="masterId">The Master ID</param>
         /// <param name="paginable">Paginable information</param>
         /// <returns>The corresponding releases</returns>
-        Task<DiscogsPaginableResults<DiscogsReleaseVersion>> GetMasterReleaseVersionshAsync(int masterId,
+        Task<DiscogsReleaseVersions> GetMasterReleaseVersionsAsync(int masterId,
             DiscogsPaginable paginable = null);
 
         /// <summary>
@@ -129,7 +129,7 @@ namespace DiscogsClient
         /// <param name="paginable">Paginable information</param>
         /// <param name="token">CancellationToken</param>
         /// <returns>The corresponding releases</returns>
-        Task<DiscogsPaginableResults<DiscogsArtistRelease>> GetArtistReleaseAsync(int artistId,
+        Task<DiscogsArtistReleases> GetArtistReleaseAsync(int artistId,
             DiscogsSortInformation sort, DiscogsPaginable paginable, CancellationToken token);
 
         /// <summary>
@@ -140,7 +140,7 @@ namespace DiscogsClient
         /// <param name="sort">Sorting information</param>
         /// <param name="paginable">Paginable information</param>
         /// <returns>The corresponding releases</returns>
-        Task<DiscogsPaginableResults<DiscogsArtistRelease>> GetArtistReleaseAsync(int artistId,
+        Task<DiscogsArtistReleases> GetArtistReleaseAsync(int artistId,
             DiscogsSortInformation sort = null, DiscogsPaginable paginable = null);
 
         /// <summary>
@@ -186,7 +186,7 @@ namespace DiscogsClient
         /// <param name="paginable">Paginable information</param>
         /// <param name="token">CancellationToken</param>
         /// <returns>The corresponding label releases</returns>
-        Task<DiscogsPaginableResults<DiscogsLabelRelease>> GetAllLabelReleasesAsync(int labelId,
+        Task<DiscogsLabelReleases> GetAllLabelReleasesAsync(int labelId,
             DiscogsPaginable paginable, CancellationToken token);
 
         /// <summary>
@@ -196,7 +196,7 @@ namespace DiscogsClient
         /// <param name="labelId">The label ID</param>
         /// <param name="paginable">Paginable information</param>
         /// <returns>The corresponding label releases</returns>
-        Task<DiscogsPaginableResults<DiscogsLabelRelease>> GetAllLabelReleasesAsync(int labelId,
+        Task<DiscogsLabelReleases> GetAllLabelReleasesAsync(int labelId,
             DiscogsPaginable paginable = null);
 
         /// <summary>
@@ -225,7 +225,7 @@ namespace DiscogsClient
         /// <param name="paginable">paginable information</param>
         /// <param name="token">CancellationToken</param>
         /// <returns>The corresponding search result</returns>
-        Task<DiscogsPaginableResults<DiscogsSearchResult>> SearchAsync(DiscogsSearch search, DiscogsPaginable paginable,
+        Task<DiscogsSearchResults> SearchAsync(DiscogsSearch search, DiscogsPaginable paginable,
             CancellationToken token);
 
         /// <summary>
@@ -235,8 +235,7 @@ namespace DiscogsClient
         /// <param name="search">The Corresponding query</param>
         /// <param name="paginable">paginable information</param>
         /// <returns>The corresponding search result</returns>
-        Task<DiscogsPaginableResults<DiscogsSearchResult>>
-            SearchAsync(DiscogsSearch search, DiscogsPaginable paginable = null);
+        Task<DiscogsSearchResults> SearchAsync(DiscogsSearch search, DiscogsPaginable paginable = null);
 
         /// <summary>
         /// Download the stream corresponding to a given image

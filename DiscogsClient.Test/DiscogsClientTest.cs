@@ -5,25 +5,29 @@ using System.Diagnostics;
 using System.IO;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
+using DiscogsClient.Internal;
 using RestSharpHelper.OAuth1;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace DiscogsClient.Test
 {
     public class DiscogsClientTest
     {
         private readonly DiscogsClient _DiscogsClient;
-        private readonly OAuthCompleteInformation _OAuthCompleteInformation;
+        private readonly ITestOutputHelper _TestOutputHelper;
         private int _Count;
+        private const string Token = "";
 
-        public DiscogsClientTest() 
+        public DiscogsClientTest(ITestOutputHelper testOutputHelper) 
         {
-            _OAuthCompleteInformation = null;
-            _DiscogsClient = new DiscogsClient(_OAuthCompleteInformation);
+            _TestOutputHelper = testOutputHelper;
+            var tokenInformation = new TokenAuthenticationInformation(Token);
+            _DiscogsClient = new DiscogsClient(tokenInformation);
         }
 
         [Fact(Skip = "Need internet access and valid token and keys.")]
-        public async Task Search_ReleaseAsync()
+        public async Task Search()
         {
             var discogsSearch = new DiscogsSearch()
             {
@@ -33,6 +37,22 @@ namespace DiscogsClient.Test
 
             var observable = _DiscogsClient.Search(discogsSearch);
             await observable.ForEachAsync(OnResult);
+        }
+
+        [Fact(Skip = "Need internet access and valid token and keys.")]
+        public async Task SearchAsync()
+        {
+            var discogsSearch = new DiscogsSearch()
+            {
+                artist = "Ornette Coleman",
+                release_title = "The Shape Of Jazz To Come"
+            };
+
+            var res = await _DiscogsClient.SearchAsync(discogsSearch);
+            foreach (var searchResult in res.GetResults())
+            {
+                OnResult(searchResult);
+            }
         }
 
         [Fact(Skip = "Need internet access and valid token and keys.")]
@@ -76,10 +96,20 @@ namespace DiscogsClient.Test
         }
 
         [Fact(Skip = "Need internet access.")]
-        public async Task GetMasterReleaseVersionAsync()
+        public async Task GetMasterReleaseVersions()
         {
             var observable = _DiscogsClient.GetMasterReleaseVersions(47813);
             await observable.ForEachAsync(OnResult);
+        }
+
+        [Fact(Skip = "Need internet access.")]
+        public async Task GetMasterReleaseVersionAsync()
+        {
+            var res = await _DiscogsClient.GetMasterReleaseVersionsAsync(47813);
+            foreach (var searchResult in res.GetResults())
+            {
+                OnResult(searchResult);
+            }
         }
 
         private void OnResult(DiscogsReleaseVersion result)
@@ -130,16 +160,26 @@ namespace DiscogsClient.Test
         }
 
         [Fact(Skip = "Need internet access.")]
-        public async Task GetAllLabelReleasesAsync()
+        public async Task GetAllLabelReleases()
         {
             var observable = _DiscogsClient.GetAllLabelReleases(26557);
             await observable.ForEachAsync(OnResult);
         }
 
+        [Fact(Skip = "Need internet access.")]
+        public async Task GetAllLabelReleasesAsync()
+        {
+            var res = await _DiscogsClient.GetAllLabelReleasesAsync(26557);
+            foreach (var searchResult in res.GetResults())
+            {
+                OnResult(searchResult);
+            }
+        }
+
         private void OnResult(DiscogsLabelRelease result) 
         {
             _Count++;
-            Trace.WriteLine($"{_Count} - {result.title}");
+            _TestOutputHelper.WriteLine($"{_Count} - {result.title}");
         }
 
         [Fact(Skip = "Need internet access.")]

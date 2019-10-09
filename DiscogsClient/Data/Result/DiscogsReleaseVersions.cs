@@ -1,6 +1,6 @@
 ﻿namespace DiscogsClient.Data.Result
 {
-    public class DiscogsReleaseVersions : DiscogsPaginableResults<DiscogsReleaseVersion>
+    public sealed class DiscogsReleaseVersions : DiscogsPaginableResults<DiscogsReleaseVersion>
     {
         public DiscogsReleaseVersion[] versions { get; set; }
 
