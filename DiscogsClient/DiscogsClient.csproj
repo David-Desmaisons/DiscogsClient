@@ -6,7 +6,7 @@
     <AssemblyName>DiscogsClient</AssemblyName>
     <RootNamespace>DiscogsClient</RootNamespace>
     <Authors>David Desmaisons</Authors>
-    <Version>2.5.1</Version>
+    <Version>2.6.0</Version>
     <PackageProjectUrl></PackageProjectUrl>
     <RepositoryUrl>https://github.com/David-Desmaisons/DiscogsClient</RepositoryUrl>
     <PackageLicenseUrl>https://github.com/David-Desmaisons/DiscogsClient/blob/master/LICENSE</PackageLicenseUrl>
@@ -22,9 +22,9 @@ Transparent management of pagination using none blocking API (Reactive IObservab
     <PackageId>DiscogsClient</PackageId>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageTags>DiscogsClient, Asynchronous, Client</PackageTags>
-    <AssemblyVersion>2.5.1.0</AssemblyVersion>
-    <FileVersion>2.5.1.0</FileVersion>
-    <PackageReleaseNotes>Update rate limit to respect discogs new rate limt (60/minutes)</PackageReleaseNotes>
+    <AssemblyVersion>2.6.0.0</AssemblyVersion>
+    <FileVersion>2.6.0.0</FileVersion>
+    <PackageReleaseNotes>Add async method for paginated queries</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
