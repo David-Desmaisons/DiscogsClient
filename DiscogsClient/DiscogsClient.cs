@@ -2,19 +2,19 @@
 using DiscogsClient.Data.Result;
 using DiscogsClient.Internal;
 using RestSharp;
+using RestSharpHelper;
+using RestSharpHelper.OAuth1;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net;
 using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.IO;
-using RestSharpHelper;
-using RestSharpHelper.OAuth1;
 
 namespace DiscogsClient
 {
-    public class DiscogsClient :  IDiscogsDataBaseClient, IDiscogsUserIdentityClient
+    public class DiscogsClient : IDiscogsDataBaseClient, IDiscogsUserIdentityClient
     {
         private readonly IDiscogsWebClient _Client;
         private DiscogsIdentity _DiscogsIdentity;
@@ -43,7 +43,7 @@ namespace DiscogsClient
             return _DiscogsIdentity = await _Client.Execute<DiscogsIdentity>(request, token);
         }
 
-        public Task<DiscogsRelease> GetReleaseAsync (int releaseId)
+        public Task<DiscogsRelease> GetReleaseAsync(int releaseId)
         {
             return GetReleaseAsync(releaseId, CancellationToken.None);
         }
@@ -65,23 +65,23 @@ namespace DiscogsClient
             return await _Client.Execute<DiscogsMaster>(request, token);
         }
 
-        public Task<DiscogsArtist> GetArtistAsync(int artistId) 
+        public Task<DiscogsArtist> GetArtistAsync(int artistId)
         {
             return GetArtistAsync(artistId, CancellationToken.None);
         }
 
-        public async Task<DiscogsArtist> GetArtistAsync(int artistId, CancellationToken token) 
+        public async Task<DiscogsArtist> GetArtistAsync(int artistId, CancellationToken token)
         {
             var request = _Client.GetArtistRequest(artistId);
             return await _Client.Execute<DiscogsArtist>(request, token);
         }
 
-        public Task<DiscogsLabel> GetLabelAsync(int labelId) 
+        public Task<DiscogsLabel> GetLabelAsync(int labelId)
         {
             return GetLabelAsync(labelId, CancellationToken.None);
         }
 
-        public async Task<DiscogsLabel> GetLabelAsync(int labelId, CancellationToken token) 
+        public async Task<DiscogsLabel> GetLabelAsync(int labelId, CancellationToken token)
         {
             var request = _Client.GetLabelRequest(labelId);
             return await _Client.Execute<DiscogsLabel>(request, token);
@@ -95,7 +95,7 @@ namespace DiscogsClient
         public async Task<DiscogsReleaseRating> GetUserReleaseRatingAsync(string userName, int releaseId, CancellationToken token)
         {
             var request = _Client.GetGetUserReleaseRatingRequest(userName, releaseId);
-            return await _Client.Execute<DiscogsReleaseRating>(request, token);          
+            return await _Client.Execute<DiscogsReleaseRating>(request, token);
         }
 
         public Task<DiscogsReleaseRating> SetUserReleaseRatingAsync(int releaseId, int rating)
@@ -105,9 +105,9 @@ namespace DiscogsClient
 
         public async Task<DiscogsReleaseRating> SetUserReleaseRatingAsync(int releaseId, int rating, CancellationToken token)
         {
-            var userIdendity = await GetUserIdentityAsync(token);
-            var request = _Client.GetPutUserReleaseRatingRequest(userIdendity.username, releaseId);
-            request.AddJsonBody(new { rating= rating});
+            var userIdentity = await GetUserIdentityAsync(token);
+            var request = _Client.GetPutUserReleaseRatingRequest(userIdentity.username, releaseId);
+            request.AddJsonBody(new { rating = rating });
             return await _Client.Execute<DiscogsReleaseRating>(request, token);
         }
 
@@ -118,8 +118,8 @@ namespace DiscogsClient
 
         public async Task<bool> DeleteUserReleaseRatingAsync(int releaseId, CancellationToken token)
         {
-            var userIdendity = await GetUserIdentityAsync(token);
-            var request = _Client.GetDeleteUserReleaseRatingRequest(userIdendity.username, releaseId);
+            var userIdentity = await GetUserIdentityAsync(token);
+            var request = _Client.GetDeleteUserReleaseRatingRequest(userIdentity.username, releaseId);
             return await _Client.Execute(request, token) == HttpStatusCode.NoContent;
         }
 
@@ -142,47 +142,80 @@ namespace DiscogsClient
         public IObservable<DiscogsSearchResult> Search(DiscogsSearch search, int? max = null)
         {
             var observable = RawSearchAll(search, max);
-            return max.HasValue? observable.Take(max.Value) : observable;
+            return max.HasValue ? observable.Take(max.Value) : observable;
+        }
+
+        public Task<DiscogsPaginableResults<DiscogsSearchResult>> SearchAsync(DiscogsSearch search, DiscogsPaginable paginable, CancellationToken token)
+        {
+            IRestRequest RequestBuilder() => _Client.GetSearchRequest().AddAsParameter(search);
+            return GetPaginableAsync<DiscogsSearchResult>(RequestBuilder, paginable, token);
+        }
+
+        public Task<DiscogsPaginableResults<DiscogsSearchResult>> SearchAsync(DiscogsSearch search, DiscogsPaginable paginable = null)
+        {
+            return SearchAsync(search, paginable, CancellationToken.None);
         }
 
         private IObservable<DiscogsSearchResult> RawSearchAll(DiscogsSearch search, int? max = null)
         {
-            Func<IRestRequest> requestBuilder = () =>  _Client.GetSearchRequest().AddAsParameter(search);
-            return GenerateFromPaginable<DiscogsSearchResult, DiscogsSearchResults>(requestBuilder, max);
+            IRestRequest RequestBuilder() => _Client.GetSearchRequest().AddAsParameter(search);
+            return GenerateFromPaginable<DiscogsSearchResult, DiscogsSearchResults>(RequestBuilder, max);
         }
 
         public IEnumerable<DiscogsReleaseVersion> GetMasterReleaseVersionsAsEnumerable(int masterId, int? max = default(int?))
         {
-            return GetMasterReleaseVersions(masterId, max).ToEnumerable();        
+            return GetMasterReleaseVersions(masterId, max).ToEnumerable();
         }
 
-        public IObservable<DiscogsReleaseVersion> GetMasterReleaseVersions(int masterId, int? max = default(int?)) 
+        public IObservable<DiscogsReleaseVersion> GetMasterReleaseVersions(int masterId, int? max = default(int?))
         {
             var observable = GetMasterReleaseVersionseRaw(masterId, max);
             return max.HasValue ? observable.Take(max.Value) : observable;
         }
 
-        private IObservable<DiscogsReleaseVersion> GetMasterReleaseVersionseRaw(int masterId, int? max = default(int?))
+        public Task<DiscogsPaginableResults<DiscogsReleaseVersion>> GetMasterReleaseVersionsAsync(int masterId, DiscogsPaginable paginable, CancellationToken token)
         {
-            Func<IRestRequest> requestBuilder = () => _Client.GetMasterReleaseVersionRequest(masterId);
-            return GenerateFromPaginable<DiscogsReleaseVersion, DiscogsReleaseVersions>(requestBuilder, max);
+            IRestRequest RequestBuilder() => _Client.GetMasterReleaseVersionRequest(masterId);
+            return GetPaginableAsync<DiscogsReleaseVersion>(RequestBuilder, paginable, token);
         }
 
-        public IEnumerable<DiscogsArtistRelease> GetArtistReleaseAsEnumerable(int artistId, DiscogsSortInformation sort = null, int? max = null) 
+        public Task<DiscogsPaginableResults<DiscogsReleaseVersion>> GetMasterReleaseVersionshAsync(int masterId, DiscogsPaginable paginable = null)
+        {
+            return GetMasterReleaseVersionsAsync(masterId, paginable, CancellationToken.None);
+        }
+
+        private IObservable<DiscogsReleaseVersion> GetMasterReleaseVersionseRaw(int masterId, int? max = default(int?))
+        {
+            IRestRequest RequestBuilder() => _Client.GetMasterReleaseVersionRequest(masterId);
+            return GenerateFromPaginable<DiscogsReleaseVersion, DiscogsReleaseVersions>(RequestBuilder, max);
+        }
+
+        public IEnumerable<DiscogsArtistRelease> GetArtistReleaseAsEnumerable(int artistId, DiscogsSortInformation sort = null, int? max = null)
         {
             return GetArtistRelease(artistId, sort, max).ToEnumerable();
         }
 
-        public IObservable<DiscogsArtistRelease> GetArtistRelease(int artistId, DiscogsSortInformation sort = null, int? max = null) 
+        public IObservable<DiscogsArtistRelease> GetArtistRelease(int artistId, DiscogsSortInformation sort = null, int? max = null)
         {
             var observable = GetArtistReleaseRaw(artistId, sort, max);
             return max.HasValue ? observable.Take(max.Value) : observable;
         }
 
-        private IObservable<DiscogsArtistRelease> GetArtistReleaseRaw(int artistId, DiscogsSortInformation sort = null, int? max = null) 
+        public Task<DiscogsPaginableResults<DiscogsArtistRelease>> GetArtistReleaseAsync(int artistId, DiscogsSortInformation sort, DiscogsPaginable paginable, CancellationToken token)
         {
-            Func<IRestRequest> requestBuilder = () => _Client.GetArtistReleaseVersionRequest(artistId).AddAsParameter(sort);
-            return GenerateFromPaginable<DiscogsArtistRelease, DiscogsArtistReleases>(requestBuilder, max);
+            IRestRequest RequestBuilder() => _Client.GetArtistReleaseVersionRequest(artistId).AddAsParameter(sort);
+            return GetPaginableAsync<DiscogsArtistRelease>(RequestBuilder, paginable, token);
+        }
+
+        public Task<DiscogsPaginableResults<DiscogsArtistRelease>> GetArtistReleaseAsync(int artistId, DiscogsSortInformation sort = null, DiscogsPaginable paginable = null)
+        {
+            return GetArtistReleaseAsync(artistId, sort, paginable, CancellationToken.None);
+        }
+
+        private IObservable<DiscogsArtistRelease> GetArtistReleaseRaw(int artistId, DiscogsSortInformation sort = null, int? max = null)
+        {
+            IRestRequest RequestBuilder() => _Client.GetArtistReleaseVersionRequest(artistId).AddAsParameter(sort);
+            return GenerateFromPaginable<DiscogsArtistRelease, DiscogsArtistReleases>(RequestBuilder, max);
         }
 
         public IEnumerable<DiscogsLabelRelease> GetAllLabelReleasesAsEnumerable(int labelId, int? max = null)
@@ -196,13 +229,24 @@ namespace DiscogsClient
             return max.HasValue ? observable.Take(max.Value) : observable;
         }
 
-        private IObservable<DiscogsLabelRelease> GetAllLabelReleasesRaw(int labelId, int? max = null)
+        public Task<DiscogsPaginableResults<DiscogsLabelRelease>> GetAllLabelReleasesAsync(int labelId, DiscogsPaginable paginable, CancellationToken token)
         {
-            Func<IRestRequest> requestBuilder = () => _Client.GetAllLabelReleasesRequest(labelId);
-            return GenerateFromPaginable<DiscogsLabelRelease, DiscogsLabelReleases>(requestBuilder, max);
+            IRestRequest RequestBuilder() => _Client.GetAllLabelReleasesRequest(labelId);
+            return GetPaginableAsync<DiscogsLabelRelease>(RequestBuilder, paginable, token);
         }
 
-        private IObservable<T> GenerateFromPaginable<T, TRes>(Func<IRestRequest> requestBuilder, int? max = null) where T : DiscogsEntity 
+        public Task<DiscogsPaginableResults<DiscogsLabelRelease>> GetAllLabelReleasesAsync(int labelId, DiscogsPaginable paginable = null)
+        {
+            return GetAllLabelReleasesAsync(labelId, paginable, CancellationToken.None);
+        }
+
+        private IObservable<DiscogsLabelRelease> GetAllLabelReleasesRaw(int labelId, int? max = null)
+        {
+            IRestRequest RequestBuilder() => _Client.GetAllLabelReleasesRequest(labelId);
+            return GenerateFromPaginable<DiscogsLabelRelease, DiscogsLabelReleases>(RequestBuilder, max);
+        }
+
+        private IObservable<T> GenerateFromPaginable<T, TRes>(Func<IRestRequest> requestBuilder, int? max = null) where T : DiscogsEntity
                         where TRes : DiscogsPaginableResults<T>
         {
             var paginable = new DiscogsPaginable()
@@ -237,6 +281,18 @@ namespace DiscogsClient
             });
         }
 
+        private async Task<DiscogsPaginableResults<T>> GetPaginableAsync<T>(Func<IRestRequest> requestBuilder, DiscogsPaginable paginable, CancellationToken token) where T : DiscogsEntity
+        {
+            paginable = paginable ?? new DiscogsPaginable()
+            {
+                per_page = 50,
+                page = 1
+            };
+
+            var request = requestBuilder().AddAsParameter(paginable);
+            return await _Client.Execute<DiscogsPaginableResults<T>>(request, token);
+        }
+
         public Task DownloadImageAsync(DiscogsImage image, Stream copyStream, DiscogsImageFormatType type = DiscogsImageFormatType.Normal)
         {
             return DownloadImageAsync(image, copyStream, CancellationToken.None, type);
@@ -245,7 +301,7 @@ namespace DiscogsClient
         public async Task DownloadImageAsync(DiscogsImage image, Stream copyStream, CancellationToken cancellationToken, DiscogsImageFormatType type = DiscogsImageFormatType.Normal)
         {
             var url = (type == DiscogsImageFormatType.Normal) ? image.uri : image.uri150;
-            await _Client.Download(url, copyStream, cancellationToken); 
+            await _Client.Download(url, copyStream, cancellationToken);
         }
 
         public Task<string> SaveImageAsync(DiscogsImage image, string path, string fileName, DiscogsImageFormatType type = DiscogsImageFormatType.Normal)
@@ -254,7 +310,7 @@ namespace DiscogsClient
         }
 
         public async Task<string> SaveImageAsync(DiscogsImage image, string path, string fileName, CancellationToken cancellationToken, DiscogsImageFormatType type = DiscogsImageFormatType.Normal)
-        { 
+        {
             var url = (type == DiscogsImageFormatType.Normal) ? image.uri : image.uri150;
             return await _Client.SaveFile(url, path, fileName, cancellationToken);
         }
