@@ -35,6 +35,20 @@ namespace DiscogsClient.Test
         }
 
         [Fact]
+        public void DeserializeResult_Deserialize_lowest_price()
+        {
+            var release = JsonConvert.DeserializeObject<DiscogsRelease>(_ReleaseJSON2);
+            release.lowest_price.Should().Be(2.1591277124041888m);
+        }
+
+        [Fact]
+        public void DeserializeResult_Deserialize_num_for_sale()
+        {
+            var release = JsonConvert.DeserializeObject<DiscogsRelease>(_ReleaseJSON2);
+            release.num_for_sale.Should().Be(11);
+        }
+
+        [Fact]
         public void DeserializeResult_Deserialize_Track_Artists()
         {
             var release = JsonConvert.DeserializeObject<DiscogsRelease>(_ReleaseJSON2);

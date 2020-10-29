@@ -16,7 +16,6 @@ namespace DiscogsClient.Data.Result
         public string country { get; set; }
         public DateTime date_added { get; set; }
         public DateTime date_changed { get; set; }
-        /// <remarks>Grams</remarks>
         public int estimated_weight { get; set; }
         public int format_quantity { get; set; }
         public decimal lowest_price { get; set; }
