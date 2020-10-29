@@ -18,7 +18,7 @@ namespace DiscogsClient.Data.Result
         public DateTime date_changed { get; set; }
         public int estimated_weight { get; set; }
         public int format_quantity { get; set; }
-        public decimal lowest_price { get; set; }
+        public decimal? lowest_price { get; set; }
         public int master_id { get; set; }
         public string master_url { get; set; }
         public string notes { get; set; }
