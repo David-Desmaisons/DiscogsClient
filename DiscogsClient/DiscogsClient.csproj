@@ -28,7 +28,7 @@ Transparent management of pagination using none blocking API (Reactive IObservab
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="RateLimiter" Version="1.1.1" />
     <PackageReference Include="RestSharp" Version="106.3.0" />
 	  <PackageReference Include="RestSharpHelper" Version="1.1.1" />
